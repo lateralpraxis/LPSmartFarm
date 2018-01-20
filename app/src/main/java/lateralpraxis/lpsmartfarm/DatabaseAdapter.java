@@ -261,13 +261,29 @@ public class DatabaseAdapter {
             Recommendation_CREATE =
                     "CREATE TABLE IF NOT EXISTS Recommendation(Id INTEGER PRIMARY KEY AUTOINCREMENT, UniqueId TEXT, FarmerUniqueId TEXT, FarmBlockNurseryUniqueId TEXT, FarmBlockNurseryType TEXT, ZoneId TEXT, PlantationId TEXT, Latitude TEXT, Longitude TEXT, Accuracy TEXT, CreateBy TEXT, CreateDate TEXT, IsSyncData TEXT, IsTemp TEXT)",
             RecommendationDetail_CREATE =
-                    "CREATE TABLE IF NOT EXISTS RecommendationDetail(Id INTEGER PRIMARY KEY AUTOINCREMENT, RecommendationUniqueId TEXT, UniqueId TEXT, FarmActivityId TEXT, FarmSubActivityId TEXT, UomId TEXT, WeekNo TEXT, Remarks TEXT, ActivityValue TEXT, FileName TEXT, IsSyncData TEXT, IsSyncFile TEXT, IsTemp TEXT, JCWeek TEXT)",
+                    "CREATE TABLE IF NOT EXISTS RecommendationDetail(Id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                            "RecommendationUniqueId TEXT, UniqueId TEXT, FarmActivityId TEXT, FarmSubActivityId TEXT, UomId TEXT, " +
+                            "WeekNo TEXT, Remarks TEXT, ActivityValue TEXT, FileName TEXT, IsSyncData TEXT, IsSyncFile TEXT, IsTemp TEXT, JCWeek TEXT)",
             PlantStatus_CREATE =
                     "CREATE TABLE IF NOT EXISTS PlantStatus(Id TEXT, Title TEXT, TitleHindi TEXT);",
             Defect_CREATE =
                     "CREATE TABLE IF NOT EXISTS Defect(Id TEXT, Title TEXT, TitleHindi TEXT);",
             PlantationWeek_CREATE =
-                    "CREATE TABLE IF NOT EXISTS PlantationWeek(PlantationUniqueId TEXT, WeekNo TEXT, FromDate TEXT, ToDate TEXT);";
+                    "CREATE TABLE IF NOT EXISTS PlantationWeek(PlantationUniqueId TEXT, WeekNo TEXT, FromDate TEXT, ToDate TEXT);",
+            BookingAddressTemp_CREATE = "CREATE TABLE IF NOT EXISTS BookingAddressTemp(UniqueId TEXT, Street1 TEXT, Street2 TEXT, " +
+                    "StateId TEXT, DistrictId TEXT, BlockId TEXT, PanchayatId TEXT, VillageId TEXT, CityId TEXT, PinCodeId TEXT, AddressType TEXT)",
+            PaymentMode_CREATE =
+                    "CREATE TABLE IF NOT EXISTS PaymentMode(Id TEXT, Title TEXT, TitleHindi TEXT);",
+            PolyBagRate_CREATE =
+                    "CREATE TABLE IF NOT EXISTS PolyBagRate(DistrictId TEXT, NurseryId TEXT, RateDate TEXT, Rate TEXT);",
+            Booking_CREATE =
+                    "CREATE TABLE IF NOT EXISTS Booking(Id INTEGER PRIMARY KEY AUTOINCREMENT, BookingUniqueId TEXT, " +
+                            "BookingFor TEXT, BookingForId TEXT, FarmBlockId TEXT, Street1 TEXT, Street2 TEXT, StateId TEXT, DistrictId TEXT, " +
+                            "BlockId TEXT, PanchayatId TEXT, VillageId TEXT, CityId TEXT, PinCodeId TEXT, AddressType TEXT, BookingDate TEXT, " +
+                            "DeliveryDate TEXT, Quantity TEXT, Rate TEXT, TotalAmount TEXT, PaymentMode TEXT, PaymentAmount TEXT, Remarks TEXT, " +
+                            "FileName TEXT, FilePath TEXT, BalanceQuantity TEXT, ShortCloseQuantity TEXT, ShortCloseReasonId TEXT, ShortCloseBy TEXT, " +
+                            "ShortCloseDate TEXT, CreateBy TEXT, CreateDate TEXT, Latitude TEXT, Longitude TEXT, Accuracy TEXT, IsSync TEXT);";
+
     static String prevfarmCroppingUniqueId = "";
     /*Context of the application using the database.*/
     private final Context context;
@@ -926,6 +942,39 @@ public class DatabaseAdapter {
 
         db = dbHelper.getWritableDatabase();
         db.insert("PlantType", null, newValues);
+        result = "success";
+        return result;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Method to insert details in Payment Mode Table">
+    public String insertPaymentMode(String id, String title, String titleHindi) {
+        result = "fail";
+        newValues = new ContentValues();
+
+        newValues.put("Id", id);
+        newValues.put("Title", title);
+        newValues.put("TitleHindi", titleHindi);
+
+        db = dbHelper.getWritableDatabase();
+        db.insert("PaymentMode", null, newValues);
+        result = "success";
+        return result;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Method to insert details in PolyBag Rate Table">
+    public String insertPolyBagRate(String distId, String nsId, String rateDate, String rate) {
+        result = "fail";
+        newValues = new ContentValues();
+
+        newValues.put("DistrictId", distId);
+        newValues.put("NurseryId", nsId);
+        newValues.put("RateDate", rateDate);
+        newValues.put("Rate", rate);
+
+        db = dbHelper.getWritableDatabase();
+        db.insert("PolyBagRate", null, newValues);
         result = "success";
         return result;
     }
@@ -3514,6 +3563,62 @@ public class DatabaseAdapter {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Method to insert Data in Booking Collection From Server">
+    public String InsertServerBookingCollections(String uniqueId, String bookingFor, String bookingForId, String farmBlockId, String street1, String street2, String stateId, String districtId, String blockId, String panchayatId, String villageId, String cityId, String pinCodeId, String addressType, String bookingDate, String deliveryDate, String quantity, String rate, String totalAmount, String paymentMode, String paymentAmount, String remarks, String fileName, String filePath, String balanceQuantity, String shortCloseQuantity, String shortCloseReasonId, String shortCloseBy, String shortCloseDate, String createBy, String createDate) {
+        try {
+            result = "fail";
+            Boolean dataExists = false;
+            selectQuery = "SELECT Id FROM Booking WHERE BookingUniqueId = '" + uniqueId + "'";
+            cursor = db.rawQuery(selectQuery, null);
+            if (cursor.getCount() > 0) {
+                dataExists = true;
+            }
+            cursor.close();
+            if (dataExists.equals(false)) {
+                newValues = new ContentValues();
+                newValues.put("BookingUniqueId", uniqueId);
+                newValues.put("BookingFor", bookingFor);
+                newValues.put("BookingForId", bookingForId);
+                newValues.put("FarmBlockId", farmBlockId);
+                newValues.put("Street1", street1);
+                newValues.put("Street2", street2);
+                newValues.put("StateId", stateId);
+                newValues.put("DistrictId", districtId);
+                newValues.put("BlockId", blockId);
+                newValues.put("PanchayatId", panchayatId);
+                newValues.put("VillageId", villageId);
+                newValues.put("CityId", cityId);
+                newValues.put("PinCodeId", pinCodeId);
+                newValues.put("AddressType", addressType);
+                newValues.put("BookingDate", bookingDate);
+                newValues.put("DeliveryDate", deliveryDate);
+                newValues.put("Quantity", quantity);
+                newValues.put("Rate", rate);
+                newValues.put("TotalAmount", totalAmount);
+                newValues.put("PaymentMode", paymentMode);
+                newValues.put("PaymentAmount", paymentAmount);
+                newValues.put("Remarks", remarks);
+                newValues.put("FileName", fileName);
+                newValues.put("FilePath", filePath);
+                newValues.put("BalanceQuantity", balanceQuantity);
+                newValues.put("ShortCloseQuantity", shortCloseQuantity);
+                newValues.put("ShortCloseReasonId", shortCloseReasonId);
+                newValues.put("ShortCloseBy", shortCloseBy);
+                newValues.put("ShortCloseDate", shortCloseDate);
+                newValues.put("CreateBy", createBy);
+                newValues.put("CreateDate", createDate);
+                newValues.put("IsSync", "1");
+                db.insert("Booking", null, newValues);
+            }
+            result = "success";
+            return result;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+    }
+    //</editor-fold>
+
     //<editor-fold desc="Method to insert Data in Job Card From Server">
     public String InsertServerJobCards(String jobCardUniqueId, String fbNurseryType, String fbNurseryUniqueId, String zoneId, String plUniqueId, String weekNo, String visitDate) {
         try {
@@ -3645,6 +3750,9 @@ public class DatabaseAdapter {
             db.execSQL("DELETE FROM NurseryLandIssue; ");
             db.execSQL("DELETE FROM PlantationWeek; ");
             db.execSQL("DELETE FROM JobCardPending; ");
+            db.execSQL("DELETE FROM PolyBagRate; ");
+            db.execSQL("DELETE FROM PaymentMode; ");
+            db.execSQL("DELETE FROM BookingAddressTemp; ");
             result = "success";
         } catch (Exception e) {
             e.printStackTrace();
@@ -4152,6 +4260,19 @@ public class DatabaseAdapter {
     }
     //</editor-fold>
 
+    //<editor-fold desc="Delete all Booking Collection">
+    public String deleteBookingCollections() {
+        try {
+            db.execSQL("DELETE FROM Booking; ");
+            result = "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return result;
+    }
+    //</editor-fold>
+
     //<editor-fold desc="To Delete Data from Pending Job Card">
     public String DeletePendingJobCard() {
         try {
@@ -4518,6 +4639,9 @@ public class DatabaseAdapter {
             case "nurserybytype":
                 selectQuery = "SELECT DISTINCT Id, Title FROM Nursery WHERE NurseryType='" + filter + "' ORDER BY Title COLLATE NOCASE ASC";
                 break;
+            case "paymentmode":
+                selectQuery = "SELECT DISTINCT Id, Title FROM PaymentMode ORDER BY Title COLLATE NOCASE ASC";
+                break;
         }
         cursor = db.rawQuery(selectQuery, null);
 
@@ -4598,6 +4722,8 @@ public class DatabaseAdapter {
                 labels.add(new CustomType(0, "...Select Nursery"));
             else if (masterType.equalsIgnoreCase("nurseryzone"))
                 labels.add(new CustomType(0, "...Select Nursery Zone"));
+            else if (masterType.equalsIgnoreCase("paymentmode"))
+                labels.add(new CustomType(0, "...Select Payment Mode"));
             else
                 labels.add(new CustomType(0, "...Select"));
         } else {

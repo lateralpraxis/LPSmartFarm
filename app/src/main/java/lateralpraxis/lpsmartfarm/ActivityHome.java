@@ -70,6 +70,7 @@ import lateralpraxis.lpsmartfarm.visits.RoutineVisitNurseryList;
 public class ActivityHome extends Activity {
 
     static final int ITEM_PER_ROW = 2;
+    private static String curusrlang;
     /*---------Start of Class Declaration-----------------------------*/
     final Context context = this;
     Common common;
@@ -89,7 +90,6 @@ public class ActivityHome extends Activity {
     /*---------Start of Variable Declaration-----------------------------*/
     private String userRole, password, userId, loginId, imei, responseJSON = "", sendJSon = "", syncFrom = "", syncByRole = "";
     private ArrayList<String> farmerData;
-    private static String curusrlang;
     /*---------Start of Control Declaration-----------------------------*/
 
     /*---------End of Control Declaration-----------------------------*/
@@ -5576,7 +5576,7 @@ public class ActivityHome extends Activity {
 
                     if (common.isConnected()) {
                         //call method of Plant Type
-                        AsyncPlantTypeWSCall task = new AsyncPlantTypeWSCall();
+                        AsyncPaymentModeWSCall task = new AsyncPaymentModeWSCall();
                         task.execute();
                     }
                 } else {
@@ -5594,6 +5594,182 @@ public class ActivityHome extends Activity {
             Dialog.setCancelable(false);
             Dialog.show();
 
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="AsyncTask class to handle Payment Mode WS call as separate UI Thread">
+    //Async class to handle Payment Mode WS call as separate UI Thread
+    private class AsyncPaymentModeWSCall extends AsyncTask<String, Void, String> {
+        private ProgressDialog Dialog = new ProgressDialog(context);
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                responseJSON = "";
+                responseJSON = common.invokeTwinJSONWS("ReadPaymentMode", "action", userId, "userId", syncByRole, "role", "ReadMaster", common.url);
+
+            } catch (SocketTimeoutException e) {
+                return "ERROR: TimeOut Exception. Either Server is busy or Internet is slow";
+            } catch (final Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+                return "ERROR: " + "Unable to fetch response from server.";
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                if (!result.contains("ERROR: ")) {
+                    JSONArray jsonArray = new JSONArray(responseJSON);
+                    dba.open();
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        dba.insertPaymentMode(jsonArray.getJSONObject(i).getString("A"), jsonArray.getJSONObject(i).getString("B"), jsonArray.getJSONObject(i).getString("C"));
+                    }
+                    dba.close();
+                    if (common.isConnected()) {
+                        AsyncPolyBagRateWSCall task = new AsyncPolyBagRateWSCall();
+                        task.execute();
+                    }
+                } else {
+                    common.showAlert(ActivityHome.this, result, false);
+                }
+            } catch (Exception e) {
+                common.showAlert(ActivityHome.this, "Payment Mode Downloading failed: " + e.toString(), true);
+            }
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Downloading Payment Mode..");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="AsyncTask class to handle PolyBag Rate WS call as separate UI Thread">
+    //Async class to handle Poly Bag Rate WS call as separate UI Thread
+    private class AsyncPolyBagRateWSCall extends AsyncTask<String, Void, String> {
+        private ProgressDialog Dialog = new ProgressDialog(context);
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                responseJSON = "";
+                responseJSON = common.invokeTwinJSONWS("ReadPolyBagRate", "action", userId, "userId", syncByRole, "role", "ReadMaster", common.url);
+
+            } catch (SocketTimeoutException e) {
+                return "ERROR: TimeOut Exception. Either Server is busy or Internet is slow";
+            } catch (final Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+                return "ERROR: " + "Unable to fetch response from server.";
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                if (!result.contains("ERROR: ")) {
+                    JSONArray jsonArray = new JSONArray(responseJSON);
+                    dba.open();
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        dba.insertPolyBagRate(jsonArray.getJSONObject(i).getString("A"), jsonArray.getJSONObject(i).getString("B"), jsonArray.getJSONObject(i).getString("C"), jsonArray.getJSONObject(i).getString("D"));
+                    }
+                    dba.close();
+                    if (common.isConnected()) {
+                        AsyncServerBookingCollectionDetailWSCall task = new AsyncServerBookingCollectionDetailWSCall();
+                        task.execute();
+                    }
+                } else {
+                    common.showAlert(ActivityHome.this, result, false);
+                }
+            } catch (Exception e) {
+                common.showAlert(ActivityHome.this, "Polybag Rate Downloading failed: " + e.toString(), true);
+            }
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Downloading Polybag Rate..");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="AsyncTask class to handle Booking Collection Details WS call as separate UI Thread">
+    //Async class to handle Server Booking Collection Details WS call as separate UI Thread
+    private class AsyncServerBookingCollectionDetailWSCall extends AsyncTask<String, Void, String> {
+        private ProgressDialog Dialog = new ProgressDialog(context);
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                responseJSON = "";
+                responseJSON = common.invokeTwinJSONWS("ReadBookingCollectionData", "action", userId, "userId", syncByRole, "role", "ReadMaster", common.url);
+
+            } catch (SocketTimeoutException e) {
+                return "ERROR: TimeOut Exception. Either Server is busy or Internet is slow";
+            } catch (final Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+                return "ERROR: " + "Unable to fetch response from server.";
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                if (!result.contains("ERROR: ")) {
+                    JSONArray jsonArray = new JSONArray(responseJSON);
+                    dba.open();
+                    dba.deleteBookingCollections();
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        dba.InsertServerBookingCollections(jsonArray.getJSONObject(i).getString("AndroidUniqueId"), jsonArray.getJSONObject(i).getString("BookingFor"), jsonArray.getJSONObject(i).getString("BookingForId"), jsonArray.getJSONObject(i).getString("FarmBlockId"), jsonArray.getJSONObject(i).getString("Street1"), jsonArray.getJSONObject(i).getString("Street2"), jsonArray.getJSONObject(i).getString("StateId"), jsonArray.getJSONObject(i).getString("DistrictId"), jsonArray.getJSONObject(i).getString("BlockId"), jsonArray.getJSONObject(i).getString("PanchayatId"), jsonArray.getJSONObject(i).getString("VillageId"), jsonArray.getJSONObject(i).getString("CityId"), jsonArray.getJSONObject(i).getString("PinCodeId"), jsonArray.getJSONObject(i).getString("AddressType"), jsonArray.getJSONObject(i).getString("BookingDate"), jsonArray.getJSONObject(i).getString("DeliveryDate"), jsonArray.getJSONObject(i).getString("Quantity"), jsonArray.getJSONObject(i).getString("Rate"), jsonArray.getJSONObject(i).getString("TotalAmount"), jsonArray.getJSONObject(i).getString("PaymentMode"), jsonArray.getJSONObject(i).getString("TotalAmount"), jsonArray.getJSONObject(i).getString("Remarks"), jsonArray.getJSONObject(i).getString("PaymentFileName"), "", jsonArray.getJSONObject(i).getString("BalanceQuantity"), jsonArray.getJSONObject(i).getString("ShortCloseQuantity"), jsonArray.getJSONObject(i).getString("ShortCloseReasonId"), jsonArray.getJSONObject(i).getString("ShortCloseBy"), jsonArray.getJSONObject(i).getString("ShortCloseDate"), jsonArray.getJSONObject(i).getString("CreateBy"), jsonArray.getJSONObject(i).getString("CreateDate"));
+                    }
+                    dba.close();
+                    if (common.isConnected()) {
+                        AsyncPlantTypeWSCall task = new AsyncPlantTypeWSCall();
+                        task.execute();
+                    }
+                } else {
+                    common.showAlert(ActivityHome.this, result, false);
+                }
+            } catch (Exception e) {
+                common.showAlert(ActivityHome.this, "Booking Collection Downloading failed: " + e.toString(), true);
+            }
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Downloading Booking Collections..");
+            Dialog.setCancelable(false);
+            Dialog.show();
         }
 
         @Override
