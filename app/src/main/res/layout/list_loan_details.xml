@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite">
+
+    <TextView
+        android:id="@+id/tvLoanId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <!-- 1/0 -->
+
+        <TextView
+            android:id="@+id/tvLoanDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/btnDelete"
+            android:layout_toStartOf="@+id/btnDelete"
+            android:text="@string/app_name"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold" />
+
+        <!-- 1/1 -->
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:drawableEnd="@mipmap/ic_delete"
+            android:drawableRight="@mipmap/ic_delete" />
+        <TextView
+            android:id="@+id/tvAmountDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvLoanDetails"
+            android:text="@string/app_name"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorBlack" />
+        <TextView
+            android:id="@+id/tvTenureDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/tvAmountDetails"
+            android:text="@string/app_name"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorBlack" />
+
+    </RelativeLayout>
+</LinearLayout>

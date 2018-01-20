@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.nurseryreporting.NurseryReportList">
+    <TextView
+        style="@style/style_topBar1"
+        android:text="@string/viewnurseryReport"
+        android:textAllCaps="true" />
+
+    <LinearLayout
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:id="@+id/linkReport"
+            style="@style/style_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:autoLink="all"
+            android:clickable="true"
+            android:linksClickable="true"
+            android:text="@string/label_linkAdd" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/datalabel_NoRecord"
+        android:textColor="@color/colorBlack" />
+    <ListView
+        android:id="@+id/listReport"
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dip"
+        android:descendantFocusability="afterDescendants"
+        android:layout_marginLeft="2dip"
+        android:layout_marginRight="2dip"
+        android:divider="@color/colorGold"
+        android:paddingBottom="2dp"
+        android:dividerHeight="1dp"
+        android:paddingLeft="2dp"
+        android:fadeScrollbars="false"
+        android:focusable="false"
+        tools:ignore="RtlHardcoded,NestedScrolling" >
+    </ListView>
+    <View
+        android:id="@+id/tvDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGold" />
+</LinearLayout>

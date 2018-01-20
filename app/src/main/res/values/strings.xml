@@ -1,0 +1,596 @@
+<resources>
+    <string name="app_name">FarmArt</string>
+    <string name="label_welcome">नमस्ते,</string>
+    <string name="appFullName">FarmArt</string>
+    <string name="appDesc">The \"Smart Farm\" System</string>
+    <string name="username">Username *</string>
+    <string name="password">Password *</string>
+    <string name="enterusername">Enter Username</string>
+    <string name="enterpassword">Enter Password</string>
+    <string name="credits">Designed &amp; Developed By\n Lateral Praxis (India) Pvt. Ltd.</string>
+    <string name="login">Login</string>
+    <string name="show_password">Show Password</string>
+    <string name="change_password">Change Password</string>
+    <string name="change_password_btn">Change Password</string>
+    <string name="the_password_should_consists_of_">The password should consists of -</string>
+    <string name="password_expired">Please change your password, as your previous password has already expired.</string>
+    <string name="old_password">Current Password *</string>
+    <string name="new_password">New Password *</string>
+    <string name="confirm_password">Confirm Password *</string>
+    <string name="show_password_all">Show All Passwords</string>
+    <string name="enteroldpassword">Enter Old Password</string>
+    <string name="enternewpassword">Enter New Password</string>
+    <string name="confirmpassword">Confirm Password</string>
+    <string name="log_out_btn">Log Out</string>
+    <string name="password_hint_">Enter Password *</string>
+    <string name="refresh">Sync Data</string>
+    <string name="logout">Logout</string>
+    <string name="change_language">Change Language</string>
+    <string name="title_activity_home_screen">HomeScreenActivity</string>
+    <string name="lang_eng">English</string>
+    <string name="lang_hindi">हिंदी</string>
+
+    <!--Start of Farmer Creation-->
+    <string name="label_createFarmer">Create Farmer</string>
+    <string name="label_editFarmer">Edit Farmer</string>
+    <string name="label_viewFarmer">View Farmer</string>
+    <string name="label_farmerName">Farmer Name</string>
+    <string name="label_fatherName">Father / Husband Name</string>
+    <string name="label_otherData">Other Data</string>
+    <string name="label_address">Address</string>
+    <string name="label_bankDetails">Bank Details</string>
+    <string name="label_fatherDetails">Farmer Details</string>
+    <string name="label_contactDetails">Contact Details</string>
+    <string name="label_addPoaPoi">Add POA / POI Documents</string>
+    <string name="label_addressDetails">Address Details</string>
+    <string name="label_bankDetail">Bank Details</string>
+    <string name="label_fssaiDetail">FSSAI Details</string>
+    <string name="label_language">Language *</string>
+    <string name="label_otherDetails">Other Datails</string>
+    <string name="label_farmerPhoto">Photo</string>
+    <string name="label_operationalBlocks">Operating Blocks</string>
+    <string name="label_Add">Add</string>
+    <string name="label_district">District</string>
+    <string name="label_block">Block</string>
+    <string name="label_addblock">Farm Block</string>
+    <string name="label_updateFarmer">Update Farmer</string>
+    <string name="label_familyDetails">Family Details</string>
+    <string name="label_loanDetails">Loan Details</string>
+    <string name="label_assetDetails">Asset Details</string>
+    <string name="label_bankPhoto">Bank Photo</string>
+    <string name="label_fssaiPhoto">FSSAI Photo</string>
+    <string name="label_PoaPoi">POA / POI Documents</string>
+
+    <!--Plantation and Inter Cropping-->
+    <string name="label_plantation">Plantation</string>
+    <string name="label_interCropping">Inter Cropping</string>
+    <string name="label_addPlantation">Add Plantation</string>
+    <string name="label_viewPlantation">View Plantation</string>
+    <string name="label_addInterCropping">Add Inter Cropping</string>
+    <string name="label_viewInterCropping">View Inter Cropping</string>
+    <string name="label_addNurseryInterCropping">Add Nursery Inter Cropping</string>
+    <string name="label_viewNurseryInterCropping">View Nursery Inter Cropping</string>
+
+    <string name="datalabel_salutation">Salutation</string>
+    <string name="datalabel_firstName">First Name</string>
+    <string name="datalabel_middleName">Middle Name</string>
+    <string name="datalabel_lastName">Last Name</string>
+    <string name="datalabel_fullName">Name</string>
+    <string name="datalabel_gender">Gender</string>
+    <string name="datalabel_birthDate">Birthdate</string>
+    <string name="datalabel_mobile">Mobile</string>
+    <string name="datalabel_alternate1">Alternate 1</string>
+    <string name="datalabel_alternate2">Alternate 2</string>
+    <string name="datalabel_farmerType">Farmer Types</string>
+    <string name="datalabel_educationLevel">Education Level</string>
+    <string name="datalabel_addressType">Address Type</string>
+    <string name="datalabel_addressStreet1">Line 1</string>
+    <string name="datalabel_addressStreet2">Line 2</string>
+    <string name="datalabel_state">State</string>
+    <string name="datalabel_district">District</string>
+    <string name="datalabel_block">Block</string>
+    <string name="datalabel_panchayat">Panchayat</string>
+    <string name="datalabel_village">Village</string>
+    <string name="datalabel_city">City</string>
+    <string name="datalabel_pinCode">Pincode</string>
+    <string name="datalabel_fatherName">Father / Husband Name</string>
+
+
+    <string name="datalabel_first">First *</string>
+    <string name="datalabel_middle">Middle</string>
+    <string name="datalabel_last">Last *</string>
+    <string name="datalabel_soiltype">Soil Type</string>
+    <string name="datalabel_irrigation">Irrigation System</string>
+    <string name="datalabel_river">River</string>
+    <string name="datalabel_dam">Dam</string>
+    <string name="datalabel_waterSource">Water Source</string>
+    <string name="datalabel_electricitySource">Elec. Source</string>
+
+
+    <string name="datalabel_farmerCode">Code</string>
+    <string name="datalabel_farmerName">Farmer</string>
+    <string name="datalabel_father">Father</string>
+    <string name="datalabel_mobileNo">Mobile</string>
+    <string name="datalabel_address">Address</string>
+
+    <string name="datalabel_accountNo">Account #</string>
+    <string name="datalabel_bankName">Bank Name</string>
+    <string name="label_uploadPassbook">Upload Passbook</string>
+    <string name="datalabel_farmBlockList">Farm Block List</string>
+    <string name="datalabel_farmBlockCode">FB Code</string>
+    <string name="datalabel_farmBlockPlantationCode">PL Code</string>
+
+    <string name="datalabel_DocumentType">Type *</string>
+    <string name="datalabel_DocumentName">Name *</string>
+    <string name="datalabel_DocumentNumber">Number *</string>
+    <string name="datalabel_NoRecord">No Record(s) Found.</string>
+    <string name="datalabel_Add">Add</string>
+    <string name="datalabel_Reset">Reset</string>
+    <string name="datalabel_Save">Save</string>
+    <string name="datalabel_Submit">Submit</string>
+    <string name="datalabel_Next">Next</string>
+    <string name="datalabel_NA">Not Applicable</string>
+    <string name="datalabel_Code">Code</string>
+    <string name="datalabel_Type">Type</string>
+    <string name="datalabel_TypeHead">Type *</string>
+
+    <string name="label_languageHead">Language</string>
+    <string name="label_gender">Gender</string>
+    <string name="label_birthdate">Birth Date</string>
+    <string name="label_birthdate_create">Birth Date *</string>
+    <string name="label_edulevel">Education</string>
+    <string name="label_totalAcreage">Total Acre</string>
+    <string name="label_emailhead">Email Id</string>
+    <string name="label_mobilehead">Mobile#</string>
+    <string name="label_athead">Alternate#</string>
+    <string name="label_street1head">Line 1</string>
+    <string name="label_street2head">Line 2</string>
+    <string name="label_statehead">State</string>
+    <string name="label_districthead">District</string>
+    <string name="label_blockhead">Block</string>
+    <string name="label_panchayathead">Panchayat</string>
+    <string name="label_villagehead">Village</string>
+    <string name="label_pincodehead">Pincode</string>
+    <string name="label_cityhead">City</string>
+    <string name="label_accounthead">Account#</string>
+    <string name="label_ifschead">IFSC</string>
+    <string name="label_fssaihead">FSSAI#</string>
+    <string name="label_regdatehead">Registration Date</string>
+    <string name="label_relationship">Relationship *</string>
+    <string name="label_Nominee">Nominee</string>
+    <string name="label_source">Source *</string>
+    <string name="label_loan_source">Loan Source *</string>
+    <string name="label_loanType">Loan Type *</string>
+    <string name="label_loanAmt">Loan Amt *</string>
+    <string name="label_balAmt">Bal Amt *</string>
+    <string name="label_tenure">Tenure *</string>
+    <string name="label_ROI">ROI(%) *</string>
+    <string name="label_prospective">Prospective</string>
+
+    <string name="label_Name">Name *</string>
+    <string name="label_NameHead">Farmer</string>
+
+    <string name="label_chooseFile">Choose File</string>
+    <string name="label_takePhoto">Take Photo</string>
+    <string name="label_selectDate">Select Date</string>
+
+    <string name="farmercreatehead">Create Farmer</string>
+    <string name="salutation">Salutation *</string>
+    <string name="firstnamehead">First Name *</string>
+    <string name="middlenamehead">Middle Name</string>
+    <string name="lastnamehead">Last Name *</string>
+    <string name="mobilehead">Mobile# *</string>
+    <string name="emailhead">Email Id</string>
+    <string name="athead">Alternate#</string>
+    <string name="addresstype">Address *</string>
+    <string name="districtwise">District</string>
+    <string name="citywise">City</string>
+    <string name="statehead">State *</string>
+    <string name="districthead">District *</string>
+    <string name="blockhead">Block *</string>
+    <string name="panchayathead">Panchayat *</string>
+    <string name="villagehead">Village *</string>
+    <string name="pincodehead">Pincode *</string>
+    <string name="cityhead">City *</string>
+    <string name="accounthead">Account#</string>
+    <string name="ifschead">IFSC</string>
+    <string name="street1head">Line 1 *</string>
+    <string name="street2head">Line 2 </string>
+    <string name="farmer_photo">Upload Photo *</string>
+    <string name="gender">Gender *</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="farmertype">Type *</string>
+    <string name="edulevel">Education *</string>
+    <string name="totalAcreage">Total Acre *</string>
+    <string name="save">Save</string>
+    <string name="fssaihead">FSSAI#</string>
+    <string name="regdatehead">Registration Date*</string>
+    <string name="expdatehead">Expiry Date*</string>
+    <string name="fssai_doc">Upload FSSAI Proof *</string>
+    <string name="bank_pass_book">Upload Bank Pass Book *</string>
+    <!--End of Farmer Creation-->
+
+    <!--Labels for Buttons-->
+    <string name="label_login">Login</string>
+    <string name="label_logout">Logout</string>
+    <string name="label_save">Save</string>
+    <string name="label_back">Back</string>
+    <string name="label_add">Add</string>
+    <string name="label_linkAdd">Add [ + ]</string>
+    <string name="label_linkEdit">Edit [ + ]</string>
+    <string name="label_linkFarmBlock">[ Farm Block ]</string>
+    <string name="label_linkPlantation">[ Plantation ]</string>
+    <string name="link_addInterCropping">[ Add Inter Cropping ]</string>
+    <string name="link_InterCropping">[ Inter Cropping ]</string>
+    <string name="label_changePassword">Change Password</string>
+    <string name="label_showPassword">Show Password</string>
+    <string name="label_showAllPassword">Show All Password</string>
+    <string name="label_forgotPassword">Forgot Password</string>
+    <string name="label_userLogin">User Login</string>
+
+    <!--Start of Hint Strings-->
+    <string name="hint_enterUsername">Enter Username</string>
+    <string name="hint_enterPassword">Enter Password</string>
+    <string name="hint_enterCurrentPassword">Enter Current Password</string>
+    <string name="hint_enterNewPassword">Enter New Password</string>
+    <string name="hint_confirmPassword">Confirm Password</string>
+
+    <string name="hint_firstName">Enter First Name</string>
+    <string name="hint_middleName">Enter Middle Name</string>
+    <string name="hint_lastName">Enter Last Name</string>
+    <string name="hint_mobile">Enter Mobile #</string>
+
+    <string name="hint_addressStreet1">Enter Line 1</string>
+    <string name="hint_addressStreet2">Enter Line 2</string>
+    <string name="hint_accountNo">Enter Account #</string>
+
+    <string name="hint_area">Enter Area  (Acre)</string>
+    <string name="hint_nurintercroparea">Enter Area (Sq.Ft.)</string>
+    <string name="hint_date">Select Date</string>
+    <string name="hint_row">Enter Row</string>
+    <string name="hint_column">Enter Column</string>
+    <string name="hint_balance">Enter Balance</string>
+
+    <string name="hint_street1">Enter Line 1</string>
+    <string name="hint_street2">Enter Line 2</string>
+
+    <string name="hintsearch">Enter Search Text</string>
+    <string name="hintaccountno">Enter Account Number</string>
+    <string name="hintifsc">Enter IFSC Code</string>
+    <string name="hintfirstname">Enter First Name</string>
+    <string name="hintname">Enter Name</string>
+    <string name="hintmiddlename">Enter Middle Name</string>
+    <string name="hintlastname">Enter Last Name</string>
+    <string name="hintmobile">Enter Mobile No.</string>
+    <string name="hintalternate">Enter Alternate No.</string>
+    <string name="hintmail">Enter Email Id</string>
+    <string name="hintfssai">Enter FSSAI#</string>
+    <string name="hintbirthdate">Select Birth Date</string>
+    <string name="hintregdate">Enter Registration Date</string>
+    <string name="hintexpirydate">Enter Expiry Date</string>
+    <string name="hintTotalAcreage">Enter Total Acreage</string>
+    <string name="hintLoanAmt">Enter Loan Amt</string>
+    <string name="hintBalAmt">Enter Balance Amt</string>
+    <string name="hintTenure">Enter Tenure</string>
+    <string name="hintROI">Enter ROI</string>
+    <string name="hintassetnumbers">Enter Quantity</string>
+    <string name="hintsearchtext">Enter Search Text</string>
+    <!--End of Hint Strings-->
+
+    <!--Start of Farm Block Strings-->
+    <string name="label_addFarmBlock">Add Farm Block</string>
+    <string name="label_updateFarmBlock">Update Farm Block</string>
+    <string name="label_farmBlock">Farm Block</string>
+    <string name="label_farmBlockOtherDetails">Farm Block - Other Details</string>
+    <string name="label_farmBlockSoilDetails">Farm Block - Soil Details</string>
+    <string name="label_characteristicHeader">Characteristics / HCVF Details</string>
+    <string name="label_landIssueHeader">Land Issue Details</string>
+    <string name="label_coordinatesHeader">Fetch GPS Details</string>
+
+
+    <string name="label_crop">Crop *</string>
+    <string name="label_variety">Variety *</string>
+    <string name="label_season">Season *</string>
+    <string name="label_area">Area (Acre) *</string>
+    <string name="label_nurintercroparea">Area (Sq.Ft.) *</string>
+
+    <string name="farmerName">Farmer Name</string>
+    <string name="ownershipType">Ownership *</string>
+    <string name="ownershipTypeDisplay">Ownership</string>
+    <string name="hintOwnershipType">Enter Ownership</string>
+    <string name="mobile">Mobile#</string>
+    <string name="fpoCooperativeName">FPO</string>
+    <string name="landDetails">Land Details</string>
+    <string name="khata">Khata# *</string>
+    <string name="khasra">Khasra# *</string>
+    <string name="khataDisplay">Khata#</string>
+    <string name="khasraDisplay">Khasra#</string>
+    <string name="landIssue">Land Issue</string>
+    <string name="contractDate">Contract Date</string>
+    <string name="area">Area (Acre) *</string>
+    <string name="contractDateDisplay">Contract Date</string>
+    <string name="areaDisplay">Area (Acre)</string>
+    <string name="hintKhata">Enter Khata#</string>
+    <string name="hintKhasra">Enter Khasra#</string>
+    <string name="hintContractDate">Enter Contract Date</string>
+    <string name="hintArea">Enter Area (Acre)</string>
+    <string name="address">Address Details</string>
+
+    <string name="soilDetails">Soil Details</string>
+    <string name="soilType">Soil Type *</string>
+    <string name="soilTypeDisplay">Soil Type</string>
+    <string name="nitrogen">Nitrogen (kg/ha)</string>
+    <string name="organicCarbon">Organic Carbon (%)</string>
+    <string name="mSLElevation">MSL Elevation</string>
+    <string name="potash">Potash (kg/ha)</string>
+    <string name="magnesium">Magnesium (kg/ha)</string>
+    <string name="pHChemical">pH (Chemical)</string>
+    <string name="phosphorous">Phosphorous (kg/ha)</string>
+    <string name="calcium">Calcium (kg/ha)</string>
+
+    <string name="hintNitrogen">Enter Nitrogen (kg/ha)</string>
+    <string name="hintOrganicCarbon">Enter Organic Carbon (%)</string>
+    <string name="hintMSLElevation">Enter MSL Elevation</string>
+    <string name="hintPotash">Enter Potash (kg/ha)</string>
+    <string name="hintMagnesium">Enter Magnesium (kg/ha)</string>
+    <string name="hintPHChemical">Enter pH (Chemical)</string>
+    <string name="hintPhosphorous">Enter Phosphorous (kg/ha)</string>
+    <string name="hintCalcium">Enter Calcium (kg/ha)</string>
+
+    <string name="otherDetails">Other Details</string>
+    <string name="existingLandUse">Existing Land Use *</string>
+    <string name="communityUse">Community Use *</string>
+    <string name="existingHazard">Existing Hazard *</string>
+    <string name="nearestRiver">Nearest River *</string>
+    <string name="nearestDam">Nearest Dam *</string>
+    <string name="irrigationSystem">Irrigation System *</string>
+    <string name="overheadTrans">Overhead Trans.</string>
+    <string name="anyLegalDispute">Any Legal Dispute *</string>
+    <string name="waterSource">Water Source *</string>
+    <string name="electricitySource">Electricity Source *</string>
+    <string name="dripperSpacing">Dripper Spacing</string>
+    <string name="dischargeRate">Discharge Rate (L/Hr)</string>
+    <string name="hintDripperSpacing">Enter Dripper Spacing</string>
+    <string name="ownerName">Owner Name *</string>
+    <string name="ownerNameDisplay">Owner Name</string>
+    <string name="enterOwnerName">Enter Owner Name</string>
+    <string name="hintDischargeRate">Enter Discharge Rate (L/Hr)</string>
+    <string name="NA">NA</string>
+    <string name="LT">LT</string>
+    <string name="HT">HT</string>
+    <string name="existingLandUseDisplay">Existing Land Use</string>
+    <string name="communityUseDisplay">Community Use</string>
+    <string name="existingHazardDisplay">Existing Hazard</string>
+    <string name="nearestRiverDisplay">Nearest River</string>
+    <string name="nearestDamDisplay">Nearest Dam</string>
+    <string name="irrigationSystemDisplay">Irrigation System</string>
+    <string name="anyLegalDisputeDisplay">Any Legal Dispute</string>
+    <string name="waterSourceDisplay">Water Source</string>
+    <string name="electricitySourceDisplay">Electricity Source</string>
+    <string name="dripperSpacingDisplay">Dripper Spacing</string>
+    <string name="dischargeRateDisplay">Discharge Rate (L/Hr)</string>
+
+    <string name="characteristicsHcvf">Characteristics / HCVF Details</string>
+    <string name="croppingPattern">Cropping Pattern Details</string>
+    <string name="crop">Crop</string>
+    <string name="variety">Variety</string>
+    <string name="type">Type</string>
+    <string name="monthage">Monthage</string>
+    <string name="label_areaName">Area (Acre)</string>
+    <string name="label_nurseryareaName">Area (Sq.Ft.)</string>
+    <string name="label_Date">Date</string>
+    <string name="label_System">System</string>
+    <string name="label_Row">Row</string>
+    <string name="label_Column">Column</string>
+    <string name="label_Balance">Balance</string>
+    <string name="label_Total">Total</string>
+    <string name="areaAcre">Area (Acre) *</string>
+    <string name="areaAcreDisplay">Area (Acre)</string>
+    <string name="hintAreaAcre">Enter Area (Acre)</string>
+    <string name="season">Season</string>
+
+    <string name="fetchGpsDetails">Fetch GPS Details</string>
+    <string name="gpsDetails">GPS Details</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="back">Back</string>
+    <string name="fetchGps">Fetch GPS</string>
+
+    <string name="viewFarmBlock">View Farm Block</string>
+    <string name="update">Update</string>
+    <string name="farmBlockCroppingPattern">Farm Block - Cropping Pattern</string>
+    <string name="label_farmBlockCharacteristics">Farm Block - Characteristics / HCVF</string>
+    <string name="label_farmBlockLand">Farm Block - Land Issue</string>
+    <string name="label_farmBlockGPS">Farm Block - GPS</string>
+    <!--End of Farm Block Strings-->
+
+    <!-- Plantation Details -->
+    <string name="datalabel_crop">Crop</string>
+    <string name="datalabel_variety">Variety</string>
+    <string name="datalabel_season">Season</string>
+    <string name="datalabel_monthAge">Month Age</string>
+    <string name="datalabel_area">Area (Acre)</string>
+    <string name="datalabel_date">Date</string>
+    <string name="datalabel_system">System</string>
+    <string name="datalabel_row">Row</string>
+    <string name="datalabel_column">Column</string>
+    <string name="datalabel_balance">Balance</string>
+    <string name="datalabel_total">Total</string>
+    <string name="label_plantationList">Plantation List</string>
+    <string name="label_plannedactlist">Planned Activity List</string>
+    <string name="label_recdactlist">Recommended Activity List</string>
+
+    <string name="datalabel_cropHead">Crop *</string>
+    <string name="datalabel_varietyHead">Variety *</string>
+    <string name="datalabel_seasonHead">Season *</string>
+    <string name="datalabel_monthAgeHead">Month Age *</string>
+    <string name="datalabel_areaHead">Area (Acre) *</string>
+    <string name="datalabel_nurseryareaHead">Area (Sq.Ft.) *</string>
+    <string name="datalabel_dateHead">Date *</string>
+    <string name="datalabel_systemHead">System *</string>
+    <string name="datalabel_rowHead">Row *</string>
+    <string name="datalabel_columnHead">Column *</string>
+    <string name="datalabel_balanceHead">Balance</string>
+    <string name="datalabel_totalHead">Total *</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_logout">Logout</string>
+    <string name="label_khata_khasra">Khata / Khasra</string>
+
+
+    <!-- Reporting Label Details -->
+    <string name="label_Farmer">Farmer *</string>
+    <string name="label_FarmBlock">Farm Block *</string>
+    <string name="label_Activity">Activity *</string>
+    <string name="label_Qty">Quantity *</string>
+    <string name="label_SubActivity">Sub Activity</string>
+    <string name="label_Remarks">Remarks</string>
+    <string name="label_FarmBlockReporting">Farm Block Reporting</string>
+    <string name="label_selectPlantation">Select Plantation</string>
+    <string name="label_plannedActivity">Planned Activity</string>
+    <string name="label_recActivity">Recommended Activity</string>
+    <string name="label_unplActivity">Unplanned Activity</string>
+    <string name="label_SearchFarmer">Farmer Search</string>
+    <string name="label_Plantation">Plantation</string>
+    <string name="label_viewReport">View Report</string>
+    <string name="label_Search">Go</string>
+    <string name="label_unplannedactlist">Unplanned Activity List</string>
+    <string name="viewReport">View Farm Block Activity Report</string>
+    <string name="viewnurseryReport">View Nursery Activity Report</string>
+    <string name="datalabel_VisitDate">Date</string>
+    <string name="label_ReportHeader">Reported Activities</string>
+    <string name="label_PlannedHeader">Planned Activity Details</string>
+    <string name="label_RecommendedHeader">Recommended Activity Details</string>
+    <string name="label_UnPlannedHeader">UnPlanned Details</string>
+
+
+    <!--Start of Menu Strings-->
+    <string name="menu_createFarmer">Create</string>
+    <string name="menu_viewFarmer">View</string>
+    <string name="menu_booking">Booking</string>
+    <string name="menu_dispatch">Dispatch</string>
+    <string name="menu_delivery">Delivery</string>
+    <string name="menu_stockReturn">Return</string>
+    <string name="menu_farmActivity">Activity</string>
+    <string name="menu_Nursery">Nursery</string>
+    <string name="menu_visitReports">Visits</string>
+    <string name="menu_recommendation">Recommend</string>
+    <string name="menu_jobcardconfirmation">Confirm</string>
+    <string name="menu_dashboards">Report</string>
+    <string name="menu_sync">Sync</string>
+    <!--End of Menu Strings-->
+
+    <!--Nursery - Zone Strings-->
+    <string name="datalabel_nurseryType">Type</string>
+    <string name="datalabel_nurseryName">Name</string>
+    <string name="datalabel_nurseryFullName">Nursery Name</string>
+    <string name="datalabel_zone">Zone</string>
+    <string name="label_addNurseryPlantation">Add Nursery Plantation</string>
+    <string name="label_updateNurseryPlantation">Update Nursery plantation</string>
+    <string name="label_viewNurseryPlantation">View Nursery Plantation</string>
+    <string name="label_NurseryGPS">Nursery - GPS</string>
+    <string name="label_NurseryZoneGPS">Nursery - Zone - GPS</string>
+    <string name="datalabel_NurseryMandatory">Nursery *</string>
+    <string name="datalabel_NurseryZone">Zone</string>
+    <string name="datalabel_Nursery">Nursery</string>
+    <string name="label_viewNursery">View Nursery</string>
+    <string name="label_linkZone">[ Zone ]</string>
+    <string name="datalabel_ConactPerson">Contact Person</string>
+    <string name="label_NurseryDetails">Nursery Details</string>
+    <string name="datalabel_RegistryDate">Registry Date</string>
+    <string name="datalabel_OffPremises">Office Premises</string>
+    <string name="datalabel_Mobile1">Mobile1#</string>
+    <string name="datalabel_Mobile2">Mobile2#</string>
+    <string name="datalabel_mininurseryDetails">Mini Nursery Details</string>
+    <string name="label_gstno">GST No.</string>
+    <string name="label_gstdate">GST Date</string>
+    <string name="label_ownwer">Owner Name</string>
+    <string name="label_loginid">Login Id</string>
+    <string name="label_contactNo">Contact No</string>
+    <string name="label_registrationDetails">Registration Details</string>
+    <string name="datalabel_CertifiedBy">Certified By</string>
+    <string name="datalabel_RegistrationNo">Registration No.</string>
+    <string name="label_AssociateMainNur">Associated with Main Nursery</string>
+    <string name="label_viewNurseryZone">Nursery Zone</string>
+    <string name="label_NurseryZoneDetails">Nursery Zone Details</string>
+    <string name="label_areaSq">Area (Sq.Ft.)</string>
+    <string name="viewNurseryZone">View Nursery Zone</string>
+    <string name="accountDetail">Account Details</string>
+    <!--End of Nursery - Zone Strings-->
+
+    <!--Start of Routine Visit Strings-->
+    <string name="createVisit">Create Visit</string>
+    <string name="visit">Visit</string>
+    <string name="visitFarmBlock">Farm Block Visit Report</string>
+    <string name="visitNursery">Nursery Visit Report</string>
+    <string name="farmer">Farmer *</string>
+    <string name="farmBlock">Farm Block *</string>
+    <string name="plantationDetails">Plantation Details</string>
+    <string name="selectPlantation">Select Plantation</string>
+    <string name="visitFarmBlockDetails">Farm Block Visit Details</string>
+    <string name="visitNurseryDetails">Nursery Visit Details</string>
+    <string name="avgHeightOfPlant">Avg. Plant Height (Mtr.) *</string>
+    <string name="avgHeightPlant">Avg. Plant Height (Mtr.)</string>
+    <string name="hintAvgHeightOfPlant">Avg. Plant Height (Mtr.)</string>
+    <string name="plantStatus">Plant Status *</string>
+    <string name="plantStatusDisplay">Plant Status</string>
+    <string name="agronomistVisitRecmd">Agronomist Visit Recmd</string>
+    <string name="hintAgronomistVisitRecmd">Enter No. of Days</string>
+    <string name="plantation">Plantation</string>
+    <string name="visitDate">Visit Date</string>
+    <string name="observationDetails">Observation Details</string>
+    <string name="addObservationDetails">Add Observation Details</string>
+    <string name="defectDiseasesName">Defect/Diseases Name *</string>
+    <string name="defectDiseasesDisplay">Defect/Diseases Name</string>
+    <string name="remarks">Remarks *</string>
+    <string name="remarkDisplay">Remarks</string>
+    <string name="hintRemarks">Enter Remarks</string>
+    <string name="uploadPhoto">Upload Photo</string>
+    <string name="main">Main</string>
+    <string name="mini">Mini</string>
+    <string name="zone">Zone *</string>
+    <string name="selectFarmBlock">Select Farm Block</string>
+    <string name="selectNursery">Select Nursery</string>
+    <string name="selectType">Select Type</string>
+    <!--End of Routine Visit Strings-->
+
+    <!--Recommendation Strings-->
+    <string name="createRecommendation">Create Recommendation</string>
+    <string name="recommendation">Recommendation</string>
+    <string name="recommendationFarmBlock">Farm Block Recommendation Report</string>
+    <string name="recommendationNursery">Nursery Recommendation Report</string>
+    <string name="viewFarmBlockRecommendation">View Farm Block Recommendation</string>
+    <string name="viewNurseryRecommendation">View Nursery Recommendation</string>
+    <string name="addRecommendedActivity">Add Recommended Activity</string>
+    <string name="recommendationDetails">Recommendation Details</string>
+    <string name="recommendationList">Recommendation List</string>
+    <string name="week">Week# *</string>
+    <string name="enterWeek">Enter Week#</string>
+    <string name="planedQuantity">Planned Quantity</string>
+    <!--End of Recommendation Strings-->
+
+    <!--Job Card Pending for confirmation Strings-->
+    <string name="label_FarmBlockJobCardPending">Farm Block Pending Confirmation</string>
+    <string name="label_FBJobCardConfirmation">Farm Block Reporting Confirmation</string>
+    <string name="label_NurJobCardConfirmation">Nursery Reporting Confirmation</string>
+    <string name="label_PCReportingActivies">Pending Confirmation of Reporting Activities</string>
+    <string name="label_ReportingDetails">Reporting Details</string>
+    <string name="label_PendingJobCard">Pending Reporting Activities</string>
+    <!--End of Job Card Pending for confirmation Strings-->
+
+
+    <!--Start of Stock Return Strings-->
+    <string name="label_PendingDispatch">Pending Dispatches</string>
+    <string name="label_Vehicle">Vehicle#</string>
+    <string name="label_Driver">Driver Name</string>
+    <string name="label_PendingDispatchList">Pending Dispatch Details</string>
+    <string name="label_ReturnDetail">Return Detail</string>
+    <string name="label_TotalCrates">No of Crates *</string>
+    <string name="label_MeterReading">Meter Reading *</string>
+    <string name="label_ReturnLossDetail">Return &amp; Loss Detail</string>
+    <string name="hintCrates">Enter Crates</string>
+    <string name="hintFinalReading">Enter final meter reading</string>
+    <string name="label_returnedto">Returned To</string>
+    <!--End of Stock Return Strings-->
+</resources>

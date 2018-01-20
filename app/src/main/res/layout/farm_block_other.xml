@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@color/colorWhite"
+    tools:context="lateralpraxis.lpsmartfarm.farmblock.FarmBlockOther">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvHeader"
+            style="@style/style_topBar1"
+            android:textAllCaps="true"
+            android:text="@string/label_farmBlockOtherDetails" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/style_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_farmerName" />
+
+                    <TextView
+                        style="@style/style_dataField"
+                        android:inputType="none"
+                        android:id="@+id/tvFarmer"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:text="@string/datalabel_farmerName" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/mobile" />
+
+                    <TextView
+                        style="@style/style_dataField"
+                        android:inputType="none"
+                        android:id="@+id/tvMobile"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:text="@string/mobile" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llFarmBlock"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/label_farmBlock" />
+
+                    <TextView
+                        style="@style/style_dataField"
+                        android:inputType="none"
+                        android:id="@+id/tvFarmBlock"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:text="@string/label_farmBlock" />
+
+                </LinearLayout>
+
+                <!-- Other Details -->
+                <TextView
+                    style="@style/style_sectionHead"
+                    android:text="@string/otherDetails" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="2dp"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/existingLandUse" />
+
+                        <Spinner
+                            android:id="@+id/spExistingLandUse"
+                            style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/communityUse" />
+
+                        <Spinner
+                            android:id="@+id/spCommunityUse"
+                            style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/existingHazard" />
+
+                        <Spinner
+                            android:id="@+id/spExistingHazard"
+                            style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/anyLegalDispute" />
+
+                        <Spinner
+                            android:id="@+id/spAnyLegalDispute"
+                            style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/nearestRiver" />
+
+                        <Spinner
+                            android:id="@+id/spNearestRiver"
+                            style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/nearestDam" />
+
+                        <Spinner
+                            android:id="@+id/spNearestDam"
+                            style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/irrigationSystem" />
+
+                        <Spinner
+                            android:id="@+id/spIrrigationSystem"
+                            style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/waterSource" />
+
+                        <Spinner
+                            android:id="@+id/spWaterSource"
+                            style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_weight="0.3"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:text="@string/electricitySource" />
+
+                        <Spinner
+                            android:id="@+id/spElectricitySource"
+                            style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            style="@style/style_dataLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3"
+                            android:text="@string/dripperSpacing" />
+
+                        <EditText
+                            android:id="@+id/etDripperSpacing"
+                            style="@style/style_dataField"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:hint="@string/hintDripperSpacing"
+                            android:digits="0123456789."
+                            android:inputType="numberDecimal"
+                            android:maxLength="5" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.3"
+                            android:text="@string/dischargeRate" />
+
+                        <EditText
+                            android:id="@+id/etDischargeRate"
+                            style="@style/style_dataField"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:hint="@string/hintDischargeRate"
+                            android:digits="0123456789."
+                            android:inputType="numberDecimal"
+                            android:maxLength="5" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <TextView
+                            style="@style/style_dataLabel"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="match_parent"
+                            android:text="@string/overheadTrans" />
+
+                        <RadioGroup
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/radioNA"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/NA"
+                                android:checked="true" />
+
+                            <RadioButton
+                                android:id="@+id/radioLT"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/LT" />
+
+                            <RadioButton
+                                android:id="@+id/radioHT"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/HT" />
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="1">
+
+                        <Button
+                            android:id="@+id/btnBack"
+                            style="@style/style_backButton"
+                            android:layout_gravity="end"
+                            android:layout_weight="0.5"
+                            android:text="@string/back" />
+
+                        <Button
+                            android:id="@+id/btnNext"
+                            style="@style/style_nextButton"
+                            android:layout_gravity="end"
+                            android:layout_weight="0.5"
+                            android:text="@string/datalabel_Next" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</LinearLayout>

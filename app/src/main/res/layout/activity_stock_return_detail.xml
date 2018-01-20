@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.returns.ActivityStockReturnDetail">
+    <TextView
+        style="@style/style_topBar1"
+        android:text="@string/label_ReturnDetail"
+        android:textAllCaps="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:fillViewport="true">
+        <LinearLayout
+            style="@style/style_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/datalabel_fullName" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:inputType="none" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/label_mobilehead" />
+
+                <TextView
+                    android:id="@+id/tvMobile"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:inputType="none" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/label_returnedto" />
+
+                <TextView
+                    android:id="@+id/tvReturnTo"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:inputType="none" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/label_TotalCrates" />
+
+                <EditText
+                    android:id="@+id/etTotalCrates"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:hint="@string/hintCrates"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textColor="@color/colorBlack" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/label_MeterReading" />
+
+                <EditText
+                    android:id="@+id/etMeterReading"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:hint="@string/hintFinalReading"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textColor="@color/colorBlack" />
+
+            </LinearLayout>
+            <TextView
+                style="@style/style_sectionHead"
+                android:text="@string/label_ReturnLossDetail" />
+            <TextView
+                android:id="@+id/tvEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/datalabel_NoRecord"
+                android:textColor="@color/colorBlack" />
+
+            <lateralpraxis.lpsmartfarm.NonScrollableListView
+                android:id="@+id/lvReturnDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/colorGold"
+                android:dividerHeight="1sp"
+                android:paddingLeft="2sp"
+                tools:ignore="RtlHardcoded,RtlSymmetry"></lateralpraxis.lpsmartfarm.NonScrollableListView>
+
+            <View
+                android:id="@+id/tvDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:visibility="gone"
+                android:background="@color/colorGold" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.nursery.ActivityViewNurseryInterCropping">
+
+    <TextView
+        style="@style/style_topBar1"
+        android:text="@string/label_viewNurseryInterCropping"
+        android:textAllCaps="true" />
+
+    <RelativeLayout
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/linkAdd"
+            style="@style/style_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:autoLink="all"
+            android:clickable="true"
+            android:focusable="true"
+            android:linksClickable="true"
+            android:text="@string/label_linkAdd" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvPlantationUniqueId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvNurseryUniqueId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/style_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <!--Nursery Type-->
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="@string/datalabel_nurseryType" />
+
+                <TextView
+                    android:id="@+id/tvNurseryType"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:inputType="none"
+                    android:text="@string/datalabel_nurseryType" />
+
+            </LinearLayout>
+
+            <!--Nursery Name-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="@string/datalabel_nurseryName" />
+
+                <TextView
+                    android:id="@+id/tvNurseryId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/tvNurseryName"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:inputType="none"
+                    android:text="@string/datalabel_nurseryName" />
+
+            </LinearLayout>
+
+            <!--Zone-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="@string/datalabel_zone" />
+
+                <TextView
+                    android:id="@+id/tvZoneUniqueId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvZoneId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvZone"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:inputType="none"
+                    android:text="@string/datalabel_zone" />
+
+            </LinearLayout>
+
+            <!--Plantation Code-->
+            <LinearLayout
+                android:id="@+id/llPlantationCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3"
+                    android:text="@string/datalabel_farmBlockPlantationCode" />
+
+                <TextView
+                    android:id="@+id/tvPlantationCode"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7"
+                    android:inputType="none"
+                    android:text="@string/datalabel_farmBlockPlantationCode" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/style_sectionHead"
+                android:text="@string/label_interCropping"
+                android:textAllCaps="true" />
+
+            <ListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:descendantFocusability="afterDescendants"
+                android:divider="@color/colorGold"
+                android:dividerHeight="1sp"
+                android:fadeScrollbars="false"
+                android:focusable="false"
+                tools:ignore="RtlHardcoded,NestedScrolling" />
+
+            <View
+                android:id="@+id/tvDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGold" />
+
+            <TextView
+                android:id="@+id/tvEmpty"
+                style="@style/style_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/datalabel_NoRecord" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/button_vertical_margin"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/btnBack"
+                    style="@style/style_backButton"
+                    android:layout_gravity="start"
+                    android:layout_weight="0.5"
+                    android:text="@string/back" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    style="@style/style_nextButton"
+                    android:layout_gravity="end"
+                    android:layout_weight="0.5"
+                    android:visibility="invisible"
+                    android:text="@string/datalabel_Next" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

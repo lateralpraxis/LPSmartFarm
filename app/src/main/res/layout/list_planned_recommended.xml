@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    android:paddingLeft="4sp">
+
+    <TextView
+        android:id="@+id/tvFileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorWhite"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <TableLayout
+        android:id="@+id/tableLayoutTotal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1.0dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:stretchColumns="0,1,2,3,4"
+        android:visibility="visible">
+        <!-- 4/0 -->
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dip"
+            android:baselineAligned="false"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_weight=".36"
+                android:layout_gravity="center_vertical"
+                android:text="@string/app_name"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPlanned"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".15"
+                android:textColor="@color/colorGreen"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".15"
+                android:textColor="@color/colorBlue"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvActual"
+                android:layout_width="0dp"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_weight=".15"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvUom"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:layout_gravity="center_vertical"
+                android:layout_weight=".12"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnViewAttach"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".07"
+                android:background="@android:color/transparent"
+                android:drawableEnd="@mipmap/ic_attach"
+                android:drawableRight="@mipmap/ic_attach"
+                android:visibility="visible" />
+
+        </TableRow>
+    </TableLayout>
+    <TextView
+        android:id="@+id/tvRemarks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/colorBlack"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+         />
+</LinearLayout>

@@ -1,0 +1,777 @@
+<resources>
+    <string name="app_name">FarmArt</string>
+    <string name="label_welcome">नमस्ते,</string>
+    <string name="appFullName">FarmArt</string>
+    <string name="appDesc">The \"Smart Farm\" System</string>
+    <string name="username">उपयोगकर्ता नाम*</string>
+    <string name="password">पासवर्ड *</string>
+    <string name="enterusername">उपयोगकर्ता नाम दर्ज करें</string>
+    <string name="enterpassword">पासवर्ड दर्ज करें</string>
+    <string name="credits">Designed &amp; Developed By\n Lateral Praxis (India) Pvt. Ltd.</string>
+    <string name="login">Login</string>
+    <string name="show_password">पासवर्ड दिखाएं</string>
+    <string name="change_password">पासवर्ड बदलें</string>
+    <string name="change_password_btn">पासवर्ड बदलें</string>
+    <string name="the_password_should_consists_of_">The password should consists of -</string>
+    <string name="password_expired">Please change your password, as your previous password has already expired.</string>
+    <string name="old_password">वर्तमान पासवर्ड *</string>
+    <string name="new_password">नया पासवर्ड *</string>
+    <string name="confirm_password">पासवर्ड की पुष्टि कीजिये *</string>
+    <string name="show_password_all">सभी पासवर्ड दिखाएँ</string>
+    <string name="enteroldpassword">पुराना पासवर्ड दर्ज करें</string>
+    <string name="enternewpassword">नया पासवर्ड दर्ज करें</string>
+    <string name="confirmpassword">पासवर्ड की पुष्टि कीजिये</string>
+    <string name="log_out_btn">लॉग आउट</string>
+
+    <string name="change_language">भाषा बदलो</string>
+    <string name="password_hint_">पासवर्ड दर्ज करें *</string>
+    <string name="refresh">डेटा समन्वयित करें</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="title_activity_home_screen">HomeScreenActivity</string>
+
+    <string name="lang_eng">English</string>
+    <string name="lang_hindi">हिंदी</string>
+
+    <!--Start of Farmer Creation-->
+    <string name="label_createFarmer">किसान बनाएँ</string>
+    <string name="label_editFarmer">किसान संपादित करें</string>
+    <string name="label_viewFarmer">किसान देखें</string>
+    <string name="label_farmerName">किसान का नाम</string>
+    <string name="label_fatherName">पिता / पति का नाम</string>
+    <string name="label_otherData">अन्य आंकड़ा</string>
+    <string name="label_address">पता</string>
+    <string name="label_bankDetails">बैंक विवरण</string>
+    <string name="label_fatherDetails">किसान विवरण</string>
+    <string name="label_contactDetails">संपर्क विवरण</string>
+    <string name="label_addPoaPoi">पीओए / पीओआई दस्तावेज़ जोड़ें</string>
+    <string name="label_addressDetails">पते का विवरण</string>
+    <string name="label_bankDetail">बैंक विवरण</string>
+    <string name="label_fssaiDetail">एफएसएसएआई विवरण</string>
+    <string name="label_language">भाषा *</string>
+    <string name="label_otherDetails">अन्य जानकारी</string>
+    <string name="label_farmerPhoto">फ़ोटो</string>
+    <string name="label_operationalBlocks">ऑपरेटिंग ब्लॉक</string>
+    <string name="label_Add">जोड़ें</string>
+    <string name="label_district">जिला</string>
+    <string name="label_block">खंड</string>
+    <string name="label_addblock">फार्म ब्लॉक</string>
+    <string name="label_updateFarmer">किसान अपडेट करें</string>
+    <string name="label_familyDetails">पारिवारिक विवरण</string>
+    <string name="label_loanDetails">ऋण विवरण</string>
+    <string name="label_assetDetails">संपत्ति विवरण</string>
+    <string name="label_bankPhoto">बैंक फोटो</string>
+    <string name="label_fssaiPhoto">एफएसएसएआई फोटो</string>
+    <string name="label_PoaPoi">पीओए / पीओआई दस्तावेज</string>
+
+    <!--Plantation and Inter Cropping-->
+    <string name="label_plantation">वृक्षारोपण</string>
+    <string name="label_interCropping">इंटर क्रॉपिंग</string>
+    <string name="label_addPlantation">वृक्षारोपण जोड़ें</string>
+    <string name="label_viewPlantation">वृक्षारोपण देखें</string>
+    <string name="label_addInterCropping">इंटर क्रॉपिंग जोड़ें</string>
+    <string name="label_viewInterCropping">इंटर क्रॉपिंग देखें</string>
+    <string name="label_addNurseryInterCropping">नर्सरी इंटर क्रॉपिंग जोड़ें</string>
+    <string name="label_viewNurseryInterCropping">नर्सरी इंटर क्रॉपिंग देखें</string>
+
+    <string name="datalabel_salutation">अभिवादन</string>
+        
+    <string name="datalabel_firstName">पहला नाम</string>
+        
+    <string name="datalabel_middleName">मध्य नाम</string>
+        
+    <string name="datalabel_lastName">अंतिम नाम</string>
+        
+    <string name="datalabel_fullName">नाम</string>
+        
+    <string name="datalabel_gender">लिंग</string>
+        
+    <string name="datalabel_birthDate">जन्म तिथि</string>
+        
+    <string name="datalabel_mobile">मोबाइल</string>
+        
+    <string name="datalabel_alternate1">वैकल्पिक 1</string>
+        
+    <string name="datalabel_alternate2">वैकल्पिक 2</string>
+        
+    <string name="datalabel_farmerType">किसान प्रकार</string>
+        
+    <string name="datalabel_educationLevel">शिक्षा स्तर</string>
+        
+    <string name="datalabel_addressType">पता प्रकार</string>
+        
+    <string name="datalabel_addressStreet1">लाइन 1</string>
+        
+    <string name="datalabel_addressStreet2">लाइन 2</string>
+        
+    <string name="datalabel_state">राज्य</string>
+        
+    <string name="datalabel_district">जिला</string>
+        
+    <string name="datalabel_block">ब्लॉक</string>
+        
+    <string name="datalabel_panchayat">पंचायत</string>
+        
+    <string name="datalabel_village">ग्राम</string>
+        
+    <string name="datalabel_city">शहर</string>
+        
+    <string name="datalabel_pinCode">पिनकोड</string>
+        
+    <string name="datalabel_fatherName">पिता / पति का नाम</string>
+
+
+    <string name="datalabel_first">प्रथम *</string>
+        
+    <string name="datalabel_middle">मध्य</string>
+        
+    <string name="datalabel_last">अंतिम  </string>
+        
+    <string name="datalabel_soiltype">मिट्टी प्रकार</string>
+        
+    <string name="datalabel_irrigation">सिंचाई प्रणाली</string>
+        
+    <string name="datalabel_river">नदी</string>
+        
+    <string name="datalabel_dam">बांध</string>
+        
+    <string name="datalabel_waterSource">जल स्रोत</string>
+    <string name="datalabel_electricitySource">विद्युत स्रोत</string>
+
+
+    <string name="datalabel_farmerCode">कोड</string>
+        
+    <string name="datalabel_farmerName">किसान</string>
+        
+    <string name="datalabel_father">पिता</string>
+        
+    <string name="datalabel_mobileNo">मोबाइल</string>  
+    <string name="datalabel_address">पता</string>
+
+    <string name="datalabel_accountNo">खाता #</string>
+    <string name="datalabel_bankName">बैंक का नाम</string>
+    <string name="label_uploadPassbook">पासबुक अपलोड करें</string>
+    <string name="datalabel_farmBlockList">फार्म ब्लॉक सूची</string>
+
+    <string name="datalabel_farmBlockCode">एफबी कोड</string>
+    <string name="datalabel_farmBlockPlantationCode">पीएल कोड</string>
+
+
+    <string name="datalabel_DocumentType">प्रकार *</string>
+        
+    <string name="datalabel_DocumentName">नाम *</string>
+        
+    <string name="datalabel_DocumentNumber">संख्या *</string>
+        
+    <string name="datalabel_NoRecord">कोई रिकार्ड नहीं मिला।</string>
+        
+    <string name="datalabel_Add">जोड़ें</string>
+        
+    <string name="datalabel_Reset">रीसेट करें</string>
+        
+    <string name="datalabel_Save">सहेजें</string>
+        
+    <string name="datalabel_Submit">सबमिट करें</string>
+        
+    <string name="datalabel_Next">अगला</string>
+        
+    <string name="datalabel_NA">लागू नहीं</string>
+        
+    <string name="datalabel_Code">कोड</string>
+        
+    <string name="datalabel_Type">प्रकार</string>
+        
+    <string name="datalabel_TypeHead">प्रकार *</string>
+
+    <string name="label_languageHead">भाषा</string>
+    <string name="label_gender">लिंग</string>
+    <string name="label_birthdate">जन्म तिथि</string>
+    <string name="label_birthdate_create">जन्म तिथि *</string>
+    <string name="label_edulevel">शिक्षा</string>
+    <string name="label_totalAcreage">कुल एकड़</string>
+    <string name="label_emailhead">ईमेल आईडी</string>
+    <string name="label_mobilehead">मोबाइल#</string>
+    <string name="label_athead">वैकल्पिक#</string>
+    <string name="label_street1head">लाइन 1</string>
+    <string name="label_street2head">लाइन 2</string>
+    <string name="label_statehead">राज्य</string>
+    <string name="label_districthead">जिला</string>
+    <string name="label_blockhead">खंड</string>
+    <string name="label_panchayathead">पंचायत</string>
+    <string name="label_villagehead">ग्राम</string>
+    <string name="label_pincodehead">पिनकोड</string>
+    <string name="label_cityhead">शहर</string>
+    <string name="label_accounthead">खाता#</string>
+    <string name="label_ifschead">आईएफएससी</string>
+    <string name="label_fssaihead">एफएसएसएआई#</string>
+    <string name="label_regdatehead">पंजीकरण तिथि</string>
+    <string name="label_relationship">रिश्ता *</string>
+    <string name="label_Nominee">नामांकित</string>
+    <string name="label_source">स्रोत *</string>
+    <string name="label_loan_source">ऋण स्रोत *</string>
+    <string name="label_loanType">ऋण प्रकार *</string>
+    <string name="label_loanAmt">ऋण राशि *</string>
+    <string name="label_balAmt">शेष राशि *</string>
+    <string name="label_tenure">अवधि *</string>
+    <string name="label_ROI">ब्याज दर (%) *</string>
+    <string name="label_prospective">भावी</string>
+
+    <string name="label_Name">नाम *</string>
+    <string name="label_NameHead">किसान</string>
+
+    <string name="label_chooseFile">फ़ाइल चयन करें</string>
+    <string name="label_takePhoto">फोटो खींचे</string>
+    <string name="label_selectDate">तारीख़ चुनें</string>
+
+    <string name="farmercreatehead">किसान बनाएँ</string>
+    <string name="salutation">अभिवादन *</string>
+    <string name="firstnamehead">पहला नाम *</string>
+    <string name="middlenamehead">मध्य नाम</string>
+    <string name="lastnamehead">अंतिम नाम *</string>
+    <string name="mobilehead">मोबाइल# *</string>
+    <string name="emailhead">ईमेल आईडी</string>
+    <string name="athead">वैकल्पिक #</string>
+        
+    <string name="addresstype">पता *</string>
+        
+    <string name="districtwise">जिला </string>
+        
+    <string name="citywise">शहर </string>
+        
+    <string name="statehead">राज्य *</string>
+        
+    <string name="districthead">जिला *</string>
+        
+    <string name="blockhead">ब्लॉक *</string>
+        
+    <string name="panchayathead">पंचायत *</string>
+        
+    <string name="villagehead">ग्राम *</string>
+        
+    <string name="pincodehead">पिनकोड *</string>
+        
+    <string name="cityhead">शहर *</string>
+        
+    <string name="accounthead">खाता #</string>
+        
+    <string name="ifschead">आईएफएससी</string>
+        
+    <string name="street1head">लाइन 1 *</string>
+        
+    <string name="street2head">लाइन 2 </string>
+    <string name="farmer_photo">फोटो अपलोड करें *</string>
+    <string name="gender">लिंग *</string>        
+    <string name="male">पुरुष </string>        
+    <string name="female">महिला </string>        
+    <string name="farmertype">प्रकार *</string>        
+    <string name="edulevel">शिक्षा *</string>
+        
+    <string name="totalAcreage">कुल एकड़ *</string>
+        
+    <string name="save">सहेजें</string>
+        
+    <string name="fssaihead">एफएसएसएआई #</string>
+        
+    <string name="regdatehead">पंजीकरण की तारीख *</string>
+        
+    <string name="expdatehead">समाप्ति दिनांक *</string>
+        
+    <string name="fssai_doc">अपलोड एफएसएसएआई प्रूफ *</string>
+        
+    <string name="bank_pass_book">बैंक पास बुक अपलोड करें *</string>
+    <!--End of Farmer Creation-->
+
+    <!--Labels for Buttons-->
+    <string name="label_login">लॉगिन</string>
+        
+    <string name="label_logout">लॉगआउट</string>
+        
+    <string name="label_save">सहेजें</string>
+        
+    <string name="label_back">पीछे</string>
+        
+    <string name="label_add">जोड़ें</string>
+        
+    <string name="label_linkAdd">जोड़ें [+]</string>
+        
+    <string name="label_linkEdit">संपादित करें [+]</string>
+        
+    <string name="label_linkFarmBlock">[फार्म ब्लॉक]</string>
+        
+    <string name="label_linkPlantation">[वृक्षारोपण]</string>
+        
+    <string name="link_addInterCropping">[इंटर क्रॉपिंग जोड़ें]</string>
+        
+    <string name="link_InterCropping">[इंटर क्रॉपिंग]</string>
+        
+    <string name="label_changePassword">पासवर्ड बदलें</string>
+        
+    <string name="label_showPassword">पासवर्ड दिखाएँ</string>
+        
+    <string name="label_showAllPassword">सभी पासवर्ड दिखाएँ</string>
+        
+    <string name="label_forgotPassword">पासवर्ड भूल गए</string>
+        
+    <string name="label_userLogin">उपयोगकर्ता लॉगिन</string>
+
+    <!--Start of Hint Strings-->
+
+
+    <string name="hint_enterUsername">उपयोगकर्ता नाम दर्ज करें</string>
+        
+    <string name="hint_enterPassword">पासवर्ड दर्ज करें</string>
+        
+    <string name="hint_enterCurrentPassword">वर्तमान पासवर्ड दर्ज करें</string>
+        
+    <string name="hint_enterNewPassword">नया पासवर्ड दर्ज करें</string>
+        
+    <string name="hint_confirmPassword">पासवर्ड की पुष्टि करें</string>
+
+
+    <string name="hint_firstName">प्रथम नाम दर्ज करें </string>
+        
+    <string name="hint_middleName">मध्य नाम दर्ज करें </string>
+        
+    <string name="hint_lastName">अंतिम नाम दर्ज करें </string>
+        
+    <string name="hint_mobile">मोबाइल # दर्ज करें </string>
+    <string name="hint_addressStreet1">लाइन 1 दर्ज करें</string>
+        
+    <string name="hint_addressStreet2">पंक्ति 2 दर्ज करें</string>
+        
+    <string name="hint_accountNo">खाता # प्रविष्ट करें</string>
+
+
+    <string name="hint_area">क्षेत्र दर्ज करें (एकड़)</string>
+        
+    <string name="hint_nurintercroparea">क्षेत्र दर्ज करें (Sq.Ft.)</string>
+        
+    <string name="hint_date">दिनांक चुनें</string>
+        
+    <string name="hint_row">पंक्ति दर्ज करें</string>
+        
+    <string name="hint_column">खाना दर्ज करें</string>
+        
+    <string name="hint_balance">शेष राशि दर्ज करें</string>
+    <string name="hint_street1">लाइन 1 दर्ज करें</string>
+    <string name="hint_street2">लाइन 2 दर्ज करें</string>
+
+    <string name="hintsearch">खोज पाठ दर्ज करें</string>
+    <string name="hintaccountno">खाता संख्या दर्ज करें</string>
+    <string name="hintifsc">आईएफएससी कोड दर्ज करें</string>
+    <string name="hintfirstname">प्रथम नाम दर्ज करें</string>
+        
+    <string name="hintname">नाम दर्ज करें</string>
+        
+    <string name="hintmiddlename">मध्य नाम दर्ज करें</string>
+        
+    <string name="hintlastname">अंतिम नाम दर्ज करें</string>
+        
+    <string name="hintmobile">मोबाइल नंबर दर्ज करें</string>
+        
+    <string name="hintalternate">वैकल्पिक नंबर दर्ज करें</string>
+        
+    <string name="hintmail">ईमेल आईडी दर्ज करें</string>
+        
+    <string name="hintfssai">एफएसएसएआई दर्ज करें #</string>
+        
+    <string name="hintbirthdate">जन्म तिथि चुनें</string>
+        
+    <string name="hintregdate">पंजीकरण दिनांक दर्ज करें</string>
+        
+    <string name="hintexpirydate">समाप्ति तिथि दर्ज करें</string>
+        
+    <string name="hintTotalAcreage">कुल रकबा प्रविष्ट करें</string>
+        
+    <string name="hintLoanAmt">ऋण एएमटी दर्ज करें</string>
+        
+    <string name="hintBalAmt">बैलेंस एएमटी दर्ज करें</string>
+        
+    <string name="hintTenure">कार्यकाल दर्ज करें</string>
+        
+    <string name="hintROI">ब्याज दर दर्ज करें</string>
+        
+    <string name="hintassetnumbers">मात्रा दर्ज करें</string>
+        
+    <string name="hintsearchtext">खोज पाठ दर्ज करें</string>
+    <!--End of Hint Strings-->
+
+    <!--Start of Farm Block Strings-->
+    <string name="label_addFarmBlock">फार्म ब्लॉक जोड़ें</string>
+        
+    <string name="label_updateFarmBlock">फार्म ब्लॉक अपडेट करें</string>
+        
+    <string name="label_farmBlock">फार्म ब्लॉक</string>
+        
+    <string name="label_farmBlockOtherDetails">फार्म ब्लॉक - अन्य विवरण</string>
+        
+    <string name="label_farmBlockSoilDetails">फार्म ब्लॉक - मृदा विवरण</string>
+        
+    <string name="label_characteristicHeader">लक्षण / एचसीवीएफ विवरण</string>
+        
+    <string name="label_landIssueHeader">भूमि मुद्दे का विवरण</string>
+        
+    <string name="label_coordinatesHeader">जीपीएस विवरण प्राप्त करें</string>
+
+
+    <string name="label_crop">क्रॉप *</string>
+        
+    <string name="label_variety">विविधता *</string>
+        
+    <string name="label_season">मौसम *</string>
+        
+    <string name="label_area">क्षेत्र (एकड़) *</string>
+        
+    <string name="label_nurintercroparea">क्षेत्र (Sq.Ft.) *</string>
+
+    <string name="farmerName">किसान का नाम</string>
+        
+    <string name="ownershipType">स्वामित्व *</string>
+        
+    <string name="ownershipTypeDisplay">स्वामित्व</string>
+        
+    <string name="hintOwnershipType">स्वामित्व दर्ज करें</string>
+        
+    <string name="mobile">मोबाइल #</string>
+        
+    <string name="fpoCooperativeName">एफपीओ</string>
+        
+    <string name="landDetails">भूमि विवरण</string>
+        
+    <string name="khata">खाता # *</string>
+        
+    <string name="khasra">खसरा # *</string>
+        
+    <string name="khataDisplay">खाता #</string>
+        
+    <string name="khasraDisplay">खसरा #</string>
+        
+    <string name="landIssue">भूमि का मुद्दा</string>
+        
+    <string name="contractDate">अनुबंध की तारीख</string>
+        
+    <string name="area">क्षेत्र (एकड़) *</string>
+        
+    <string name="contractDateDisplay">अनुबंध की तिथि</string>
+        
+    <string name="areaDisplay">क्षेत्र (एकड़)</string>
+        
+    <string name="hintKhata">खटा प्रविष्ट करें</string>
+        
+    <string name="hintKhasra">खसरा # दर्ज करें</string>
+        
+    <string name="hintContractDate">अनुबंध दिनांक दर्ज करें</string>
+        
+    <string name="hintArea">क्षेत्र दर्ज करें (एकड़)</string>
+        
+    <string name="address">पता विवरण</string>
+
+    <string name="soilDetails">मिट्टी का विवरण</string>
+    <string name="soilType">मिट्टी का प्रकार *</string>
+    <string name="soilTypeDisplay">मिट्टी का प्रकार</string>
+    <string name="nitrogen">नाइट्रोजन (kg/ha)</string>
+    <string name="organicCarbon">जैविक कार्बन (%)</string>
+    <string name="mSLElevation">एमएसएल ऊंचाई</string>
+    <string name="potash">पोटाश (kg/ha)</string>
+    <string name="magnesium">मैग्निशियम(kg/ha)</string>
+    <string name="pHChemical">पीएच (Chemical)</string>
+    <string name="phosphorous">फ़ास्फ़रोस (kg/ha)</string>
+    <string name="calcium">कैल्शियम (kg/ha)</string>
+
+    <string name="hintNitrogen">नाइट्रोजन दर्ज करें (kg/ha)</string>
+    <string name="hintOrganicCarbon">जैविक कार्बन (%) दर्ज करें</string>
+    <string name="hintMSLElevation">एमएसएल ऊंचाई दर्ज करें</string>
+    <string name="hintPotash">पोटाश दर्ज करें (kg/ha)</string>
+    <string name="hintMagnesium">मैग्निशियम दर्ज करें (kg/ha)</string>
+    <string name="hintPHChemical">पीएच दर्ज करें (Chemical)</string>
+    <string name="hintPhosphorous">फ़ास्फ़रोस दर्ज करें (kg/ha)</string>
+    <string name="hintCalcium">कैल्शियम दर्ज करें (kg/ha)</string>
+
+
+    <string name="otherDetails">अन्य विवरण</string>
+        
+    <string name="existingLandUse">मौजूदा भूमि उपयोग *</string>
+        
+    <string name="communityUse">सामुदायिक उपयोग *</string>
+        
+    <string name="existingHazard">मौजूदा ख़तरा *</string>
+        
+    <string name="nearestRiver">निकटतम नदी *</string>
+        
+    <string name="nearestDam">निकटतम बांध *</string>
+        
+    <string name="irrigationSystem">सिंचाई प्रणाली *</string>
+        
+    <string name="overheadTrans">ओवरहेड ट्रांस</string>
+        
+    <string name="anyLegalDispute">कोई कानूनी विवाद *</string>
+        
+    <string name="waterSource">जल स्रोत *</string>
+        
+    <string name="electricitySource">विद्युत स्रोत *</string>
+        
+    <string name="dripperSpacing">ड्रिपर स्पेसिंग</string>
+        
+    <string name="dischargeRate">डिस्चार्ज रेट (L/Hr)</string>
+        
+    <string name="hintDripperSpacing">ड्रिप्पर स्पेसिंग दर्ज करें</string>
+        
+    <string name="ownerName">स्वामी का नाम *</string>
+        
+    <string name="ownerNameDisplay">स्वामी का नाम</string>
+        
+    <string name="enterOwnerName">स्वामी का नाम दर्ज करें</string>
+        
+    <string name="hintDischargeRate">डिस्चार्ज रेट (L / Hr) दर्ज करें</string>
+
+    <string name="NA">NA</string>
+    <string name="LT">LT</string>
+    <string name="HT">HT</string>
+    <string name="existingLandUseDisplay">मौजूदा भूमि उपयोग</string>
+    <string name="communityUseDisplay">सामुदायिक उपयोग</string>
+    <string name="existingHazardDisplay">मौजूदा ख़तरा</string>
+    <string name="nearestRiverDisplay">निकटतम नदी</string>
+    <string name="nearestDamDisplay">निकटतम बांध</string>
+    <string name="irrigationSystemDisplay">सिंचाई प्रणाली</string>
+    <string name="anyLegalDisputeDisplay">कोई कानूनी विवाद</string>
+    <string name="waterSourceDisplay">जल स्रोत</string>
+    <string name="electricitySourceDisplay">विद्युत स्रोत</string>
+    <string name="dripperSpacingDisplay">ड्रिप्पर स्पेसिंग</string>
+    <string name="dischargeRateDisplay">डिस्चार्ज रेट (L/Hr)</string>
+
+    <string name="characteristicsHcvf">लक्षण / एचसीवीएफ विवरण</string>
+    <string name="croppingPattern">Cropping Pattern Details</string>
+    <string name="crop">फ़सल</string>
+    <string name="variety">क़िस्म</string>
+    <string name="type">प्रकार</string>
+    <string name="monthage">Monthage</string>
+    <string name="label_areaName">क्षेत्र (एकड़)</string>
+    <string name="label_nurseryareaName">क्षेत्र (Sq.Ft.)</string>
+    <string name="label_Date">Date</string>
+    <string name="label_System">System</string>
+    <string name="label_Row">पंक्ति</string>
+    <string name="label_Column">खाना</string>
+    <string name="label_Balance">शेष</string>
+    <string name="label_Total">कुल</string>
+    <string name="areaAcre">क्षेत्र (एकड़) *</string>
+    <string name="areaAcreDisplay">क्षेत्र (एकड़)</string>
+    <string name="hintAreaAcre">क्षेत्र (एकड़) दर्ज करें</string>
+    <string name="season">मौसम</string>
+
+    <string name="fetchGpsDetails">जीपीएस विवरण प्राप्त करें</string>
+    <string name="gpsDetails">जीपीएस विवरण</string>
+    <string name="latitude">अक्षांश</string>
+    <string name="longitude">देशान्तर</string>
+    <string name="back">वापस</string>
+    <string name="fetchGps">जीपीएस प्राप्त करें</string>
+
+    <string name="viewFarmBlock">फार्म ब्लॉक देखें</string>
+    <string name="update">अद्यतन करें</string>
+    <string name="farmBlockCroppingPattern">फार्म ब्लॉक - Cropping Pattern</string>
+    <string name="label_farmBlockCharacteristics">फार्म ब्लॉक - लक्षण / एचसीवीएफ विवरण</string>
+    <string name="label_farmBlockLand">फार्म ब्लॉक - Land Issue</string>
+    <string name="label_farmBlockGPS">फार्म ब्लॉक - GPS</string>
+    <!--End of Farm Block Strings-->
+
+    <!-- Plantation Details -->
+    <string name="datalabel_crop">फ़सल</string>
+    <string name="datalabel_variety">क़िस्म</string>
+    <string name="datalabel_season">मौसम</string>
+    <string name="datalabel_monthAge">Month Age</string>
+    <string name="datalabel_area">क्षेत्र (एकड़)</string>
+    <string name="datalabel_date">दिनांक</string>
+    <string name="datalabel_system">प्रणाली</string>
+    <string name="datalabel_row">पंक्ति</string>
+    <string name="datalabel_column">खाना</string>
+    <string name="datalabel_balance">शेष</string>
+    <string name="datalabel_total">कुल</string>
+    <string name="label_plantationList">वृक्षारोपण सूची</string>
+    <string name="label_plannedactlist">नियोजित गतिविधि सूची</string>
+    <string name="label_recdactlist">अनुशंसित गतिविधि सूची</string>
+
+    <string name="datalabel_cropHead">फ़सल *</string>
+    <string name="datalabel_varietyHead">क़िस्म *</string>
+    <string name="datalabel_seasonHead">मौसम *</string>
+    <string name="datalabel_monthAgeHead">Month Age *</string>
+    <string name="datalabel_areaHead">क्षेत्र (एकड़) *</string>
+    <string name="datalabel_nurseryareaHead">क्षेत्र (Sq.Ft.) *</string>
+    <string name="datalabel_dateHead">दिनांक *</string>
+    <string name="datalabel_systemHead">प्रणाली *</string>
+    <string name="datalabel_rowHead">पंक्ति *</string>
+    <string name="datalabel_columnHead">खाना *</string>
+    <string name="datalabel_balanceHead">शेष</string>
+    <string name="datalabel_totalHead">कुल *</string>
+
+    <string name="menu_home">होम</string>
+    <string name="menu_logout">लोग आउट</string>
+    <string name="label_khata_khasra">खाता / खसरा</string>
+
+
+    <!-- Reporting Label Details -->
+    <string name="label_Farmer">किसान *</string>
+        
+    <string name="label_FarmBlock">फार्म ब्लॉक *</string>
+        
+    <string name="label_Activity">गतिविधि *</string>
+        
+    <string name="label_Qty">मात्रा *</string>
+        
+    <string name="label_SubActivity">उप गतिविधि</string>
+        
+    <string name="label_Remarks">टिप्पणी</string>
+        
+    <string name="label_FarmBlockReporting">फार्म ब्लॉक रिपोर्टिंग</string>
+        
+    <string name="label_selectPlantation">वृक्षारोपण का चयन करें</string>
+        
+    <string name="label_plannedActivity">नियोजित गतिविधि</string>
+        
+    <string name="label_recActivity">अनुशंसित गतिविधि</string>
+        
+    <string name="label_unplActivity">अनियोजित गतिविधि</string>
+        
+    <string name="label_SearchFarmer">किसान खोजें</string>
+        
+    <string name="label_Plantation">वृक्षारोपण</string>
+    <string name="label_viewReport">रिपोर्ट देखें</string>
+        
+    <string name="label_Search">जाओ</string>
+        
+    <string name="label_unplannedactlist">अनियोजित गतिविधि सूची</string>
+        
+    <string name="viewReport">फार्म ब्लॉक गतिविधि रिपोर्ट देखें</string>
+        
+    <string name="viewnurseryReport">नर्सरी गतिविधि रिपोर्ट देखें</string>
+        
+    <string name="datalabel_VisitDate">दिनांक</string>
+        
+    <string name="label_ReportHeader">रिपोर्ट किए गए क्रियाएँ</string>
+        
+    <string name="label_PlannedHeader">नियोजित गतिविधि विवरण</string>
+        
+    <string name="label_RecommendedHeader">अनुशंसित गतिविधि विवरण</string>
+        
+    <string name="label_UnPlannedHeader">अनियोजित विवरण</string>
+
+
+    <!--Start of Menu Strings-->
+
+    <string name="menu_createFarmer">बनाएं</string>
+        
+    <string name="menu_viewFarmer">देखें</string>
+    <string name="menu_booking">बुकिंग</string>
+    <string name="menu_dispatch">डिस्पैच</string>
+    <string name="menu_delivery">डिलिवरी</string>
+    <string name="menu_stockReturn">वापसी</string>
+    <string name="menu_farmActivity">गतिविधि</string>
+    <string name="menu_Nursery">नर्सरी</string>
+    <string name="menu_visitReports">विज़िट</string>
+    <string name="menu_recommendation">अनुशंसा</string>
+    <string name="menu_jobcardconfirmation">पुष्टि करें</string>
+    <string name="menu_dashboards">रिपोर्ट करें</string>
+    <string name="menu_sync">सिंक करें</string>
+    <!--End of Menu Strings-->
+
+    <!--Nursery - Zone Strings-->
+    <string name="datalabel_nurseryType">प्रकार</string>
+    <string name="datalabel_nurseryName">नाम</string>
+    <string name="datalabel_nurseryFullName">नर्सरी का नाम</string>
+    <string name="datalabel_zone">ज़ोन</string>
+    <string name="label_addNurseryPlantation">नर्सरी वृक्षारोपण जोड़ें</string>
+    <string name="label_updateNurseryPlantation">नर्सरी वृक्षारोपण अद्यतन करें</string>
+    <string name="label_viewNurseryPlantation">नर्सरी वृक्षारोपण देखें</string>
+    <string name="label_NurseryGPS">नर्सरी - जीपीएस</string>
+    <string name="label_NurseryZoneGPS">नर्सरी - जोन - जीपीएस</string>
+    <string name="datalabel_NurseryMandatory">नर्सरी *</string>
+    <string name="datalabel_NurseryZone">जोन</string>
+    <string name="datalabel_Nursery">नर्सरी</string>
+    <string name="label_viewNursery">नर्सरी देखें</string>
+    <string name="label_linkZone">[ जोन ]</string>
+    <string name="datalabel_ConactPerson">संपर्क व्यक्ति</string>
+    <string name="label_NurseryDetails">नर्सरी विवरण</string>
+    <string name="datalabel_RegistryDate">रजिस्ट्री तिथि</string>
+    <string name="datalabel_OffPremises">कार्यालय प्रांगण</string>
+    <string name="datalabel_Mobile1">मोबाइल1#</string>
+    <string name="datalabel_Mobile2">मोबाइल2#</string>
+    <string name="datalabel_mininurseryDetails">मिनी नर्सरी विवरण</string>
+    <string name="label_gstno">जीएसटी नंबर</string>
+    <string name="label_gstdate">जीएसटी तिथि</string>
+    <string name="label_ownwer">मालिक का नाम</string>
+    <string name="label_loginid">लॉगिन आईडी</string>
+    <string name="label_contactNo">संपर्क नंबर</string>
+    <string name="label_registrationDetails">पंजीकरण के विवरण</string>
+    <string name="datalabel_CertifiedBy">द्वारा प्रमाणित</string>
+    <string name="datalabel_RegistrationNo">पंजीकरण क्रमांक</string>
+    <string name="label_AssociateMainNur">मुख्य नर्सरी के साथ संबद्ध</string>
+    <string name="label_viewNurseryZone">नर्सरी ज़ोन</string>
+    <string name="label_NurseryZoneDetails">नर्सरी ज़ोन विवरण</string>
+    <string name="label_areaSq">क्षेत्र (Sq.Ft.)</string>
+    <string name="viewNurseryZone">नर्सरी जोन देखें</string>
+    <string name="accountDetail">खाता विवरण</string>
+    <!--End of Nursery - Zone Strings-->
+
+    <!--Start of Routine Visit Strings-->
+    <string name="createVisit">विज़िट बनाएं</string>
+    <string name="visit">विज़िट</string>
+    <string name="visitFarmBlock">फार्म ब्लॉक विज़िट रिपोर्ट</string>
+    <string name="visitNursery">नर्सरी विज़िट रिपोर्ट</string>
+    <string name="farmer">Farmer *</string>
+    <string name="farmBlock">फार्म ब्लॉक *</string>
+    <string name="plantationDetails">वृक्षारोपण विवरण</string>
+    <string name="selectPlantation">वृक्षारोपण का चयन करें</string>
+    <string name="visitFarmBlockDetails">फार्म ब्लॉक विज़िट विवरण</string>
+    <string name="visitNurseryDetails">नर्सरी विज़िट विवरण</string>
+    <string name="avgHeightOfPlant">औसत पौधे की ऊँचाई (मीटर) *</string>
+    <string name="avgHeightPlant">औसत पौधे की ऊँचाई (मीटर)</string>
+    <string name="hintAvgHeightOfPlant">औसत पौधे की ऊँचाई (मीटर)</string>
+    <string name="plantStatus">पौधे की स्थिति *</string>
+    <string name="plantStatusDisplay">पौधे की स्थिति</string>
+    <string name="agronomistVisitRecmd">कृषिविशेषज्ञ यात्रा अनुशंसा</string>
+    <string name="hintAgronomistVisitRecmd">दिनों की संख्या दर्ज करें</string>
+    <string name="plantation">वृक्षारोपण</string>
+    <string name="visitDate">यात्रा तिथि</string>
+    <string name="observationDetails">निरीक्षण का विवरण</string>
+    <string name="addObservationDetails">निरीक्षण के विवरण जोड़ें</string>
+    <string name="defectDiseasesName">दोष / रोग नाम *</string>
+    <string name="defectDiseasesDisplay">दोष / रोग नाम</string>
+    <string name="remarks">रिमार्क्स *</string>
+    <string name="remarkDisplay">रिमार्क्स</string>
+    <string name="hintRemarks">रिमार्क्स दर्ज करें</string>
+    <string name="uploadPhoto">फोटो अपलोड करें</string>
+    <string name="main">मुख्य</string>
+    <string name="mini">मिनी</string>
+    <string name="zone">ज़ोन *</string>
+    <string name="selectFarmBlock">फार्म ब्लॉक का चयन करें</string>
+    <string name="selectNursery">नर्सरी का चयन करें</string>
+    <string name="selectType">प्रकार का चयन करें</string>
+    <!--End of Routine Visit Strings-->
+
+    <!--Recommendation Strings-->
+
+    <string name="createRecommendation">अनुशंसा बनाएं</string>
+    <string name="recommendation">अनुशंसा</string>
+    <string name="recommendationFarmBlock">फार्म ब्लॉक अनुशंसा रिपोर्ट</string>
+    <string name="recommendationNursery">नर्सरी अनुशंसा रिपोर्ट</string>
+    <string name="viewFarmBlockRecommendation">फार्म ब्लॉक अनुशंसा देखें</string>
+    <string name="viewNurseryRecommendation">नर्सरी अनुशंसा देखें</string>
+    <string name="addRecommendedActivity">अनुशंसित गतिविधि जोड़ें</string>
+    <string name="recommendationDetails">अनुशंसा विवरण</string>
+    <string name="recommendationList">अनुशंसा सूची</string>
+    <string name="week">सप्ताह # *</string>
+    <string name="enterWeek">सप्ताह दर्ज करें</string>
+    <string name="planedQuantity">नियोजित मात्रा</string>
+    <!--End of Recommendation Strings-->
+
+    <!--Job Card Pending for confirmation Strings-->
+    <string name="label_FarmBlockJobCardPending">फार्म ब्लॉक लंबित पुष्टिकरण</string>
+        
+    <string name="label_FBJobCardConfirmation">फार्म ब्लॉक रिपोर्टिंग पुष्टिकरण</string>
+        
+    <string name="label_NurJobCardConfirmation">नर्सरी रिपोर्टिंग पुष्टिकरण</string>
+        
+    <string name="label_PCReportingActivies">रिपोर्टिंग क्रियाकलापों की लंबित पुष्टि</string>
+        
+    <string name="label_ReportingDetails">रिपोर्टिंग विवरण</string>
+        
+    <string name="label_PendingJobCard">लंबित रिपोर्टिंग क्रियाएँ</string>
+    <!--End of Job Card Pending for confirmation Strings-->
+</resources>

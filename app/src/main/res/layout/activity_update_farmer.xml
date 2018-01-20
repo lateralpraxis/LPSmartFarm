@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.farmer.ActivityUpdateFarmer">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        style="@style/style_topBar1"
+        android:textAllCaps="true"
+        android:text="@string/label_updateFarmer" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/style_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvFarmerUniqueId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvFarmerCodeHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_Code" />
+
+                    <TextView
+                        android:id="@+id/tvFarmerCode"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:inputType="none"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvFarmerLanguage"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/label_languageHead" />
+
+                    <TextView
+                        android:id="@+id/tvLanguage"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:inputType="none"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/style_sectionHead"
+                    android:text="@string/label_farmerName" />
+
+                <!-- Farmer Name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvFarmerName"
+                        style="@style/style_dataLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llAttachPhoto"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="3dp">
+
+                    <TextView
+                        style="@style/style_sectionHead"
+                        android:text="@string/label_farmerPhoto" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:paddingBottom="2dp"
+                        android:weightSum="1">
+
+                        <TextView
+                            android:id="@+id/tvFarmerImage"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="8dip"
+                            android:layout_weight="0.8"
+                            android:text="@string/app_name"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/btnViewPhoto"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.2"
+                            android:background="@android:color/transparent"
+                            android:drawableEnd="@mipmap/ic_attach"
+                            android:drawableRight="@mipmap/ic_attach"
+                            android:textColor="@color/colorWhite"
+                            android:visibility="gone" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            style="@style/style_sectionHead"
+                            android:text="@string/datalabel_fatherName" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvFatherName"
+                        style="@style/style_dataLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvGender"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/label_gender" />
+
+                    <TextView
+                        android:id="@+id/tvGenderName"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:inputType="none"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvBirthDateHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/label_birthdate" />
+
+                    <TextView
+                        android:id="@+id/tvBirthDate"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:inputType="none"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvBirthAddressHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/label_address" />
+
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        style="@style/style_dataField"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.7"
+                        android:inputType="none"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvEducationHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/edulevel" />
+
+                    <Spinner
+                        android:id="@+id/spEducationLevel"
+                        style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:paddingLeft="5dp"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvFarmerTypeHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_Type" />
+
+                    <TextView
+                        android:id="@+id/tvFarmerType"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:inputType="none"
+                        android:text="@string/app_name" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvTotalAcreageHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/totalAcreage" />
+
+                    <EditText
+                        android:id="@+id/etTotalAcreage"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:hint="@string/hintTotalAcreage"
+                        android:inputType="number"
+                        android:maxLength="12"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/colorBlack"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/style_sectionHead"
+                    android:text="@string/label_contactDetails" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvEmailHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/emailhead" />
+
+                    <EditText
+                        android:id="@+id/etMail"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:hint="@string/hintmail"
+                        android:inputType="textWebEmailAddress"
+                        android:maxLength="50"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/colorBlack"
+                        tools:ignore="RtlSymmetry" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvMobileHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/label_mobilehead" />
+
+                    <TextView
+                        android:id="@+id/tvMobile"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:text="@string/label_mobilehead" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvAlternateHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/athead" />
+
+                    <EditText
+                        android:id="@+id/etAlternate1"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:digits="0123456789+"
+                        android:hint="@string/hintalternate"
+                        android:inputType="phone"
+                        android:maxLength="13"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvAlternateHead"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/athead" />
+
+                    <EditText
+                        android:id="@+id/etAlternate2"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:digits="0123456789+"
+                        android:hint="@string/hintalternate"
+                        android:inputType="phone"
+                        android:maxLength="13"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <TextView
+                    style="@style/style_sectionHead"
+                    android:text="@string/label_bankDetails" />
+
+                <LinearLayout
+                    android:id="@+id/llAccount"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:visibility="visible"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvAccountHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/accounthead" />
+
+                    <EditText
+                        android:id="@+id/etAccount"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:digits="0123456789"
+                        android:hint="@string/hintaccountno"
+                        android:inputType="number"
+                        android:maxLength="35"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBank"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvIFSC"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/ifschead" />
+
+                    <EditText
+                        android:id="@+id/etIFSC"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+                        android:hint="@string/hintifsc"
+                        android:inputType="textCapCharacters"
+                        android:maxLength="15"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llBankAttach"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="3dp">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dip"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvBankPassBook"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/bank_pass_book"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dip"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/btnUpload"
+                            style="@style/style_nextButton"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:width="100sp"
+                            android:text="@string/label_chooseFile"
+                            android:textColor="@color/colorWhite"
+                            tools:ignore="RtlHardcoded" />
+
+                        <TextView
+                            android:id="@+id/tvPassBookImage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dip"
+                            android:layout_toEndOf="@+id/btnUpload"
+                            android:layout_toRightOf="@+id/btnUpload"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/btnViewAttach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@android:color/transparent"
+                            android:drawableEnd="@mipmap/ic_attach"
+                            android:drawableRight="@mipmap/ic_attach"
+                            android:textColor="@color/colorWhite"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <TextView
+                    style="@style/style_sectionHead"
+                    android:text="@string/label_fssaiDetail" />
+
+                <LinearLayout
+                    android:id="@+id/llFSSAIHead"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:visibility="visible"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvFSSAIHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:text="@string/fssaihead" />
+
+                    <EditText
+                        android:id="@+id/etFSSAI"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:digits="0123456789"
+                        android:hint="@string/hintfssai"
+                        android:inputType="number"
+                        android:maxLength="14"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llRegDate"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvFSSAIRegHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:text="@string/regdatehead" />
+
+                    <EditText
+                        android:id="@+id/etFSSAIRegDate"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:focusable="false"
+                        android:hint="@string/hintregdate"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llExpDate"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvFSSAIExpHeader"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_weight="0.3"
+                        android:text="@string/expdatehead" />
+
+                    <EditText
+                        android:id="@+id/etFSSAIExpDate"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:focusable="false"
+                        android:hint="@string/hintexpirydate"
+                        android:paddingLeft="5dp"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llFSSAIAttach"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="3dp">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dip"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvFSSAIDocument"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/fssai_doc"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dip"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/btnFSSAIUpload"
+                            style="@style/style_nextButton"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_marginTop="5dp"
+                            android:width="100sp"
+                            android:text="@string/label_chooseFile"
+                            android:textColor="@color/colorWhite"
+                            tools:ignore="RtlHardcoded" />
+
+                        <TextView
+                            android:id="@+id/tvFSSAIImage"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dip"
+                            android:layout_toEndOf="@+id/btnFSSAIUpload"
+                            android:layout_toRightOf="@+id/btnFSSAIUpload"
+                            android:textColor="@color/colorBlack"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/btnViewFSSAIAttach"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_alignParentTop="true"
+                            android:background="@android:color/transparent"
+                            android:drawableEnd="@mipmap/ic_attach"
+                            android:drawableRight="@mipmap/ic_attach"
+                            android:textColor="@color/colorWhite"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llNext"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="3dp">
+
+                    <Button
+                        android:id="@+id/btnSave"
+                        style="@style/style_nextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_margin="1sp"
+                        android:paddingBottom="5sp"
+                        android:paddingLeft="10sp"
+                        android:paddingRight="10sp"
+                        android:paddingTop="5sp"
+                        android:text="@string/datalabel_Next"
+                        android:textColor="@android:color/white" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

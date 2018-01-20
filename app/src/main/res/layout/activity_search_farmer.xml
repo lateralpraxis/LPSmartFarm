@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.farmreporting.SearchFarmer">
+    <TextView
+        style="@style/style_topBar1"
+        android:text="@string/label_SearchFarmer"
+        android:textAllCaps="true" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:weightSum="1">
+        <EditText
+            android:id="@+id/etSearchText"
+            style="@style/style_dataField"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
+            android:hint="@string/hintsearchtext"
+            android:inputType="text"
+            android:maxLength="10"
+            android:paddingLeft="4dp"
+            android:textColor="@color/colorBlack" />
+        <Button
+            android:id="@+id/btnSearch"
+            style="@style/style_nextButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:width="100sp"
+            android:text="@string/label_Search"
+            android:textColor="@color/colorWhite"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/datalabel_NoRecord"
+        android:textColor="@color/colorBlack" />
+    <ListView
+        android:id="@+id/listSelectFarmer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dip"
+        android:descendantFocusability="afterDescendants"
+        android:divider="@color/colorGold"
+        android:dividerHeight="2sp"
+        android:fadeScrollbars="false"
+        android:focusable="false"
+        tools:ignore="RtlHardcoded,NestedScrolling" >
+    </ListView>
+</LinearLayout>

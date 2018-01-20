@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:fillViewport="true"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.farmblock.ActivityAddPlantation">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/style_topBar1"
+            android:text="@string/label_addPlantation"
+            android:textAllCaps="true" />
+
+        <LinearLayout
+            style="@style/style_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!--<TextView
+                style="@style/style_sectionHead"
+                android:text="@string/label_farmerName"
+                android:textAllCaps="true" />-->
+
+            <!-- Farmer Data -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Farmer Name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_fullName" />
+
+                    <TextView
+                        android:id="@+id/tvFarmerName"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7" />
+
+                </LinearLayout>
+
+                <!-- Farmer Mobile -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_mobile" />
+
+                    <TextView
+                        android:id="@+id/tvFarmerMobile"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7" />
+                </LinearLayout>
+
+                <!-- Farmer Farm Block -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_farmBlockCode" />
+
+                    <TextView
+                        android:id="@+id/tvFarmBlockCode"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/style_sectionHead"
+                android:text="@string/label_plantation"
+                android:textAllCaps="true" />
+
+            <!-- Plantation details -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Crop -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_cropHead" />
+
+                    <Spinner
+                        android:id="@+id/spPlantationCrop"
+                        style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7" />
+
+                </LinearLayout>
+
+                <!-- Variety -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_varietyHead" />
+
+                    <Spinner
+                        android:id="@+id/spPlantationVariety"
+                        style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7" />
+
+                </LinearLayout>
+
+                <!-- Type -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_TypeHead" />
+
+                    <Spinner
+                        android:id="@+id/spPlantationType"
+                        style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7" />
+
+                </LinearLayout>
+
+                <!-- Month Age -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_monthAgeHead" />
+
+                    <Spinner
+                        android:id="@+id/spPlantationMonthAge"
+                        style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7" />
+
+                </LinearLayout>
+
+                <!-- Area -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_areaHead" />
+
+                    <EditText
+                        android:id="@+id/etPlantationArea"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:hint="@string/hint_area"
+                        android:inputType="numberDecimal"
+                        android:maxLength="8" />
+
+                </LinearLayout>
+
+                <!-- Date -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_dateHead" />
+                    <EditText
+                        android:id="@+id/etPlantationDate"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:hint="@string/hint_date"
+                        android:focusable="false"
+                        android:layout_weight="0.7"
+                        tools:ignore="TextFields" />
+                    <!--<TextView
+                        android:id="@+id/tvPlantationDate"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6" />
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="0.1"
+                        android:contentDescription="@string/label_selectDate"
+                        android:gravity="center"
+                        android:onClick="setDate"
+                        android:src="@drawable/ic_calendar" />-->
+
+                </LinearLayout>
+
+                <!-- System -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_systemHead" />
+
+                    <Spinner
+                        android:id="@+id/spPlantationSystem"
+                        style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7" />
+
+                </LinearLayout>
+
+                <!-- Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_rowHead" />
+
+                    <EditText
+                        android:id="@+id/etPlantationRow"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:hint="@string/hint_row"
+                        android:inputType="number"
+                        android:maxLength="3" />
+
+                </LinearLayout>
+
+                <!-- Column -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_columnHead" />
+
+                    <EditText
+                        android:id="@+id/etPlantationColumn"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:hint="@string/hint_column"
+                        android:inputType="number"
+                        android:maxLength="3" />
+
+                </LinearLayout>
+
+                <!-- Balance -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_balanceHead" />
+
+                    <EditText
+                        android:id="@+id/etPlantationBalance"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:hint="@string/hint_balance"
+                        android:inputType="number"
+                        android:maxLength="3" />
+
+                </LinearLayout>
+
+                <!-- Total -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/datalabel_totalHead" />
+
+                    <TextView
+                        android:id="@+id/tvPlantationTotal"
+                        style="@style/style_dataField"
+                        android:inputType="none"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:maxLength="6" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- Back / Save Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="1"
+                tools:ignore="RtlHardcoded">
+
+                <!-- Button Back -->
+                <Button
+                    android:id="@+id/btnBack"
+                    style="@style/style_backButton"
+                    android:layout_weight="0.5"
+                    android:text="@string/label_back" />
+
+                <!-- Button Save -->
+                <Button
+                    android:id="@+id/btnSave"
+                    style="@style/style_nextButton"
+                    android:layout_weight="0.5"
+                    android:text="@string/label_save" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

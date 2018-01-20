@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/style_topBar1"
+        android:textAlignment="center"
+        android:text="@string/appDesc" />
+
+    <LinearLayout
+        style="@style/style_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/activity_bottom_margin"
+                android:layout_marginTop="@dimen/activity_bottom_margin"
+                android:contentDescription="@string/app_name"
+                android:gravity="center"
+                android:src="@drawable/ic_farmart_logo" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/style_sectionHead"
+            android:text="@string/label_userLogin"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/etUsername"
+            style="@style/style_dataField"
+            android:hint="@string/hint_enterUsername"
+            android:inputType="text"
+            android:maxLength="50" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            style="@style/style_dataField"
+            android:hint="@string/hint_enterPassword"
+            android:inputType="textPassword" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/style_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        tools:ignore="DisableBaselineAlignment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/linkForgotPassword"
+                style="@style/style_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:clickable="true"
+                android:visibility="gone"
+                android:linksClickable="true"
+                android:text="@string/label_forgotPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="right"
+            tools:ignore="RtlHardcoded">
+
+            <CheckBox
+                android:id="@+id/ckShowPass"
+                style="Widget.AppCompat.CompoundButton.CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:focusable="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_showPassword"
+                android:textColor="@color/colorBlack" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="RtlHardcoded">
+
+        <Button
+            android:id="@+id/btnLogin"
+            style="@style/style_nextButton"
+            android:text="@string/label_login" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dip"
+            android:background="@color/colorBlack"
+            android:gravity="center_horizontal|bottom"
+            android:text="@string/credits"
+            android:textColor="@color/colorWhite"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            tools:ignore="SpUsage" />
+
+    </RelativeLayout>
+
+</LinearLayout>

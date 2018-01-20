@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.farmreporting.FarmReportDetail">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        style="@style/style_topBar1"
+        android:text="@string/label_ReportHeader"
+        android:textAllCaps="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/style_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/tvDateHead"
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/datalabel_VisitDate" />
+
+                <TextView
+                    android:id="@+id/tvDate"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/app_name" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/tvCodeHead"
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/datalabel_farmBlockCode" />
+
+                <TextView
+                    android:id="@+id/tvFBCode"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/app_name" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/tvPlantationHead"
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/label_Plantation" />
+
+                <TextView
+                    android:id="@+id/tvPlantation"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/app_name" />
+
+            </LinearLayout>
+            <TextView
+                style="@style/style_sectionHead"
+                android:text="@string/label_PlannedHeader" />
+
+            <RelativeLayout
+
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvPlannedEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/datalabel_NoRecord"
+                    android:textColor="@color/colorBlack" />
+
+
+                <lateralpraxis.lpsmartfarm.NonScrollableListView
+                    android:id="@+id/lvPlannedList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/colorGold"
+                    android:dividerHeight="1sp"
+                    android:paddingLeft="2sp"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+                <View
+                    android:id="@+id/tvDividerPlanned"
+                    android:layout_below="@+id/lvPlannedList"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorGold" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/style_sectionHead"
+                android:text="@string/label_RecommendedHeader" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvRecommendedEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/datalabel_NoRecord"
+                    android:textColor="@color/colorBlack" />
+
+
+                <lateralpraxis.lpsmartfarm.NonScrollableListView
+                    android:id="@+id/lvRecommendedList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/colorGold"
+                    android:dividerHeight="1sp"
+                    android:paddingLeft="2sp"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+                <View
+                    android:id="@+id/tvDividerRecommended"
+                    android:layout_below="@+id/lvRecommendedList"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorGold" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/style_sectionHead"
+                android:text="@string/label_UnPlannedHeader" />
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvUnplannedEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/datalabel_NoRecord"
+                    android:textColor="@color/colorBlack" />
+
+
+                <lateralpraxis.lpsmartfarm.NonScrollableListView
+                    android:id="@+id/lvUnPlannedList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@color/colorGold"
+                    android:dividerHeight="1sp"
+                    android:paddingLeft="2sp"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+                <View
+                    android:id="@+id/tvDividerUnplanned"
+                    android:layout_below="@+id/lvUnPlannedList"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorGold" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.farmblock.FarmBlockList">
+
+    <TextView
+        style="@style/style_topBar1"
+        android:text="@string/viewFarmBlock"
+        android:textAllCaps="true" />
+
+    <RelativeLayout
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/linkFarmBlock"
+            style="@style/style_link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:autoLink="all"
+            android:clickable="true"
+            android:linksClickable="true"
+            android:text="@string/label_linkAdd" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llFarmerData"
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/style_dataLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="@string/datalabel_farmerCode" />
+
+            <TextView
+                android:id="@+id/tvFarmerCode"
+                style="@style/style_dataField"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:inputType="none"
+                android:text="@string/datalabel_farmerCode" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/style_dataLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="@string/datalabel_farmerName" />
+
+            <TextView
+                android:id="@+id/tvFarmer"
+                style="@style/style_dataField"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:inputType="none"
+                android:text="@string/datalabel_farmerName" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/style_sectionHead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/datalabel_farmBlockList"/>
+
+        <TextView
+            android:id="@+id/tvEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="@string/datalabel_NoRecord"
+            android:textColor="@color/colorBlack" />
+
+        <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="afterDescendants"
+            android:divider="@color/colorGold"
+            android:dividerHeight="1sp"
+            android:fadeScrollbars="false"
+            android:focusable="false"
+            tools:ignore="RtlHardcoded,NestedScrolling" />
+        <View
+            android:id="@+id/tvDivider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGold" />
+    </LinearLayout>
+
+</LinearLayout>

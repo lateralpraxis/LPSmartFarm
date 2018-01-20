@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/style_topBar1"
+        android:text="@string/addObservationDetails"
+        android:textAllCaps="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:text="@string/defectDiseasesName" />
+
+                <Spinner
+                    android:id="@+id/spDefect"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                    android:layout_weight="0.6"
+                    android:paddingLeft="5dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:text="@string/remarks" />
+
+
+                <EditText
+                    android:id="@+id/etRemarks"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.6"
+                    android:gravity="top|left"
+                    android:hint="@string/hintRemarks"
+                    android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:maxLength="500"
+                    android:minLines="5"
+                    android:paddingLeft="5dp"
+                    android:scrollbars="vertical"
+                    android:textColor="@color/colorBlack" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llAttachPhoto"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="3dp">
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dip"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/btnUploadPhoto"
+                        style="@style/style_nextButton"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:width="100sp"
+                        android:text="@string/label_takePhoto"
+                        android:textColor="@color/colorWhite"
+                        tools:ignore="RtlHardcoded" />
+
+                    <TextView
+                        android:id="@+id/tvImage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dip"
+                        android:layout_toEndOf="@+id/btnUploadPhoto"
+                        android:layout_toRightOf="@+id/btnUploadPhoto"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnViewPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@android:color/transparent"
+                        android:drawableEnd="@mipmap/ic_attach"
+                        android:drawableRight="@mipmap/ic_attach"
+                        android:textColor="@color/colorWhite"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/btnBack"
+                    style="@style/style_backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/back" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    style="@style/style_nextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/label_add" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

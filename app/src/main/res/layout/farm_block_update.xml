@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.farmblock.FarmBlock">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        style="@style/style_topBar1"
+        android:text="@string/label_updateFarmBlock"
+        android:textAllCaps="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/style_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/datalabel_farmerName" />
+
+                <TextView
+                    android:id="@+id/tvFarmer"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/datalabel_farmerName" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/mobile" />
+
+
+                <TextView
+                    android:id="@+id/tvMobile"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/mobile" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llFarmBlock"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/label_farmBlock" />
+
+
+                <TextView
+                    android:id="@+id/tvFarmBlock"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/ownershipTypeDisplay" />
+
+                <TextView
+                    android:id="@+id/tvOwnershipType"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llNameMobile"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/ownerNameDisplay" />
+
+                    <TextView
+                        android:id="@+id/tvOwner"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:text="@string/label_farmBlock" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/mobile" />
+
+                    <TextView
+                        android:id="@+id/tvOwnerMobile"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:text="@string/label_farmBlock" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="2dp"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/fpoCooperativeName" />
+
+
+                <TextView
+                    android:id="@+id/tvFpoCooperativeName"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+            </LinearLayout>
+
+
+            <!-- Land Details -->
+            <TextView
+                style="@style/style_sectionHead"
+                android:text="@string/landDetails" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvKhata"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/khata" />
+
+                    <EditText
+                        android:id="@+id/etKhata"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+
+                        android:hint="@string/hintKhata"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvKhasra"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/khasra" />
+
+                    <EditText
+                        android:id="@+id/etKhasra"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+
+                        android:hint="@string/hintKhasra"
+                        android:inputType="text"
+                        android:maxLength="30" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/contractDate" />
+
+                    <TextView
+                        android:id="@+id/tvContractDate"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:text="@string/label_farmBlock" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:paddingBottom="2dp"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tvArea"
+                        style="@style/style_dataLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.3"
+                        android:text="@string/areaAcre" />
+
+                    <EditText
+                        android:id="@+id/etArea"
+                        style="@style/style_dataField"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.7"
+                        android:hint="@string/hintAreaAcre"
+                        android:inputType="number"
+                        android:maxLength="12"
+                        android:textColor="@color/colorBlack" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Address -->
+            <TextView
+                style="@style/style_sectionHead"
+                android:text="@string/address" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_weight="0.3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/datalabel_addressStreet1" />
+
+                <TextView
+                    android:id="@+id/tvStreet1"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_weight="0.3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/datalabel_addressStreet2" />
+
+                <TextView
+                    android:id="@+id/tvStreet2"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_weight="0.3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/datalabel_state" />
+
+                <TextView
+                    android:id="@+id/tvState"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llDistrict"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_weight="0.3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/datalabel_district" />
+
+                <TextView
+                    android:id="@+id/tvDistrict"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llBlock"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_weight="0.3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/datalabel_block"/>
+
+                <TextView
+                    android:id="@+id/tvBlock"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llPanchayat"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_weight="0.3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/datalabel_panchayat"/>
+
+                <TextView
+                    android:id="@+id/tvPanchayat"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llVillage"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_weight="0.3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/datalabel_village" />
+
+                <TextView
+                    android:id="@+id/tvVillage"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llPincode"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_weight="0.3"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/datalabel_pinCode" />
+
+                <TextView
+                    android:id="@+id/tvPincode"
+                    style="@style/style_dataField"
+                    android:inputType="none"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7"
+                    android:text="@string/label_farmBlock" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/btnBack"
+                    style="@style/style_backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/back" />
+
+                <Button
+                    android:id="@+id/btnNext"
+                    style="@style/style_nextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="@string/datalabel_Next" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

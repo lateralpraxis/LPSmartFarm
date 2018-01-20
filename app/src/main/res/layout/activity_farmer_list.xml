@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    tools:context="lateralpraxis.lpsmartfarm.farmer.ActivityFarmerList">
+
+    <TextView
+        style="@style/style_topBar1"
+        android:text="@string/label_viewFarmer"
+        android:textAllCaps="true" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:weightSum="1">
+
+        <EditText
+            android:id="@+id/etSearchText"
+            style="@style/style_dataField"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
+            android:hint="@string/hintsearchtext"
+            android:inputType="text"
+            android:maxLength="10"
+            android:paddingLeft="4dp"
+            android:textColor="@color/colorBlack" />
+
+        <Button
+            android:id="@+id/btnSearch"
+            style="@style/style_nextButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="0.3"
+            android:width="100sp"
+            android:text="@string/label_Search"
+            android:textColor="@color/colorWhite"
+            tools:ignore="RtlHardcoded" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:weightSum="1">
+        <CheckBox
+            android:id="@+id/ckProspective"
+            style="Widget.AppCompat.CompoundButton.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_prospective"
+            android:checked="false"
+            android:focusable="false" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/datalabel_NoRecord"
+        android:textColor="@color/colorBlack" />
+
+    <ListView
+        android:id="@+id/listSelectFarmer"
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="2dip"
+        android:layout_marginRight="2dip"
+        android:layout_marginTop="1dip"
+        android:descendantFocusability="afterDescendants"
+        android:divider="@color/colorGold"
+        android:dividerHeight="1dp"
+        android:fadeScrollbars="false"
+        android:focusable="false"
+        android:paddingBottom="2dp"
+        android:paddingLeft="2dp"
+        tools:ignore="RtlHardcoded,NestedScrolling"></ListView>
+
+    <View
+        android:id="@+id/tvDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGold" />
+</LinearLayout>

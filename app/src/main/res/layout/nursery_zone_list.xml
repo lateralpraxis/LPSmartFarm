@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/colorWhite"
+              tools:context="lateralpraxis.lpsmartfarm.nursery.NurseryZone">
+
+    <TextView
+        style="@style/style_topBar1"
+        android:textAllCaps="true"
+        android:text="@string/label_viewNurseryZone" />
+
+    <TextView
+        android:id="@+id/tvHeaderData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="@color/colorBlack" />
+    <TextView
+        android:id="@+id/tvEmpty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="@string/datalabel_NoRecord"
+        android:textColor="@color/colorBlack" />
+
+    <ListView
+        android:id="@+id/listSelectNurseryZone"
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dip"
+        android:descendantFocusability="afterDescendants"
+        android:layout_marginLeft="2dip"
+        android:layout_marginRight="2dip"
+        android:divider="@color/colorGold"
+        android:paddingBottom="2dp"
+        android:dividerHeight="1dp"
+        android:paddingLeft="2dp"
+        android:fadeScrollbars="false"
+        android:focusable="false"
+        tools:ignore="RtlHardcoded,NestedScrolling" >
+    </ListView>
+    <View
+        android:id="@+id/tvDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorGold" />
+</LinearLayout>

@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/style_topBar1"
+        android:text="@string/addRecommendedActivity"
+        android:textAllCaps="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        style="@style/style_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/style_dataLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="@string/week" />
+
+            <Spinner
+                android:id="@+id/spWeek"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.7"
+                android:paddingLeft="4dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/style_dataLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="@string/label_Activity" />
+
+            <Spinner
+                android:id="@+id/spActivity"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.7"
+                android:paddingLeft="4dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/style_dataLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="@string/label_SubActivity" />
+
+            <Spinner
+                android:id="@+id/spSubActivity"
+                style="@style/Widget.AppCompat.Spinner.Underlined"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.7"
+                android:paddingLeft="4dp"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/style_dataLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="@string/label_Remarks" />
+
+            <EditText
+                android:id="@+id/etRemarks"
+                style="@style/style_dataField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:gravity="top|left"
+                android:hint="@string/hintRemarks"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:maxLength="500"
+                android:minLines="5"
+                android:paddingLeft="5dp"
+                android:scrollbars="vertical"
+                android:textColor="@color/colorBlack" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llPlaned"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/style_dataLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="@string/planedQuantity" />
+
+            <TextView
+                android:id="@+id/tvQuantity"
+                style="@style/style_dataField"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:paddingLeft="4dp"
+                android:textColor="@color/colorBlack"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                style="@style/style_dataLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3"
+                android:text="@string/label_Qty" />
+
+            <EditText
+                android:id="@+id/etQuantity"
+                style="@style/style_dataField"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:hint="@string/hintassetnumbers"
+                android:digits="0123456789."
+                android:inputType="numberDecimal"
+                android:maxLength="8"
+                android:paddingLeft="4dp"
+                android:textColor="@color/colorBlack"
+                tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tvUOM"
+                style="@style/style_dataLabel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.2" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llAttachPhoto"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="3dp">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dip"
+                android:orientation="vertical"
+                tools:ignore="UselessParent">
+
+                <Button
+                    android:id="@+id/btnUploadPhoto"
+                    style="@style/style_nextButton"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:width="100sp"
+                    android:text="@string/label_takePhoto"
+                    android:textColor="@color/colorWhite"
+                    tools:ignore="RtlHardcoded" />
+
+                <TextView
+                    android:id="@+id/tvFarmerImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dip"
+                    android:layout_toEndOf="@+id/btnUploadPhoto"
+                    android:layout_toRightOf="@+id/btnUploadPhoto"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnViewPhoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@mipmap/ic_attach"
+                    android:drawableRight="@mipmap/ic_attach"
+                    android:textColor="@color/colorWhite"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5sp"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btnBack"
+                style="@style/style_backButton"
+                android:layout_gravity="end"
+                android:layout_weight="0.5"
+                android:text="@string/back" />
+
+            <Button
+                android:id="@+id/btnNext"
+                style="@style/style_nextButton"
+                android:layout_gravity="end"
+                android:layout_weight="0.5"
+                android:text="@string/datalabel_Add"
+                android:visibility="visible" />
+        </LinearLayout>
+</LinearLayout>
+    </ScrollView>
+</LinearLayout>

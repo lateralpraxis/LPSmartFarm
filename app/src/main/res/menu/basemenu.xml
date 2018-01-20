@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mainMenu"
+        android:icon="@mipmap/ic_navigationstrip"
+        android:showAsAction="always"
+        android:title="@string/app_name">
+        <menu>
+            <item
+                android:id="@+id/action_changelanguage"
+                android:visible="false"
+                android:title="@string/change_language"></item>
+            <item
+                android:id="@+id/action_logout"
+                android:icon="@mipmap/ic_logout"
+                android:title="@string/logout"></item>
+        </menu>
+    </item>
+
+</menu>

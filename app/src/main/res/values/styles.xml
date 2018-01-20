@@ -1,0 +1,220 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <!--<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"></style>-->
+    <style name="style_dataLabel">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:background">@drawable/datalabel</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+    </style>
+
+    <style name="style_dataField">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/colorEditText</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:background">@drawable/datafield</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="style_spinnerField" parent="Base.Widget.AppCompat.Spinner.Underlined">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:background">@drawable/spinnerfield</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="style_mandatoryField">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/colorEditText</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:background">@drawable/mandatoryfield</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="style_topBar1">
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">48sp</item>
+        <item name="android:autoText">false</item>
+        <item name="android:background">@color/colorBlue</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--<item name="android:layout_marginBottom">2dp</item>-->
+        <item name="android:paddingBottom">4sp</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingTop">4sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="style_topBar2">
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">48sp</item>
+        <item name="android:autoText">false</item>
+        <item name="android:background">@color/colorGreen</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--<item name="android:layout_marginBottom">2dp</item>-->
+        <item name="android:paddingBottom">4sp</item>
+        <item name="android:paddingLeft">16sp</item>
+        <item name="android:paddingRight">16sp</item>
+        <item name="android:paddingTop">4sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="style_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginLeft">@dimen/button_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/button_horizontal_margin</item>
+    </style>
+
+    <style name="style_nextButton" parent="style_button">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:background">@color/colorGreen</item>
+    </style>
+
+    <style name="style_backButton" parent="style_button">
+        <item name="android:textColor">@color/colorGreen</item>
+        <item name="android:background">@color/colorGrey</item>
+    </style>
+
+    <style name="custom_dialog_theme">
+        <item name="android:windowBackground">@color/dialog_background_color</item>
+    </style>
+
+    <style name="style_layoutPadding">
+        <item name="android:paddingLeft">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_padding</item>
+        <item name="android:paddingTop">@dimen/activity_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/activity_vertical_padding</item>
+    </style>
+
+    <style name="style_menuButtonPadding">
+        <item name="android:paddingLeft">@dimen/menuButton_horizontal_padding</item>
+        <item name="android:paddingRight">@dimen/menuButton_horizontal_padding</item>
+        <item name="android:paddingTop">@dimen/menuButton_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/menuButton_horizontal_padding</item>
+    </style>
+
+    <style name="style_layout" parent="style_layoutPadding">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">0sp</item>
+    </style>
+
+    <style name="style_homeMenu">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
+        <!--<item name="android:weightSum">2</item>-->
+    </style>
+
+    <style name="style_homeButton" parent="style_menuButtonPadding">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">88dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:minHeight">88dp</item>
+        <item name="android:background">@color/colorBlue</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">0dp</item>
+    </style>
+
+    <style name="style_homeButtonLeft" parent="style_homeButton">
+        <!--<item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">4dp</item>-->
+    </style>
+
+    <style name="style_homeButtonRight" parent="style_homeButton">
+       <!-- <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:layout_marginRight">8dp</item>-->
+    </style>
+
+    <style name="style_link">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/colorBlue</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="style_sectionHead">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/colorGreen</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="style_tableHead">
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">40sp</item>
+        <item name="android:autoText">false</item>
+        <item name="android:background">@color/colorGrey</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <!--<item name="android:layout_marginBottom">2dp</item>-->
+        <item name="android:paddingBottom">4sp</item>
+        <item name="android:paddingLeft">8sp</item>
+        <item name="android:paddingRight">8sp</item>
+        <item name="android:paddingTop">4sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="style_tableItem">
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">40sp</item>
+        <item name="android:autoText">false</item>
+        <item name="android:textColor">@color/colorBlack</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">4sp</item>
+        <item name="android:paddingLeft">8sp</item>
+        <item name="android:paddingRight">8sp</item>
+        <item name="android:paddingTop">4sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="SwitchTheme" parent="Theme.AppCompat">
+        <item name="colorControlActivated">#009688</item>
+        <item name="colorSwitchThumbNormal">#EEEEEE</item>
+        <item name="android:colorForeground">#B2DFDB</item>
+    </style>
+</resources>
