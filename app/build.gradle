@@ -9,8 +9,8 @@ android {
             storePassword 'cuboid@12'
         }
     }
-    compileSdkVersion 25
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "lateralpraxis.lpsmartfarm"
         minSdkVersion 16
