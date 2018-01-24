@@ -5,13 +5,13 @@
     android:background="@color/colorWhite">
 
     <Button
-        android:id="@+id/btnJobCardConfirmation"
+        android:id="@+id/btnDelivery"
         style="@style/style_homeButtonLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="fill_vertical"
         android:layout_weight="0.5"
-        android:drawableLeft="@mipmap/ic_dashboard"
-        android:text="@string/menu_jobcardconfirmation"
+        android:drawableLeft="@mipmap/ic_delivery"
+        android:text="@string/menu_delivery"
         android:textAllCaps="true" />
 </LinearLayout>

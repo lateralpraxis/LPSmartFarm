@@ -593,4 +593,16 @@
     <string name="hintFinalReading">Enter final meter reading</string>
     <string name="label_returnedto">Returned To</string>
     <!--End of Stock Return Strings-->
+
+    <!-- Start of Delivery Strings -->
+    <string name="label_DeliveryDetails">Delivery Details</string>
+    <string name="label_PaymentDetails">Payment Details</string>
+    <string name="label_BookingDetails">Booking Details</string>
+    <string name="label_BookedQty">Booked Qty.</string>
+    <string name="label_Amount">Amount</string>
+    <string name="label_Advance">Advance</string>
+    <string name="label_PaymentMode">Mode</string>
+
+
+
 </resources>

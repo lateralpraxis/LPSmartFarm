@@ -55,6 +55,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import lateralpraxis.lpsmartfarm.confirmation.PendingJobCard;
 import lateralpraxis.lpsmartfarm.confirmation.PendingNurseryJobCard;
+import lateralpraxis.lpsmartfarm.delivery.ActivityAddPayment;
+import lateralpraxis.lpsmartfarm.delivery.ActivityViewPendingDispatch;
 import lateralpraxis.lpsmartfarm.farmer.ActivityFarmerList;
 import lateralpraxis.lpsmartfarm.farmer.ActivityFarmerView;
 import lateralpraxis.lpsmartfarm.farmer.FarmerCreateStep1;
@@ -196,24 +198,62 @@ public class ActivityHome extends Activity {
         dba.openR();
         userRole = dba.getAllRoles();
 
-        if (userRole.contains("Farmer"))
-            syncByRole = "Farmer";
-        else
-            syncByRole = "";
-        if (userRole.contains("Area Manager") || userRole.contains("Executive") || userRole.contains("FA Administrator") || userRole.contains("Management User") || userRole.contains("Mini Nursery Admin") || userRole.contains("Tele Caller"))
-            views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_sync);
-        else if (userRole.contains("Service Provider") && !userRole.contains("Mini Nursery Service Provider"))
-            views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_confirm, R.layout.btn_recommend, R.layout.btn_visits, R.layout.btn_farm_activity, R.layout.btn_sync);
+        syncByRole = (userRole.contains("Farmer")) ? "Farmer" : "";
+        if (userRole.contains("Area Manager")
+                || userRole.contains("Executive")
+                || userRole.contains("FA Administrator")
+                || userRole.contains("Management User")
+                || userRole.contains("Mini Nursery Admin")
+                || userRole.contains("Tele Caller"))
+            views = Arrays.asList(R.layout.btn_farmer_create,
+                    R.layout.btn_farmer_view,
+                    R.layout.btn_sync);
+        else if (userRole.contains("Service Provider")
+                && !userRole.contains("Mini Nursery Service Provider"))
+            views = Arrays.asList(R.layout.btn_farmer_create,
+                    R.layout.btn_farmer_view,
+                    R.layout.btn_confirm,
+                    R.layout.btn_recommend,
+                    R.layout.btn_visits,
+                    R.layout.btn_farm_activity,
+                    R.layout.btn_delivery,
+                    R.layout.btn_sync);
         else if (userRole.contains("Mini Nursery Service Provider"))
-            views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_visits, R.layout.btn_farm_activity, R.layout.btn_sync);
-        else if (userRole.contains("Mini Nursery User") || userRole.contains("Nursery Supervisor"))
-            views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_nursery, R.layout.btn_farm_activity,R.layout.btn_stock_return, R.layout.btn_sync);
-        else if (userRole.contains("Service Provider") && !userRole.contains("Mini Nursery Service Provider") && userRole.contains("Nursery Supervisor"))
-            views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_nursery, R.layout.btn_confirm, R.layout.btn_recommend, R.layout.btn_visits, R.layout.btn_farm_activity, R.layout.btn_sync);
+            views = Arrays.asList(R.layout.btn_farmer_create,
+                    R.layout.btn_farmer_view,
+                    R.layout.btn_visits,
+                    R.layout.btn_farm_activity,
+                    R.layout.btn_sync);
+        else if (userRole.contains("Mini Nursery User")
+                || userRole.contains("Nursery Supervisor"))
+            views = Arrays.asList(R.layout.btn_farmer_create,
+                    R.layout.btn_farmer_view,
+                    R.layout.btn_nursery,
+                    R.layout.btn_farm_activity,
+                    R.layout.btn_stock_return,
+                    R.layout.btn_sync);
+        else if (userRole.contains("Service Provider")
+                && !userRole.contains("Mini Nursery Service Provider")
+                && userRole.contains("Nursery Supervisor"))
+            views = Arrays.asList(R.layout.btn_farmer_create,
+                    R.layout.btn_farmer_view,
+                    R.layout.btn_nursery,
+                    R.layout.btn_confirm,
+                    R.layout.btn_recommend,
+                    R.layout.btn_visits,
+                    R.layout.btn_farm_activity,
+                    R.layout.btn_sync);
         else if (userRole.contains("Agronomist"))
-            views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_confirm, R.layout.btn_recommend, R.layout.btn_visits, R.layout.btn_sync);
+            views = Arrays.asList(R.layout.btn_farmer_create,
+                    R.layout.btn_farmer_view,
+                    R.layout.btn_confirm,
+                    R.layout.btn_recommend,
+                    R.layout.btn_visits,
+                    R.layout.btn_sync);
         else if (userRole.contains("Farmer"))
-            views = Arrays.asList(R.layout.btn_farmer_view, R.layout.btn_farm_activity, R.layout.btn_sync);
+            views = Arrays.asList(R.layout.btn_farmer_view,
+                    R.layout.btn_farm_activity,
+                    R.layout.btn_sync);
 
         go.performClick();
 
@@ -277,12 +317,12 @@ public class ActivityHome extends Activity {
                         if (dba.IsSyncRequired()) {
                             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityHome.this);
                             // set title
-                            alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en")?"Confirmation":"पुष्टीकरण");
+                            alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en") ? "Confirmation" : "पुष्टीकरण");
                             // set dialog message
                             alertDialogBuilder
-                                    .setMessage(curusrlang.equalsIgnoreCase("en")?"Some masters are missing, do you want to synchronize?":"कुछ मास्टर्स उपलब्ध नहीं हैं, क्या आप सिंक्रनाइज़ करना चाहते हैं?")
+                                    .setMessage(curusrlang.equalsIgnoreCase("en") ? "Some masters are missing, do you want to synchronize?" : "कुछ मास्टर्स उपलब्ध नहीं हैं, क्या आप सिंक्रनाइज़ करना चाहते हैं?")
                                     .setCancelable(false)
-                                    .setPositiveButton(curusrlang.equalsIgnoreCase("en")?"Yes":"हाँ", new DialogInterface.OnClickListener() {
+                                    .setPositiveButton(curusrlang.equalsIgnoreCase("en") ? "Yes" : "हाँ", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int id) {
 
@@ -295,7 +335,7 @@ public class ActivityHome extends Activity {
                                             }
                                         }
                                     })
-                                    .setNegativeButton(curusrlang.equalsIgnoreCase("en")?"No":"नहीं", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton(curusrlang.equalsIgnoreCase("en") ? "No" : "नहीं", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int id) {
                                             // if this button is clicked, just close
@@ -318,12 +358,12 @@ public class ActivityHome extends Activity {
                                 } else {
                                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityHome.this);
                                     // set title
-                                    alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en")?"Confirmation":"पुष्टीकरण");
+                                    alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en") ? "Confirmation" : "पुष्टीकरण");
                                     // set dialog message
                                     alertDialogBuilder
-                                            .setMessage(curusrlang.equalsIgnoreCase("en")?"Some masters are missing, do you want to synchronize?":"कुछ मास्टर्स उपलब्ध नहीं हैं, क्या आप सिंक्रनाइज़ करना चाहते हैं?")
+                                            .setMessage(curusrlang.equalsIgnoreCase("en") ? "Some masters are missing, do you want to synchronize?" : "कुछ मास्टर्स उपलब्ध नहीं हैं, क्या आप सिंक्रनाइज़ करना चाहते हैं?")
                                             .setCancelable(false)
-                                            .setPositiveButton(curusrlang.equalsIgnoreCase("en")?"Yes":"हाँ", new DialogInterface.OnClickListener() {
+                                            .setPositiveButton(curusrlang.equalsIgnoreCase("en") ? "Yes" : "हाँ", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
 
@@ -336,7 +376,7 @@ public class ActivityHome extends Activity {
                                                     }
                                                 }
                                             })
-                                            .setNegativeButton(curusrlang.equalsIgnoreCase("en")?"No":"नहीं", new DialogInterface.OnClickListener() {
+                                            .setNegativeButton(curusrlang.equalsIgnoreCase("en") ? "No" : "नहीं", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     // if this button is clicked, just close
@@ -365,12 +405,12 @@ public class ActivityHome extends Activity {
                     public void onClick(View v) {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityHome.this);
                         // set title
-                        alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en")?"Confirmation":"पुष्टीकरण");
+                        alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en") ? "Confirmation" : "पुष्टीकरण");
                         // set dialog message
                         alertDialogBuilder
-                                .setMessage(curusrlang.equalsIgnoreCase("en")?"Are you sure, you want to Synchronize?":"क्या आप वाकई सिंक्रनाइज़ करना चाहते हैं?")
+                                .setMessage(curusrlang.equalsIgnoreCase("en") ? "Are you sure, you want to Synchronize?" : "क्या आप वाकई सिंक्रनाइज़ करना चाहते हैं?")
                                 .setCancelable(false)
-                                .setPositiveButton(curusrlang.equalsIgnoreCase("en")?"Yes":"हाँ", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(curusrlang.equalsIgnoreCase("en") ? "Yes" : "हाँ", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
 
@@ -382,7 +422,7 @@ public class ActivityHome extends Activity {
 
                                     }
                                 })
-                                .setNegativeButton(curusrlang.equalsIgnoreCase("en")?"No":"नहीं", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(curusrlang.equalsIgnoreCase("en") ? "No" : "नहीं", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int id) {
                                         // if this button is clicked, just close
@@ -644,6 +684,17 @@ public class ActivityHome extends Activity {
                     }
                 });
                 break;
+            case R.layout.btn_delivery:
+                btn = btnLayout.findViewById(R.id.btnDelivery);
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        intent = new Intent(context, ActivityAddPayment.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                break;
             case R.layout.btn_blank:
                 break;
 
@@ -677,12 +728,12 @@ public class ActivityHome extends Activity {
             case R.id.action_logout:
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 // set title
-                alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en")?"Confirmation":"पुष्टीकरण");
+                alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en") ? "Confirmation" : "पुष्टीकरण");
                 // set dialog message
                 alertDialogBuilder
-                        .setMessage(curusrlang.equalsIgnoreCase("en")?"Are you sure, want to Log Out ?":"क्या आप वाकई लॉग आउट करना चाहते हैं?")
+                        .setMessage(curusrlang.equalsIgnoreCase("en") ? "Are you sure, want to Log Out ?" : "क्या आप वाकई लॉग आउट करना चाहते हैं?")
                         .setCancelable(false)
-                        .setPositiveButton(curusrlang.equalsIgnoreCase("en")?"Yes":"हाँ", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(curusrlang.equalsIgnoreCase("en") ? "Yes" : "हाँ", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 if (common.isConnected()) {
@@ -693,14 +744,14 @@ public class ActivityHome extends Activity {
                                         AsyncLogOutWSCall task = new AsyncLogOutWSCall();
                                         task.execute();
                                     } else {
-                                        common.showToast(curusrlang.equalsIgnoreCase("en")?"Unable to logout as data is pending for synchronize.":"लॉग आउट करने में असमर्थ क्यूंकि डेटा सिंक्रनाइज़ करने के लिए लंबित है।");
+                                        common.showToast(curusrlang.equalsIgnoreCase("en") ? "Unable to logout as data is pending for synchronize." : "लॉग आउट करने में असमर्थ क्यूंकि डेटा सिंक्रनाइज़ करने के लिए लंबित है।");
                                     }
                                 } else {
-                                    common.showToast(curusrlang.equalsIgnoreCase("en")?"Unable to connect to Internet !":"इंटरनेट से जुड़ने में असमर्थ!");
+                                    common.showToast(curusrlang.equalsIgnoreCase("en") ? "Unable to connect to Internet !" : "इंटरनेट से जुड़ने में असमर्थ!");
                                 }
                             }
                         })
-                        .setNegativeButton(curusrlang.equalsIgnoreCase("en")?"No":"नहीं", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(curusrlang.equalsIgnoreCase("en") ? "No" : "नहीं", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 // if this button is clicked, just close
@@ -2183,16 +2234,16 @@ public class ActivityHome extends Activity {
                     }
                     dba.close();
                     if (syncFrom.equalsIgnoreCase("masters"))
-                        common.showAlert(ActivityHome.this, curusrlang.equalsIgnoreCase("en")?"Synchronization completed successfully.":"सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ।", false);
+                        common.showAlert(ActivityHome.this, curusrlang.equalsIgnoreCase("en") ? "Synchronization completed successfully." : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ।", false);
                     else {
                         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                         // set title
-                        alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en")?"Sync Successful":"सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ");
+                        alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en") ? "Sync Successful" : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ");
                         // set dialog message
                         alertDialogBuilder
-                                .setMessage(curusrlang.equalsIgnoreCase("en")?"Transaction Synchronization completed successfully. It is recommended to synchronize master data. Do you want to continue?":"ट्रांसक्शन्स सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ। मास्टर डेटा को सिंक्रनाइज़ करने के लिए अनुशंसित है। क्या आप जारी रखना चाहते हैं?")
+                                .setMessage(curusrlang.equalsIgnoreCase("en") ? "Transaction Synchronization completed successfully. It is recommended to synchronize master data. Do you want to continue?" : "ट्रांसक्शन्स सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ। मास्टर डेटा को सिंक्रनाइज़ करने के लिए अनुशंसित है। क्या आप जारी रखना चाहते हैं?")
                                 .setCancelable(false)
-                                .setPositiveButton(curusrlang.equalsIgnoreCase("en")?"Yes":"हाँ", new DialogInterface.OnClickListener() {
+                                .setPositiveButton(curusrlang.equalsIgnoreCase("en") ? "Yes" : "हाँ", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
 
                                         if (common.isConnected()) {
@@ -2201,7 +2252,7 @@ public class ActivityHome extends Activity {
                                         }
                                     }
                                 })
-                                .setNegativeButton(curusrlang.equalsIgnoreCase("en")?"No":"नहीं", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(curusrlang.equalsIgnoreCase("en") ? "No" : "नहीं", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         // if this button is clicked, just close
                                         dialog.cancel();
@@ -2953,20 +3004,61 @@ public class ActivityHome extends Activity {
                     else
                         syncByRole = "";
 
-                    if (userRole.contains("Area Manager") || userRole.contains("Executive") || userRole.contains("FA Administrator") || userRole.contains("Management User") || userRole.contains("Mini Nursery Admin") || userRole.contains("Tele Caller"))
-                        views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_sync);
-                    else if (userRole.contains("Service Provider") && !userRole.contains("Mini Nursery Service Provider"))
-                        views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_confirm, R.layout.btn_recommend, R.layout.btn_visits, R.layout.btn_farm_activity, R.layout.btn_sync);
+                    if (userRole.contains("Area Manager")
+                            || userRole.contains("Executive")
+                            || userRole.contains("FA Administrator")
+                            || userRole.contains("Management User")
+                            || userRole.contains("Mini Nursery Admin")
+                            || userRole.contains("Tele Caller"))
+                        views = Arrays.asList(R.layout.btn_farmer_create,
+                                R.layout.btn_farmer_view,
+                                R.layout.btn_sync);
+                    else if (userRole.contains("Service Provider")
+                            && !userRole.contains("Mini Nursery Service Provider"))
+                        views = Arrays.asList(R.layout.btn_farmer_create,
+                                R.layout.btn_farmer_view,
+                                R.layout.btn_confirm,
+                                R.layout.btn_recommend,
+                                R.layout.btn_visits,
+                                R.layout.btn_farm_activity,
+                                R.layout.btn_delivery,
+                                R.layout.btn_sync);
                     else if (userRole.contains("Mini Nursery Service Provider"))
-                        views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_visits, R.layout.btn_farm_activity, R.layout.btn_sync);
-                    else if (userRole.contains("Mini Nursery User") || userRole.contains("Nursery Supervisor"))
-                        views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_nursery, R.layout.btn_farm_activity,R.layout.btn_stock_return, R.layout.btn_sync);
-                    else if (userRole.contains("Service Provider") && !userRole.contains("Mini Nursery Service Provider") && userRole.contains("Nursery Supervisor"))
-                        views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_nursery, R.layout.btn_confirm, R.layout.btn_recommend, R.layout.btn_visits, R.layout.btn_farm_activity, R.layout.btn_sync);
+                        views = Arrays.asList(R.layout.btn_farmer_create,
+                                R.layout.btn_farmer_view,
+                                R.layout.btn_visits,
+                                R.layout.btn_farm_activity,
+                                R.layout.btn_sync);
+                    else if (userRole.contains("Mini Nursery User")
+                            || userRole.contains("Nursery Supervisor"))
+                        views = Arrays.asList(R.layout.btn_farmer_create,
+                                R.layout.btn_farmer_view,
+                                R.layout.btn_nursery,
+                                R.layout.btn_farm_activity,
+                                R.layout.btn_stock_return,
+                                R.layout.btn_sync);
+                    else if (userRole.contains("Service Provider")
+                            && !userRole.contains("Mini Nursery Service Provider")
+                            && userRole.contains("Nursery Supervisor"))
+                        views = Arrays.asList(R.layout.btn_farmer_create,
+                                R.layout.btn_farmer_view,
+                                R.layout.btn_nursery,
+                                R.layout.btn_confirm,
+                                R.layout.btn_recommend,
+                                R.layout.btn_visits,
+                                R.layout.btn_farm_activity,
+                                R.layout.btn_sync);
                     else if (userRole.contains("Agronomist"))
-                        views = Arrays.asList(R.layout.btn_farmer_create, R.layout.btn_farmer_view, R.layout.btn_confirm, R.layout.btn_recommend, R.layout.btn_visits, R.layout.btn_sync);
+                        views = Arrays.asList(R.layout.btn_farmer_create,
+                                R.layout.btn_farmer_view,
+                                R.layout.btn_confirm,
+                                R.layout.btn_recommend,
+                                R.layout.btn_visits,
+                                R.layout.btn_sync);
                     else if (userRole.contains("Farmer"))
-                        views = Arrays.asList(R.layout.btn_farmer_view, R.layout.btn_farm_activity, R.layout.btn_sync);
+                        views = Arrays.asList(R.layout.btn_farmer_view,
+                                R.layout.btn_farm_activity,
+                                R.layout.btn_sync);
 
 
                     go.performClick();
@@ -7084,7 +7176,7 @@ public class ActivityHome extends Activity {
                             task.execute();
                         }
                     } else
-                        common.showAlert(ActivityHome.this,curusrlang.equalsIgnoreCase("en")? "Synchronization completed successfully.":"सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ।", false);
+                        common.showAlert(ActivityHome.this, curusrlang.equalsIgnoreCase("en") ? "Synchronization completed successfully." : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ।", false);
 
                 } else {
                     common.showAlert(ActivityHome.this, result, false);
