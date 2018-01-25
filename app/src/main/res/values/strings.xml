@@ -605,5 +605,8 @@
     <string name="label_Advance">Advance</string>
     <string name="label_PaymentMode">Mode</string>
 
+    <!--Start of Booking Cancellation Strings-->
+    <string name="label_PendingBooking">Booking Details</string>
+    <!--End of Booking Cancellation Strings-->
 
 </resources>
