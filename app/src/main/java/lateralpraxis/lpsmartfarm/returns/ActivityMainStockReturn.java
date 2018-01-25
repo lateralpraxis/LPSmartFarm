@@ -35,24 +35,22 @@ public class ActivityMainStockReturn extends Activity {
 
     //<editor-fold desc="Code For Class Declaration">
     final Context context = this;
+    private final Context mContext = this;
     Common common;
     DatabaseAdapter dba;
     UserSessionManager session;
-    private Intent intent;
-    private final Context mContext = this;
+    HashMap<String, String> map = null;
     //</editor-fold>
-
+    private Intent intent;
     //<editor-fold desc="Code For Control Declaration">
     private ListView lvPendingDispatch;
     private View tvDivider;
-    private TextView tvEmpty;
     //</editor-fold>
-
+    private TextView tvEmpty;
     //<editor-fold desc="Code For Variable Declaration">
     private String responseJSON,userId;
     private int listSize = 0;
     private ArrayList<HashMap<String, String>> wordList = null;
-    HashMap<String, String> map = null;
     //</editor-fold>
 
     //<editor-fold desc="Code to be executed on On Create">
@@ -143,6 +141,13 @@ public class ActivityMainStockReturn extends Activity {
     }
 //</editor-fold>
 
+    //<editor-fold desc="Code Binding Data In List">
+    public static class viewHolder {
+        TextView tvDispatchId, tvDispatchDetails, tvDispatchToDetails;
+        int ref;
+    }
+    //</editor-fold>
+
     //<editor-fold desc="Code for fetching Pending Dispatches from Portal By User Id">
     private class AsyncPendingDispatchWSCall extends
             AsyncTask<String, Void, String> {
@@ -157,7 +162,7 @@ public class ActivityMainStockReturn extends Activity {
                 String[] value = {  };
                 // Call method of web service to Get Pending Dispatch Data
                 responseJSON = "";
-                responseJSON = common.invokeJSONWS(userId, "userId","GetPendingDispatchForAndroid", common.url);;
+                responseJSON = common.invokeJSONWS(userId, "userId", "GetPendingDispatchForAndroid", common.url);
                 return "";
             } catch (SocketTimeoutException e) {
                 return "ERROR: TimeOut Exception. Either Server is busy or Internet is slow";
@@ -211,7 +216,7 @@ public class ActivityMainStockReturn extends Activity {
                         }
 
                     } else {
-                        common.showToast("There is no pending disptch!",2);
+                        common.showToast("There is no pending dispatch!", 2);
                     }
 
                 } else {
@@ -233,13 +238,6 @@ public class ActivityMainStockReturn extends Activity {
             Dialog.setCancelable(false);
             Dialog.show();
         }
-    }
-    //</editor-fold>
-
-    //<editor-fold desc="Code Binding Data In List">
-    public static class viewHolder {
-        TextView tvDispatchId, tvDispatchDetails, tvDispatchToDetails;
-        int ref;
     }
 
     private class ReportListAdapter extends BaseAdapter {
