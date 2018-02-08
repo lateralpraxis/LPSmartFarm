@@ -55,8 +55,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import lateralpraxis.lpsmartfarm.confirmation.PendingJobCard;
 import lateralpraxis.lpsmartfarm.confirmation.PendingNurseryJobCard;
-import lateralpraxis.lpsmartfarm.delivery.ActivityAddPayment;
-import lateralpraxis.lpsmartfarm.delivery.ActivityViewPendingDispatch;
+import lateralpraxis.lpsmartfarm.delivery.ActivityViewDelivery;
 import lateralpraxis.lpsmartfarm.farmer.ActivityFarmerList;
 import lateralpraxis.lpsmartfarm.farmer.ActivityFarmerView;
 import lateralpraxis.lpsmartfarm.farmer.FarmerCreateStep1;
@@ -689,7 +688,7 @@ public class ActivityHome extends Activity {
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        intent = new Intent(context, ActivityAddPayment.class);
+                        intent = new Intent(context, ActivityViewDelivery.class);
                         startActivity(intent);
                         finish();
                     }
@@ -2171,7 +2170,7 @@ public class ActivityHome extends Activity {
                     if (common.isConnected()) {
 
                         //Code to Synchronize Job Card Confirmation Data
-                        AsyncJobCardConfirmationSyncWSCall task = new AsyncJobCardConfirmationSyncWSCall();
+                        AsyncPendingDispatchesForDeliveryWSCall task = new AsyncPendingDispatchesForDeliveryWSCall();
                         task.execute();
                        /* //call method of get Job Cards from Server By User Id
                         AsyncServerJobCardDetailWSCall task = new AsyncServerJobCardDetailWSCall();
@@ -2198,6 +2197,98 @@ public class ActivityHome extends Activity {
             Dialog.show();
         }
     }
+
+    //<editor-fold desc="AsyncTask class to handle Pending Dispatch for Delivery WS call as separate UI Thread">
+    private class AsyncPendingDispatchesForDeliveryWSCall extends AsyncTask<String, Void, String> {
+        private ProgressDialog Dialog = new ProgressDialog(context);
+
+        @Override
+        protected String doInBackground(String... params) {
+            if (userRole.contains("Farmer")
+                    || userRole.contains("Mini Nursery User")
+                    || userRole.contains("Service Provider")) {
+                try {
+                    responseJSON = "";
+                /*responseJSON = common.invokeJSONWS(userId, "userId",
+                        "GetPendingDispatchForDelivery", common.url);*/
+                    responseJSON = common.invokeTwinJSONWS("GetPendingDispatchForDelivery",
+                            "action", userId, "userId", userRole.replace(',', ' ').trim(),
+                            "userRole",
+                            "GetPendingDispatchForDelivery", common.url);
+                } catch (SocketTimeoutException e) {
+                    return "ERROR: TimeOut Exception. Either Server is busy or Internet is slow";
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    //return "ERROR: " + "Unable to fetch response from server.";
+                    return "ERROR: " + e.getMessage();
+                }
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (userRole.contains("Farmer")
+                    || userRole.contains("Mini Nursery User")
+                    || userRole.contains("Service Provider")) {
+                try {
+                    if (!result.contains("ERROR: ")) {
+                        JSONArray jsonArrayMst = new JSONArray(responseJSON.split("~")[0]);
+                        JSONArray jsonArrayDet = new JSONArray(responseJSON.split("~")[1]);
+                        dba.open();
+                        dba.clearPendingDispatchForDelivery();
+                        for (int i = 0; i < jsonArrayMst.length(); i++) {
+                            dba.insertPendingDispatchForDelivery(
+                                    jsonArrayMst.getJSONObject(i).getString("Id"),
+                                    jsonArrayMst.getJSONObject(i).getString("Code"),
+                                    jsonArrayMst.getJSONObject(i).getString("DispatchForId"),
+                                    jsonArrayMst.getJSONObject(i).getString("DispatchForName"),
+                                    jsonArrayMst.getJSONObject(i).getString("DispatchForMobile"),
+                                    jsonArrayMst.getJSONObject(i).getString("VehicleNo"),
+                                    jsonArrayMst.getJSONObject(i).getString("DriverName"),
+                                    jsonArrayMst.getJSONObject(i).getString("DriverMobileNo"));
+                        }
+
+                        dba.clearPendingDispatchDetailForDelivery();
+                        for (int i = 0; i < jsonArrayDet.length(); i++) {
+                            dba.insertPendingDispatchDetailForDelivery(
+                                    jsonArrayDet.getJSONObject(i).getString("DispatchId"),
+                                    jsonArrayDet.getJSONObject(i).getString("BookingId"),
+                                    jsonArrayDet.getJSONObject(i).getString("Rate"),
+                                    jsonArrayDet.getJSONObject(i).getString("PolybagTypeId"),
+                                    jsonArrayDet.getJSONObject(i).getString("PolybagTitle"),
+                                    jsonArrayDet.getJSONObject(i).getString("Quantity"));
+                        }
+                        dba.close();
+                        if (common.isConnected()) {
+                            AsyncServerJobCardDetailWSCall task = new AsyncServerJobCardDetailWSCall();
+                            task.execute();
+                        }
+                    } else {
+                        common.showAlert(ActivityHome.this, result, true);
+                    }
+                } catch (Exception e) {
+                    common.showAlert(ActivityHome.this, "Pending Dispatch Downloading failed: " + e
+                            .toString(), true);
+                }
+            }
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Downloading Pending Dispatch Details ..");
+            Dialog.setCancelable(false);
+            Dialog.show();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+    }
+    //</editor-fold>
 
     //Async class to handle ServerJob Card Details WS call as separate UI Thread
     private class AsyncServerJobCardDetailWSCall extends AsyncTask<String, Void, String> {

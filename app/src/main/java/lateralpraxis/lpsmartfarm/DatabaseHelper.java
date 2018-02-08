@@ -132,9 +132,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         _db.execSQL(DatabaseAdapter.Defect_CREATE);
         _db.execSQL(DatabaseAdapter.TempJobCardFile_CREATE);
         _db.execSQL(DatabaseAdapter.PlantationWeek_CREATE);
+        _db.execSQL(DatabaseAdapter.BookingAddressTemp_CREATE);
         _db.execSQL(DatabaseAdapter.Recommendation_CREATE);
         _db.execSQL(DatabaseAdapter.RecommendationDetail_CREATE);
-
+        _db.execSQL(DatabaseAdapter.PaymentMode_CREATE);
+        _db.execSQL(DatabaseAdapter.PolyBagRate_CREATE);
+        _db.execSQL(DatabaseAdapter.Booking_CREATE);
+        _db.execSQL(DatabaseAdapter.PendingDispatchForDelivery_CREATE);
+        _db.execSQL(DatabaseAdapter.PendingDispatchDetailsForDelivery_CREATE);
     }
 
     @Override

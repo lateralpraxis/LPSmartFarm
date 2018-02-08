@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
     tools:context="lateralpraxis.lpsmartfarm.delivery.ActivityAddPayment">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+    <TextView
+        style="@style/style_topBar1"
+        android:text="@string/label_PaymentDetails"
+        android:textAllCaps="true" />
 
-        <TextView
-            style="@style/style_topBar1"
-            android:text="@string/label_PaymentDetails"
-            android:textAllCaps="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        android:fillViewport="true">
 
         <LinearLayout
             style="@style/style_layout"
@@ -25,62 +28,56 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/datalabel_fullName" />
 
-                    <TextView
-                        style="@style/style_dataLabel"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.3"
-                        android:text="@string/datalabel_fullName" />
-
-                    <TextView
-                        android:id="@+id/tvName"
-                        style="@style/style_dataField"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.7" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <TextView
-                        style="@style/style_dataLabel"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.3"
-                        android:text="@string/label_mobilehead" />
-
-                    <TextView
-                        android:id="@+id/tvMobile"
-                        style="@style/style_dataField"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="0.7" />
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7" />
 
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:text="@string/label_mobilehead" />
+
+                <TextView
+                    android:id="@+id/tvMobile"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.7" />
+
+            </LinearLayout>
+
 
             <TextView
                 style="@style/style_sectionHead"
                 android:text="@string/label_BookingDetails"
                 android:textAllCaps="true" />
 
-           <!-- Booking Details -->
+            <!-- Booking Details -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -207,9 +204,11 @@
 
                     <Spinner
                         android:id="@+id/spMode"
-                        style="@style/Widget.AppCompat.Spinner.Underlined" android:layout_marginTop="5dp" android:layout_marginBottom="5dp"
+                        style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
                         android:layout_weight="0.7"
                         android:paddingLeft="5dp"
                         tools:ignore="RtlHardcoded,RtlSymmetry" />
@@ -266,6 +265,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </ScrollView>
 
-</ScrollView>
+</LinearLayout>

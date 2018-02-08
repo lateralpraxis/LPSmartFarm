@@ -282,7 +282,16 @@ public class DatabaseAdapter {
                             "BlockId TEXT, PanchayatId TEXT, VillageId TEXT, CityId TEXT, PinCodeId TEXT, AddressType TEXT, BookingDate TEXT, " +
                             "DeliveryDate TEXT, Quantity TEXT, Rate TEXT, TotalAmount TEXT, PaymentMode TEXT, PaymentAmount TEXT, Remarks TEXT, " +
                             "FileName TEXT, FilePath TEXT, BalanceQuantity TEXT, ShortCloseQuantity TEXT, ShortCloseReasonId TEXT, ShortCloseBy TEXT, " +
-                            "ShortCloseDate TEXT, CreateBy TEXT, CreateDate TEXT, Latitude TEXT, Longitude TEXT, Accuracy TEXT, IsSync TEXT);";
+                            "ShortCloseDate TEXT, CreateBy TEXT, CreateDate TEXT, Latitude TEXT, " +
+                            "Longitude TEXT, Accuracy TEXT, IsSync TEXT);",
+            PendingDispatchForDelivery_CREATE =
+                    "CREATE TABLE IF NOT EXISTS PendingDispatchForDelivery(Id TEXT, Code TEXT, " +
+                            "DispatchForId TEXT, DispatchForName TEXT, DispatchForMobile TEXT, " +
+                            "VehicleNo TEXT, DriverName TEXT, DriverMobileNo TEXT);",
+            PendingDispatchDetailsForDelivery_CREATE = "CREATE TABLE IF NOT EXISTS " +
+                    "PendingDispatchDetailsForDelivery (DispatchId TEXT, BookingId TEXT, Rate TEXT, " +
+                    "PolybagTypeId TEXT, PolybagTitle TEXT, Quantity TEXT)";
+
 
     static String prevfarmCroppingUniqueId = "";
     /*Context of the application using the database.*/
@@ -1658,6 +1667,58 @@ public class DatabaseAdapter {
 
         db = dbHelper.getWritableDatabase();
         db.insert("NurseryInterCropping", null, newValues);
+        result = "success";
+        return result;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Methods insert details of Pending Dispatch for Delivery">
+    public void clearPendingDispatchForDelivery() {
+        db.execSQL("DELETE FROM PendingDispatchForDelivery");
+    }
+
+    public String insertPendingDispatchForDelivery(String id, String code, String dispatchForId,
+                                                   String dispatchForName, String
+                                                           dispatchForMobile, String
+                                                           vehicleNo, String driverName,
+                                                   String driverMobileNo) {
+        result = "fail";
+        newValues = new ContentValues();
+
+        newValues.put("Id", id);
+        newValues.put("Code", code);
+        newValues.put("DispatchForId", dispatchForId);
+        newValues.put("DispatchForName", dispatchForName);
+        newValues.put("DispatchForMobile", dispatchForMobile);
+        newValues.put("VehicleNo", vehicleNo);
+        newValues.put("DriverName", driverName);
+        newValues.put("DriverMobileNo", driverMobileNo);
+
+        db = dbHelper.getWritableDatabase();
+        db.insert("PendingDispatchForDelivery", null, newValues);
+        result = "success";
+        return result;
+    }
+
+    public void clearPendingDispatchDetailForDelivery() {
+        db.execSQL("DELETE FROM PendingDispatchDetailsForDelivery");
+    }
+
+    public String insertPendingDispatchDetailForDelivery(String DispatchId, String BookingId, String
+            Rate, String PolybagTypeId, String PolybagTitle, String Quantity) {
+
+        result = "fail";
+        newValues = new ContentValues();
+
+        newValues.put("DispatchId", DispatchId);
+        newValues.put("BookingId", BookingId);
+        newValues.put("Rate", Rate);
+        newValues.put("PolybagTypeId", PolybagTypeId);
+        newValues.put("PolybagTitle", PolybagTitle);
+        newValues.put("Quantity", Quantity);
+
+        db = dbHelper.getWritableDatabase();
+        db.insert("PendingDispatchDetailsForDelivery", null, newValues);
         result = "success";
         return result;
     }
@@ -6360,6 +6421,30 @@ public class DatabaseAdapter {
         }
         cursor.close();
         return wordList;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get the list of Pending Dispatches for Delivery">
+    public ArrayList<HashMap<String, String>> getPendingDispatchesForDelivery() {
+        ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
+        selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForName, SUM" +
+                "(t2.Quantity) AS TotalDispatch FROM PendingDispatchForDelivery t1, " +
+                "PendingDispatchDetailsForDelivery t2 WHERE t2.DispatchId = t1.Id GROUP BY t1.Id," +
+                " t1.Code, t1.VehicleNo, t1.DispatchForName ORDER BY t1.Id";
+        /*selectQuery = "SELECT Id, Code, VehicleNo, DispatchForName, 10 AS TotalDispatch FROM " +
+                "PendingDispatchForDelivery";*/
+        cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
+            map = new HashMap<>();
+            map.put("Id", cursor.getString(0));
+            map.put("Code", cursor.getString(1));
+            map.put("VehicleNo", cursor.getString(2));
+            map.put("DispatchForName", cursor.getString(3));
+            map.put("TotalDispatch", cursor.getString(4));
+            dataList.add(map);
+        }
+        cursor.close();
+        return dataList;
     }
     //</editor-fold>
 

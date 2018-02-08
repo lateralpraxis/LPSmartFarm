@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
@@ -58,16 +57,16 @@ public class Common {
     //QA
     //public final String domain = "http://122.180.148.98:81";
     //Development
-    public final String domain = "http://122.180.148.98";
+    //public final String domain = "http://122.180.148.98";
     //public final String domain = "http://www.lateralpraxis.co.in:81";
     //public final String domain = "http://10.0.2.2";
+    //Mumbai office
+    public final String domain = "http://114.143.190.166";
     public final String url = domain + "/FarmArt/Shared/Services/Android.asmx";
     public String log = "farmart_app";
-    private DatabaseAdapter databaseAdapter;
-
     public String deviceIP = "";
-
     UserSessionManager session;
+    private DatabaseAdapter databaseAdapter;
 
     /*Constructor*/
     public Common(Context context) {
@@ -75,18 +74,6 @@ public class Common {
         session = new UserSessionManager(c);
         databaseAdapter = new DatabaseAdapter(c);
         user = session.getLoginUserDetails();
-    }
-
-    /*Check device has Internet connection*/
-    public boolean isConnected() {
-        ConnectivityManager connMgr = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected())
-            return true;
-        else {
-            showToast("Unable to connect to Internet !");
-            return false;
-        }
     }
 
     /*Get the IP address of the device on which application is running*/
@@ -116,6 +103,18 @@ public class Common {
             ex.printStackTrace();
         }
         return "";
+    }
+
+    /*Check device has Internet connection*/
+    public boolean isConnected() {
+        ConnectivityManager connMgr = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected())
+            return true;
+        else {
+            showToast("Unable to connect to Internet !");
+            return false;
+        }
     }
 
     //<editor-fold desc="Show Toast message">
