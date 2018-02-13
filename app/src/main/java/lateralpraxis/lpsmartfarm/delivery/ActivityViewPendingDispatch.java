@@ -35,7 +35,7 @@ public class ActivityViewPendingDispatch extends Activity {
     private TextView tvVehicle, tvDriver, tvMobile;
     private int lsize = 0;
     private TextView tvEmpty;
-    private ListView lvPendingDispatch;
+    private ListView lvPendingDispatchForDelivery;
     private View tvDivider;
     private DatabaseAdapter dba;
     private UserSessionManager session;
@@ -70,7 +70,7 @@ public class ActivityViewPendingDispatch extends Activity {
         //<editor-fold desc="Find controls by Id">
         tvEmpty = findViewById(R.id.tvEmpty);
         tvDivider = findViewById(R.id.tvDivider);
-        lvPendingDispatch = findViewById(R.id.lvPendingDispatch);
+        lvPendingDispatchForDelivery = findViewById(R.id.lvPendingDispatchForDelivery);
         //</editor-fold>
 
         //<editor-fold desc="Get Extra values from Intent call">
@@ -87,10 +87,12 @@ public class ActivityViewPendingDispatch extends Activity {
             startActivity(intent);
             finish();
         }
-        lvPendingDispatch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lvPendingDispatchForDelivery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> lv, View item, int position, long id) {
                 Intent intent = new Intent(ActivityViewPendingDispatch.this, ActivityAddDelivery.class);
-                intent.putExtra("DispatchId", String.valueOf(((TextView) item.findViewById(R.id.tvDispatchId)).getText().toString()));
+                intent.putExtra("dispatchId", String.valueOf(((TextView) item.findViewById(R.id.tvDispatchId)).getText().toString()));
+                intent.putExtra("driverName", String.valueOf(((TextView) item.findViewById(R.id.tvDriverName)).getText().toString()));
+                intent.putExtra("driverMobileNo", String.valueOf(((TextView) item.findViewById(R.id.tvDriverMobileNo)).getText().toString()));
                 startActivity(intent);
                 finish();
             }
@@ -103,15 +105,15 @@ public class ActivityViewPendingDispatch extends Activity {
         dispatchData = dba.getPendingDispatchesForDelivery();
         dba.close();
         if (dispatchData.size() != 0) {
-            lvPendingDispatch.setAdapter(new CustomAdapter(mContext, dispatchData));
+            lvPendingDispatchForDelivery.setAdapter(new CustomAdapter(mContext, dispatchData));
 
-            ViewGroup.LayoutParams params = lvPendingDispatch.getLayoutParams();
-            lvPendingDispatch.setLayoutParams(params);
-            lvPendingDispatch.requestLayout();
+            ViewGroup.LayoutParams params = lvPendingDispatchForDelivery.getLayoutParams();
+            lvPendingDispatchForDelivery.setLayoutParams(params);
+            lvPendingDispatchForDelivery.requestLayout();
             tvEmpty.setVisibility(View.GONE);
             tvDivider.setVisibility(View.VISIBLE);
         } else {
-            lvPendingDispatch.setAdapter(null);
+            lvPendingDispatchForDelivery.setAdapter(null);
             tvEmpty.setVisibility(View.VISIBLE);
             tvDivider.setVisibility(View.GONE);
         }
@@ -186,7 +188,7 @@ public class ActivityViewPendingDispatch extends Activity {
     }
 
     public static class ViewHolder {
-        TextView tvDispatchId, tvDispatchDetails, tvDispatchToDetails;
+        TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchDetails, tvDispatchToDetails;
         int ref;
     }
 
@@ -240,11 +242,15 @@ public class ActivityViewPendingDispatch extends Activity {
             holder.ref = position;
 
             holder.tvDispatchId = convertView.findViewById(R.id.tvDispatchId);
+            holder.tvDriverName = convertView.findViewById(R.id.tvDriverName);
+            holder.tvDriverMobileNo = convertView.findViewById(R.id.tvDriverMobileNo);
             holder.tvDispatchDetails = convertView.findViewById(R.id.tvDispatchDetails);
             holder.tvDispatchToDetails = convertView.findViewById(R.id.tvDispatchToDetails);
 
             final HashMap<String, String> itemData = _listData.get(position);
             holder.tvDispatchId.setText(itemData.get("Id"));
+            holder.tvDriverName.setText(itemData.get("DriverName"));
+            holder.tvDriverMobileNo.setText(itemData.get("DriverMobileNo"));
             holder.tvDispatchDetails.setText(itemData.get("VehicleNo") + " - " + itemData.get("Code"));
             holder.tvDispatchToDetails.setText(itemData.get("DispatchForName") + " - " + itemData.get("TotalDispatch"));
 

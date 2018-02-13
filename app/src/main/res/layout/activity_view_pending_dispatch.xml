@@ -34,7 +34,7 @@
                 android:textColor="@color/colorBlack" />
 
             <lateralpraxis.lpsmartfarm.NonScrollableListView
-                android:id="@+id/lvPendingDispatch"
+                android:id="@+id/lvPendingDispatchForDelivery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@color/colorGold"

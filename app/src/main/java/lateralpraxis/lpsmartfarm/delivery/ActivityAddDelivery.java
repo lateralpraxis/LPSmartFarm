@@ -23,7 +23,7 @@ import lateralpraxis.lpsmartfarm.UserSessionManager;
 public class ActivityAddDelivery extends Activity {
 
     private final Context mContext = this;
-    private TextView tvVehicle, tvDriver, tvMobile;
+    private TextView tvDispatchId, tvDriverName, tvDriverMobileNo;
 
     private DatabaseAdapter dba;
     private UserSessionManager session;
@@ -31,6 +31,8 @@ public class ActivityAddDelivery extends Activity {
 
     private String userId;
     private String lang;
+
+    private String dispatchId, driverName, driverMobileNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,28 @@ public class ActivityAddDelivery extends Activity {
         //<editor-fold desc="Set Action Bar">
         ActionBar ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+        //</editor-fold>
+
+        //<editor-fold desc="Find Controls on the layout">
+        tvDispatchId = findViewById(R.id.tvDispatchId);
+        tvDriverName = findViewById(R.id.tvDriverName);
+        tvDriverMobileNo = findViewById(R.id.tvDriverMobileNo);
+        //</editor-fold>
+
+
+        //<editor-fold desc="Get Extra values from Intent call">
+        Bundle extras = this.getIntent().getExtras();
+        if (extras != null) {
+            dispatchId = extras.getString("dispatchId");
+            driverName = extras.getString("driverName");
+            driverMobileNo = extras.getString("driverMobileNo");
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="Assign values to layout controls">
+        tvDispatchId.setText(dispatchId);
+        tvDriverName.setText(driverName);
+        tvDriverMobileNo.setText(driverMobileNo);
         //</editor-fold>
     }
 
