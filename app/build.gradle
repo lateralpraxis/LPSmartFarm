@@ -14,15 +14,32 @@ android {
     defaultConfig {
         applicationId "lateralpraxis.lpsmartfarm"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            ext.enableCrashlytics = false
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions "stage", "mode"
+    productFlavors {
+        dev {
+            dimension "stage"
+            minSdkVersion 16
+            versionNameSuffix "-dev"
+            applicationIdSuffix ".dev"
+            resConfigs "en", "xxhdpi"
+        }
+
+        prod {
+            dimension "mode"
         }
     }
     sourceSets {
