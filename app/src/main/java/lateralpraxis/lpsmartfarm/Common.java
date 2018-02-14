@@ -12,6 +12,7 @@ import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+
+import lateralpraxis.type.CustomType;
 
 /**
  * Created by LPNOIDA01 on 9/26/2017.
@@ -527,6 +530,5 @@ public class Common {
 
         return responseJSON;
     }
-
 
 }

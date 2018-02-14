@@ -138,6 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         _db.execSQL(DatabaseAdapter.PaymentMode_CREATE);
         _db.execSQL(DatabaseAdapter.PolyBagRate_CREATE);
         _db.execSQL(DatabaseAdapter.Booking_CREATE);
+        _db.execSQL(DatabaseAdapter.ShortCloseReason_CREATE);
         _db.execSQL(DatabaseAdapter.PendingDispatchForDelivery_CREATE);
         _db.execSQL(DatabaseAdapter.PendingDispatchDetailsForDelivery_CREATE);
     }

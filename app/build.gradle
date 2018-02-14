@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'lateralpraxis.co.in'
             keyPassword 'cuboid@12'
-            storeFile file('C:/Workarea/Android/Projects/my.keystroke')
+            storeFile file('E:/Android/Projects/my.keystroke')
             storePassword 'cuboid@12'
         }
     }

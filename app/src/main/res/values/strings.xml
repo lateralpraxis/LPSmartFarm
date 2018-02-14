@@ -604,6 +604,8 @@
     <string name="label_Amount">Amount</string>
     <string name="label_Advance">Advance</string>
     <string name="label_PaymentMode">Mode</string>
+    <string name="label_DispatchFor">Dispatch For</string>
+    <string name="label_ShortClose">Short Close</string>
 
     <!--Start of Booking Cancellation Strings-->
     <string name="label_PendingBooking">Booking Details</string>

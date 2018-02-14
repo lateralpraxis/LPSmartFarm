@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -284,6 +285,8 @@ public class DatabaseAdapter {
                             "FileName TEXT, FilePath TEXT, BalanceQuantity TEXT, ShortCloseQuantity TEXT, ShortCloseReasonId TEXT, ShortCloseBy TEXT, " +
                             "ShortCloseDate TEXT, CreateBy TEXT, CreateDate TEXT, Latitude TEXT, " +
                             "Longitude TEXT, Accuracy TEXT, IsSync TEXT);",
+            ShortCloseReason_CREATE =
+                    "CREATE TABLE IF NOT EXISTS ShortCloseReason(Id TEXT, Title TEXT, TitleLocal TEXT);",
             PendingDispatchForDelivery_CREATE =
                     "CREATE TABLE IF NOT EXISTS PendingDispatchForDelivery(Id TEXT, Code TEXT, " +
                             "DispatchForId TEXT, DispatchForName TEXT, DispatchForMobile TEXT, " +
@@ -4703,6 +4706,9 @@ public class DatabaseAdapter {
             case "paymentmode":
                 selectQuery = "SELECT DISTINCT Id, Title FROM PaymentMode ORDER BY Title COLLATE NOCASE ASC";
                 break;
+            case "shortclosereason":
+                selectQuery = "SELECT DISTINCT Id, Title FROM ShortCloseReason ORDER BY Title COLLATE NOCASE ASC";
+                break;
         }
         cursor = db.rawQuery(selectQuery, null);
 
@@ -4785,6 +4791,8 @@ public class DatabaseAdapter {
                 labels.add(new CustomType(0, "...Select Nursery Zone"));
             else if (masterType.equalsIgnoreCase("paymentmode"))
                 labels.add(new CustomType(0, "...Select Payment Mode"));
+            else if (masterType.equalsIgnoreCase("shortclosereason"))
+                labels.add(new CustomType(0, "...Select ShotClose Readon"));
             else
                 labels.add(new CustomType(0, "...Select"));
         } else {
@@ -4864,6 +4872,8 @@ public class DatabaseAdapter {
                 labels.add(new CustomType(0, "पौधशाला का चयन करें "));
             else if (masterType.equalsIgnoreCase("nurseryzone"))
                 labels.add(new CustomType(0, "पौधशाला ज़ोन का चयन करें Nursery Zone"));
+            else if (masterType.equalsIgnoreCase("shortclosereason"))
+                labels.add(new CustomType(0, "संक्षिप्त बंद कारण"));
             else
                 labels.add(new CustomType(0, "चयन करें"));
         }
@@ -5012,6 +5022,9 @@ public class DatabaseAdapter {
             case "nurserybytype":
                 selectQuery = "SELECT DISTINCT Id, Title FROM Nursery WHERE NurseryType='" + filter + "' ORDER BY Title COLLATE NOCASE ASC";
                 break;
+            case "shortclosereason":
+                selectQuery = "SELECT DISTINCT Id, Title FROM ShortCloseReason ORDER BY Title COLLATE NOCASE ASC";
+                break;
         }
         cursor = db.rawQuery(selectQuery, null);
 
@@ -5091,6 +5104,8 @@ public class DatabaseAdapter {
             labels.add(new CustomType(0, "...Select Nursery"));
         else if (masterType.equalsIgnoreCase("nurseryzone"))
             labels.add(new CustomType(0, "...Select Nursery Zone"));
+        else if (masterType.equalsIgnoreCase("shortclosereason"))
+            labels.add(new CustomType(0, "...Select ShortClose Reason"));
         else
             labels.add(new CustomType(0, "...Select"));
 
@@ -6427,8 +6442,8 @@ public class DatabaseAdapter {
     //<editor-fold desc="Get the list of Pending Dispatches for Delivery">
     public ArrayList<HashMap<String, String>> getPendingDispatchesForDelivery() {
         ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
-        selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForName, SUM(t2.Quantity) AS TotalDispatch, t1.DriverName, " +
-                "t1.DriverMobileNo  FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2 " +
+        selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForName, SUM(t2.Quantity) AS TotalDispatch, DriverName, " +
+                "DriverMobileNo   FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2 " +
                 "WHERE t2.DispatchId = t1.Id " +
                 "GROUP BY t1.Id,t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DriverName, t1.DriverMobileNo ORDER BY t1.Id";
         /*selectQuery = "SELECT Id, Code, VehicleNo, DispatchForName, 10 AS TotalDispatch FROM " +
@@ -6443,6 +6458,28 @@ public class DatabaseAdapter {
             map.put("TotalDispatch", cursor.getString(4));
             map.put("DriverName", cursor.getString(5));
             map.put("DriverMobileNo", cursor.getString(6));
+            dataList.add(map);
+        }
+        cursor.close();
+        return dataList;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get the list of Dispatch Items for selected Delivery">
+    public ArrayList<HashMap<String, String>> getPendingDispatchItemsForDelivery(String dispatchId) {
+        ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
+        selectQuery = "SELECT DispatchId, BookingId, Rate, PolybagTypeId, PolybagTitle, Quantity " +
+                "FROM PendingDispatchDetailsForDelivery " +
+                "WHERE DispatchId = '" + dispatchId + "'";
+        cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
+            map = new HashMap<>();
+            map.put("DispatchId", cursor.getString(0));
+            map.put("BookingId", cursor.getString(1));
+            map.put("Rate", cursor.getString(2));
+            map.put("PolybagId", cursor.getString(3));
+            map.put("PolybagTitle", cursor.getString(4));
+            map.put("Quantity", cursor.getString(5));
             dataList.add(map);
         }
         cursor.close();

@@ -69,8 +69,7 @@
                     android:text="@string/label_mobilehead" />
 
                 <TextView
-                    android:id="@+id/tvDriverMobileno"
-                    style="@style/style_dataField"
+                    android:id="@+id/tvDriverMobileNo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.7" />
@@ -83,6 +82,86 @@
                 android:textAllCaps="true" />
 
             <!-- display delivery input fields here -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:text="@string/label_DispatchFor" />
+
+                <TextView
+                    android:id="@+id/tvDispatchFor"
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6" />
+
+            </LinearLayout>
+
+            <lateralpraxis.lpsmartfarm.NonScrollableListView
+                android:id="@+id/lvDispatchItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/colorGold"
+                android:dividerHeight="1sp"
+                tools:ignore="RtlHardcoded,RtlSymmetry">
+
+            </lateralpraxis.lpsmartfarm.NonScrollableListView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:text="@string/label_Total" />
+
+                <TextView
+                    android:id="@+id/tvTotalDelivery"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    style="@style/style_dataLabel"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:text="@string/label_ShortClose" />
+
+                <Spinner
+                    android:id="@+id/spShortClose"
+                    style="@style/Widget.AppCompat.Spinner.Underlined"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.6" />
+
+            </LinearLayout>
 
             <!-- Back / Save Buttons -->
             <LinearLayout

@@ -32,19 +32,14 @@ public class ActivityViewPendingDispatch extends Activity {
 
     private final Context mContext = this;
     HashMap<String, String> map = null;
-    private TextView tvVehicle, tvDriver, tvMobile;
-    private int lsize = 0;
     private TextView tvEmpty;
     private ListView lvPendingDispatchForDelivery;
     private View tvDivider;
     private DatabaseAdapter dba;
     private UserSessionManager session;
     private Common common;
-    private CustomAdapter customAdapter;
-    private String userId, responseJSON;
-    private int listSize = 0;
-    private ArrayList<HashMap<String, String>> dispatchData = null, wordList = null;
-    private String lang;
+    private ArrayList<HashMap<String, String>> dispatchData = null;
+    private String userId, lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +88,7 @@ public class ActivityViewPendingDispatch extends Activity {
                 intent.putExtra("dispatchId", String.valueOf(((TextView) item.findViewById(R.id.tvDispatchId)).getText().toString()));
                 intent.putExtra("driverName", String.valueOf(((TextView) item.findViewById(R.id.tvDriverName)).getText().toString()));
                 intent.putExtra("driverMobileNo", String.valueOf(((TextView) item.findViewById(R.id.tvDriverMobileNo)).getText().toString()));
+                intent.putExtra("dispatchFor", String.valueOf(((TextView) item.findViewById(R.id.tvDispatchFor)).getText().toString()));
                 startActivity(intent);
                 finish();
             }
@@ -188,7 +184,7 @@ public class ActivityViewPendingDispatch extends Activity {
     }
 
     public static class ViewHolder {
-        TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchDetails, tvDispatchToDetails;
+        TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchFor, tvDispatchDetails, tvDispatchToDetails;
         int ref;
     }
 
@@ -197,8 +193,7 @@ public class ActivityViewPendingDispatch extends Activity {
         private Context docContext;
         private LayoutInflater inflater;
 
-        public CustomAdapter(Context context, ArrayList<HashMap<String, String>>
-                listData) {
+        public CustomAdapter(Context context, ArrayList<HashMap<String, String>> listData) {
             this.docContext = context;
             inflater = LayoutInflater.from(docContext);
             _listData = listData;
@@ -244,6 +239,7 @@ public class ActivityViewPendingDispatch extends Activity {
             holder.tvDispatchId = convertView.findViewById(R.id.tvDispatchId);
             holder.tvDriverName = convertView.findViewById(R.id.tvDriverName);
             holder.tvDriverMobileNo = convertView.findViewById(R.id.tvDriverMobileNo);
+            holder.tvDispatchFor = convertView.findViewById(R.id.tvDispatchFor);
             holder.tvDispatchDetails = convertView.findViewById(R.id.tvDispatchDetails);
             holder.tvDispatchToDetails = convertView.findViewById(R.id.tvDispatchToDetails);
 
@@ -251,6 +247,7 @@ public class ActivityViewPendingDispatch extends Activity {
             holder.tvDispatchId.setText(itemData.get("Id"));
             holder.tvDriverName.setText(itemData.get("DriverName"));
             holder.tvDriverMobileNo.setText(itemData.get("DriverMobileNo"));
+            holder.tvDispatchFor.setText(itemData.get("DispatchForName"));
             holder.tvDispatchDetails.setText(itemData.get("VehicleNo") + " - " + itemData.get("Code"));
             holder.tvDispatchToDetails.setText(itemData.get("DispatchForName") + " - " + itemData.get("TotalDispatch"));
 
