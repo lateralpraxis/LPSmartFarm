@@ -3589,6 +3589,63 @@ public class ActivityHome extends Activity {
                     }
                     dba.close();
                     if (common.isConnected()) {
+                        AsyncShortCloseReasonWSCall task = new AsyncShortCloseReasonWSCall();
+                        task.execute();
+                    }
+                } else {
+                    common.showAlert(ActivityHome.this, result, false);
+                }
+            } catch (Exception e) {
+                common.showAlert(ActivityHome.this, "Pincode Downloading failed: " + e.toString(), true);
+            }
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Downloading Pincode..");
+            Dialog.setCancelable(false);
+            Dialog.show();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+    }
+
+    //Async class to handle PinCode WS call as separate UI Thread
+    private class AsyncShortCloseReasonWSCall extends AsyncTask<String, Void, String> {
+        private ProgressDialog Dialog = new ProgressDialog(context);
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                responseJSON = "";
+                responseJSON = common.invokeTwinJSONWS("ReadShortCloseReason", "action", userId, "userId", syncByRole, "role", "ReadMaster", common.url);
+
+            } catch (SocketTimeoutException e) {
+                return "ERROR: TimeOut Exception. Either Server is busy or Internet is slow";
+            } catch (final Exception e) {
+                // TODO: handle exception
+                e.printStackTrace();
+                return "ERROR: " + "Unable to fetch response from server.";
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            try {
+                if (!result.contains("ERROR: ")) {
+                    JSONArray jsonArray = new JSONArray(responseJSON);
+                    dba.open();
+                    for (int i = 0; i < jsonArray.length(); ++i) {
+                        dba.insertPinCode(jsonArray.getJSONObject(i).getString("PinCodeId"), jsonArray.getJSONObject(i).getString("StateId"), jsonArray.getJSONObject(i).getString("DistrictId"), jsonArray.getJSONObject(i).getString("CityId"), jsonArray.getJSONObject(i).getString("BlockId"), jsonArray.getJSONObject(i).getString("PanchayatId"), jsonArray.getJSONObject(i).getString("VillageId"), jsonArray.getJSONObject(i).getString("PinCode"));
+                    }
+                    dba.close();
+                    if (common.isConnected()) {
                         AsyncFarmerTypeWSCall task = new AsyncFarmerTypeWSCall();
                         task.execute();
                     }

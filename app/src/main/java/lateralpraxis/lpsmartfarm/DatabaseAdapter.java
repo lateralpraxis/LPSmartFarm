@@ -4792,7 +4792,7 @@ public class DatabaseAdapter {
             else if (masterType.equalsIgnoreCase("paymentmode"))
                 labels.add(new CustomType(0, "...Select Payment Mode"));
             else if (masterType.equalsIgnoreCase("shortclosereason"))
-                labels.add(new CustomType(0, "...Select ShotClose Readon"));
+                labels.add(new CustomType(0, "...Select ShortClose Reason"));
             else
                 labels.add(new CustomType(0, "...Select"));
         } else {
