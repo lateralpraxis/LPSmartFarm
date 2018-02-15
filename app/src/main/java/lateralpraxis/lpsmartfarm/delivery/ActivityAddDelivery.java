@@ -3,11 +3,14 @@ package lateralpraxis.lpsmartfarm.delivery;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,9 +19,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,11 +45,12 @@ public class ActivityAddDelivery extends Activity {
     UserSessionManager session;
     Common common;
     String userId, lang;
-    private TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchFor;
+    private TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchFor, tvTotalDelivery;
     private Spinner spShortClose;
     private ListView lvDispatchItems;
     private ArrayList<HashMap<String, String>> dispatchData = null;
     private String dispatchId, driverName, driverMobileNo, dispatchFor;
+    private Button btnBack, btnSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +79,11 @@ public class ActivityAddDelivery extends Activity {
         tvDriverMobileNo = findViewById(R.id.tvDriverMobileNo);
         tvDispatchFor = findViewById(R.id.tvDispatchFor);
         lvDispatchItems = findViewById(R.id.lvDispatchItems);
+        tvTotalDelivery = findViewById(R.id.tvTotalDelivery);
         spShortClose = findViewById(R.id.spShortClose);
+
+        btnBack = findViewById(R.id.btnBack);
+        btnSave = findViewById(R.id.btnSave);
         //</editor-fold>
 
 
@@ -96,6 +108,75 @@ public class ActivityAddDelivery extends Activity {
         tvDriverMobileNo.setText(driverMobileNo);
         tvDispatchFor.setText(dispatchFor);
         //</editor-fold>
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityAddDelivery.this, ActivityViewPendingDispatch.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        /*Save button click Listener*/
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
+                        (ActivityAddDelivery.this);
+                alertDialogBuilder.setTitle("Confirmation");
+                alertDialogBuilder
+                        .setMessage("Are you sure, you want to save Delivery?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                for (int i = 0; i < lvDispatchItems.getCount(); i++) {
+                                    LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
+                                    TextView tvDispatchId = (TextView) layout1.getChildAt(0);
+                                    TextView tvBookingId = (TextView) layout1.getChildAt(1);
+                                    LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
+                                    TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
+                                    EditText etDeliveryQty = (EditText) layout2.getChildAt(3);
+                                    dba.open();
+                                    dba.insertDeliveryDetailsForDispatch(
+                                            tvDispatchId.getText().toString(),
+                                            tvBookingId.getText().toString(),
+                                            tvDispatchItemId.getText().toString(),
+                                            etDeliveryQty.getText().toString());
+                                    dba.close();
+
+                                    Intent intent = new Intent(ActivityAddDelivery.this,
+                                            ActivityAddPayment.class);
+                                    /*intent.putExtra("nurseryUniqueId", nurseryUniqueId);
+                                    intent.putExtra("nurseryId", nurseryId);
+                                    intent.putExtra("nurseryType", nurseryType);
+                                    intent.putExtra("nurseryName", nurseryName);
+                                    intent.putExtra("nurseryZone", nurseryZoneName);
+                                    intent.putExtra("nurseryZoneId", zoneId);*/
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                if (!String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()).trim().isEmpty()) {
+                                    dba.open();
+                                    dba.updatePendingDispatchForDeliveryShortCloseReason(
+                                            tvDispatchId.getText().toString(),
+                                            String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()));
+                                    dba.close();
+                                }
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                /*Just close the dialog without doing anything*/
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+            }
+        });
 
         if (common.isConnected()) {
             BindData();
@@ -127,9 +208,9 @@ public class ActivityAddDelivery extends Activity {
             lvDispatchItems.setLayoutParams(params);
             lvDispatchItems.requestLayout();
         }
-
     }
 
+    /* <editor-fold desc="Back button pressed"> */
     /**
      * Method to load previous Activity if back is pressed
      */
@@ -197,9 +278,15 @@ public class ActivityAddDelivery extends Activity {
             ab.setHomeButtonEnabled(true);
         }
     }
+    //</editor-fold>
+
+    private Integer getValue(String val) {
+        return Integer.valueOf(val.trim().isEmpty() ? "0" : val);
+    }
 
     public static class ViewHolder {
-        TextView tvDispatchItem, tvDispatchItemQty;
+        TextView tvDispatchId, tvBookingId, tvDispatchItem, tvDispatchItemId, tvDispatchItemQty;
+        EditText etDeliveryQty;
         int ref;
     }
 
@@ -251,17 +338,57 @@ public class ActivityAddDelivery extends Activity {
             }
             holder.ref = position;
 
+            holder.tvDispatchId = convertView.findViewById(R.id.tvDispatchId);
+            holder.tvBookingId = convertView.findViewById(R.id.tvBookingId);
             holder.tvDispatchItem = convertView.findViewById(R.id.tvDispatchItem);
             holder.tvDispatchItemQty = convertView.findViewById(R.id.tvDispatchItemQty);
+            holder.tvDispatchItemId = convertView.findViewById(R.id.tvDispatchItemId);
+            holder.etDeliveryQty = convertView.findViewById(R.id.etDeliveryQty);
 
             final HashMap<String, String> itemData = _listData.get(position);
+            holder.tvDispatchId.setText(itemData.get("DispatchId"));
+            holder.tvBookingId.setText(itemData.get("BookingId"));
             holder.tvDispatchItem.setText(itemData.get("PolybagTitle"));
-            /*holder.tvDispatchItemQty.setText(itemData.get("DriverName"));*/
+            holder.tvDispatchItemId.setText(itemData.get("PolybagId"));
+            holder.tvDispatchItemQty.setText(itemData.get("Quantity"));
+
+            tvTotalDelivery.setText("");
+
+            holder.etDeliveryQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    Integer totalDelivery = 0;
+                    if (!hasFocus) {
+                        for (int i = 0; i < lvDispatchItems.getCount(); i++) {
+                            LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
+                            TextView tvDispatchId = (TextView) layout1.getChildAt(0);
+                            TextView tvBookingId = (TextView) layout1.getChildAt(1);
+                            LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
+                            TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
+                            TextView tvDispatchItemQty = (TextView) layout2.getChildAt(2);
+                            EditText etDeliveryQty = (EditText) layout2.getChildAt(3);
+                            etDeliveryQty.setHint("Maximum: " + tvDispatchItemQty.getText());
+                            if (getValue(etDeliveryQty.getEditableText().toString()) > getValue(tvDispatchItemQty.getText().toString())) {
+                                common.showToast("Cannot be greater than " + tvDispatchItemQty.getText(), Toast.LENGTH_LONG, 0);
+                                etDeliveryQty.setText("");
+                            }
+                            totalDelivery = totalDelivery + getValue(etDeliveryQty.getEditableText().toString());
+
+                            //TODO: Insert record in the SQLite table
+
+                           /* dba.open();
+                            dba.insertDeliveryDetailsForDispatch(tvDispatchId.getText().toString(), tvBookingId.getText().toString(), tvDispatchItemId.getText().toString(), etDeliveryQty.getText().toString());
+                            dba.close();*/
+                        }
+                        tvTotalDelivery.setText(totalDelivery.toString());
+
+                    }
+                }
+            });
 
             convertView.setBackgroundColor(Color.parseColor((position % 2 == 1) ? "#EEEEEE" : "#FFFFFF"));
             return convertView;
         }
 
     }
-    //</editor-fold>
 }

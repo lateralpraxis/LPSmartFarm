@@ -141,6 +141,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         _db.execSQL(DatabaseAdapter.ShortCloseReason_CREATE);
         _db.execSQL(DatabaseAdapter.PendingDispatchForDelivery_CREATE);
         _db.execSQL(DatabaseAdapter.PendingDispatchDetailsForDelivery_CREATE);
+        _db.execSQL(DatabaseAdapter.DeliveryDetailsForDispatch_CREATE);
     }
 
     @Override

@@ -2110,7 +2110,7 @@ public class ActivityHome extends Activity {
                                     jsonArrayDet.getJSONObject(i).getString("Rate"),
                                     jsonArrayDet.getJSONObject(i).getString("PolybagTypeId"),
                                     jsonArrayDet.getJSONObject(i).getString("PolybagTitle"),
-                                    jsonArrayDet.getJSONObject(i).getString("Quantity"));
+                                    Integer.valueOf(jsonArrayDet.getJSONObject(i).getString("Quantity")));
                         }
                         dba.close();
                         if (common.isConnected()) {
@@ -3642,7 +3642,7 @@ public class ActivityHome extends Activity {
                     JSONArray jsonArray = new JSONArray(responseJSON);
                     dba.open();
                     for (int i = 0; i < jsonArray.length(); ++i) {
-                        dba.insertPinCode(jsonArray.getJSONObject(i).getString("PinCodeId"), jsonArray.getJSONObject(i).getString("StateId"), jsonArray.getJSONObject(i).getString("DistrictId"), jsonArray.getJSONObject(i).getString("CityId"), jsonArray.getJSONObject(i).getString("BlockId"), jsonArray.getJSONObject(i).getString("PanchayatId"), jsonArray.getJSONObject(i).getString("VillageId"), jsonArray.getJSONObject(i).getString("PinCode"));
+                        dba.insertShortCloseReason(jsonArray.getJSONObject(i).getString("A"), jsonArray.getJSONObject(i).getString("B"), jsonArray.getJSONObject(i).getString("C"));
                     }
                     dba.close();
                     if (common.isConnected()) {
@@ -3653,14 +3653,14 @@ public class ActivityHome extends Activity {
                     common.showAlert(ActivityHome.this, result, false);
                 }
             } catch (Exception e) {
-                common.showAlert(ActivityHome.this, "Pincode Downloading failed: " + e.toString(), true);
+                common.showAlert(ActivityHome.this, "ShortClose Reason Downloading failed: " + e.toString(), true);
             }
             Dialog.dismiss();
         }
 
         @Override
         protected void onPreExecute() {
-            Dialog.setMessage("Downloading Pincode..");
+            Dialog.setMessage("Downloading ShortClose Reason..");
             Dialog.setCancelable(false);
             Dialog.show();
 

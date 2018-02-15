@@ -49,16 +49,15 @@ import lateralpraxis.type.CustomType;
 
 public class ActivityAddNurseryPlantation extends Activity {
 
-    /*Code for Class Declaration*/
-    Common common;
-    DatabaseAdapter dba;
-    UserSessionManager session;
-
     //-------Varaibles used in Capture GPS---------//
     protected boolean isGPSEnabled = false;
     protected boolean canGetLocation = false;
     protected String latitude = "NA", longitude = "NA", accuracy = "NA";
     protected String latitudeN = "NA", longitudeN = "NA";
+    /*Code for Class Declaration*/
+    Common common;
+    DatabaseAdapter dba;
+    UserSessionManager session;
     double flatitude = 0.0, flongitude = 0.0;
     // GPSTracker class
     GPSTracker gps;

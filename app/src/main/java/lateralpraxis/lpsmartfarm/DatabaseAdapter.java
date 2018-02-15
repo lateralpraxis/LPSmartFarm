@@ -290,11 +290,12 @@ public class DatabaseAdapter {
             PendingDispatchForDelivery_CREATE =
                     "CREATE TABLE IF NOT EXISTS PendingDispatchForDelivery(Id TEXT, Code TEXT, " +
                             "DispatchForId TEXT, DispatchForName TEXT, DispatchForMobile TEXT, " +
-                            "VehicleNo TEXT, DriverName TEXT, DriverMobileNo TEXT);",
+                            "VehicleNo TEXT, DriverName TEXT, DriverMobileNo TEXT, ShortCloseReasonId TEXT);",
             PendingDispatchDetailsForDelivery_CREATE = "CREATE TABLE IF NOT EXISTS " +
                     "PendingDispatchDetailsForDelivery (DispatchId TEXT, BookingId TEXT, Rate TEXT, " +
-                    "PolybagTypeId TEXT, PolybagTitle TEXT, Quantity TEXT)";
-
+                    "PolybagTypeId TEXT, PolybagTitle TEXT, Quantity INTEGER)",
+            DeliveryDetailsForDispatch_CREATE = "CREATE TABLE IF NOT EXISTS DeliveryDetailsForDispatch (DispatchId TEXT, BookingId TEXT, " +
+                    "DispatchItemId TEXT, Quantity INTEGER)";
 
     static String prevfarmCroppingUniqueId = "";
     /*Context of the application using the database.*/
@@ -845,6 +846,20 @@ public class DatabaseAdapter {
         return result;
     }
     //</editor-fold>
+
+    public String insertShortCloseReason(String id, String title, String titleLocal) {
+        result = "fail";
+        newValues = new ContentValues();
+
+        newValues.put("Id", id);
+        newValues.put("Title", title);
+        newValues.put("TitleLocal", titleLocal);
+
+        db = dbHelper.getWritableDatabase();
+        db.insert("ShortCloseReason", null, newValues);
+        result = "success";
+        return result;
+    }
 
     //<editor-fold desc="Method to insert details in Farmer Type Table">
     public String insertFarmerType(String farmerTypeId, String farmerType, String farmerTypeLocal) {
@@ -1708,7 +1723,7 @@ public class DatabaseAdapter {
     }
 
     public String insertPendingDispatchDetailForDelivery(String DispatchId, String BookingId, String
-            Rate, String PolybagTypeId, String PolybagTitle, String Quantity) {
+            Rate, String PolybagTypeId, String PolybagTitle, Integer Quantity) {
 
         result = "fail";
         newValues = new ContentValues();
@@ -3021,6 +3036,40 @@ public class DatabaseAdapter {
         return result;
     }
     //</editor-fold>
+
+    public String insertDeliveryDetailsForDispatch(String dispatchId, String bookingId, String dispatchItemId, String quantity) {
+        try {
+            result = "fail";
+            newValues = new ContentValues();
+
+            newValues.put("DispatchId", dispatchId);
+            newValues.put("BookingId", bookingId);
+            newValues.put("DispatchItemId", dispatchItemId);
+            newValues.put("Quantity", quantity);
+
+            db.insert("DeliveryDetailsForDispatch", null, newValues);
+            result = "success";
+            return result;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String updatePendingDispatchForDeliveryShortCloseReason(String dispatchId, String shortCloseReasonId) {
+        try {
+            result = "fail";
+            selectQuery = "UPDATE PendingDispatchForDelivery " +
+                    "SET ShortCloseReasonId = '" + shortCloseReasonId + "' " +
+                    "WHERE DispatchId ='" + dispatchId + "' ";
+            db.execSQL(selectQuery);
+            result = "success";
+            return result;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+    }
 
     //<editor-fold desc="Method to insert Temp Job Card File Data in temporary Table">
     public String Insert_TempJobCardFile(String activityId, String subActivityId, String type, String fileName) {
