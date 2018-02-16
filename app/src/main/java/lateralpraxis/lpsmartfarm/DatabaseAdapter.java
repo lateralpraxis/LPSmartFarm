@@ -6491,10 +6491,11 @@ public class DatabaseAdapter {
     //<editor-fold desc="Get the list of Pending Dispatches for Delivery">
     public ArrayList<HashMap<String, String>> getPendingDispatchesForDelivery() {
         ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
-        selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForName, SUM(t2.Quantity) AS TotalDispatch, DriverName, " +
-                "DriverMobileNo   FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2 " +
+        selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DispatchForMobile, SUM(t2.Quantity) AS TotalDispatch,  " +
+                "t1.DriverName, t1.DriverMobileNo  " +
+                "FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2 " +
                 "WHERE t2.DispatchId = t1.Id " +
-                "GROUP BY t1.Id,t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DriverName, t1.DriverMobileNo ORDER BY t1.Id";
+                "GROUP BY t1.Id,t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DispatchForMobile, t1.DriverName, t1.DriverMobileNo ORDER BY t1.Id";
         /*selectQuery = "SELECT Id, Code, VehicleNo, DispatchForName, 10 AS TotalDispatch FROM " +
                 "PendingDispatchForDelivery";*/
         cursor = db.rawQuery(selectQuery, null);
@@ -6504,9 +6505,10 @@ public class DatabaseAdapter {
             map.put("Code", cursor.getString(1));
             map.put("VehicleNo", cursor.getString(2));
             map.put("DispatchForName", cursor.getString(3));
-            map.put("TotalDispatch", cursor.getString(4));
-            map.put("DriverName", cursor.getString(5));
-            map.put("DriverMobileNo", cursor.getString(6));
+            map.put("DispatchForMobile", cursor.getString(4));
+            map.put("TotalDispatch", cursor.getString(5));
+            map.put("DriverName", cursor.getString(6));
+            map.put("DriverMobileNo", cursor.getString(7));
             dataList.add(map);
         }
         cursor.close();

@@ -88,7 +88,8 @@ public class ActivityViewPendingDispatch extends Activity {
                 intent.putExtra("dispatchId", String.valueOf(((TextView) item.findViewById(R.id.tvDispatchId)).getText().toString()));
                 intent.putExtra("driverName", String.valueOf(((TextView) item.findViewById(R.id.tvDriverName)).getText().toString()));
                 intent.putExtra("driverMobileNo", String.valueOf(((TextView) item.findViewById(R.id.tvDriverMobileNo)).getText().toString()));
-                intent.putExtra("dispatchFor", String.valueOf(((TextView) item.findViewById(R.id.tvDispatchFor)).getText().toString()));
+                intent.putExtra("dispatchForName", String.valueOf(((TextView) item.findViewById(R.id.tvDispatchForName)).getText().toString()));
+                intent.putExtra("dispatchForMobile", String.valueOf(((TextView) item.findViewById(R.id.tvDispatchForMobile)).getText().toString()));
                 startActivity(intent);
                 finish();
             }
@@ -184,7 +185,7 @@ public class ActivityViewPendingDispatch extends Activity {
     }
 
     public static class ViewHolder {
-        TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchFor, tvDispatchDetails, tvDispatchToDetails;
+        TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchForName, tvDispatchForMobile, tvDispatchDetails, tvDispatchToDetails;
         int ref;
     }
 
@@ -239,7 +240,8 @@ public class ActivityViewPendingDispatch extends Activity {
             holder.tvDispatchId = convertView.findViewById(R.id.tvDispatchId);
             holder.tvDriverName = convertView.findViewById(R.id.tvDriverName);
             holder.tvDriverMobileNo = convertView.findViewById(R.id.tvDriverMobileNo);
-            holder.tvDispatchFor = convertView.findViewById(R.id.tvDispatchFor);
+            holder.tvDispatchForName = convertView.findViewById(R.id.tvDispatchForName);
+            holder.tvDispatchForMobile = convertView.findViewById(R.id.tvDispatchForMobile);
             holder.tvDispatchDetails = convertView.findViewById(R.id.tvDispatchDetails);
             holder.tvDispatchToDetails = convertView.findViewById(R.id.tvDispatchToDetails);
 
@@ -247,7 +249,8 @@ public class ActivityViewPendingDispatch extends Activity {
             holder.tvDispatchId.setText(itemData.get("Id"));
             holder.tvDriverName.setText(itemData.get("DriverName"));
             holder.tvDriverMobileNo.setText(itemData.get("DriverMobileNo"));
-            holder.tvDispatchFor.setText(itemData.get("DispatchForName"));
+            holder.tvDispatchForName.setText(itemData.get("DispatchForName"));
+            holder.tvDispatchForMobile.setText(itemData.get("DispatchForMobile"));
             holder.tvDispatchDetails.setText(itemData.get("VehicleNo") + " - " + itemData.get("Code"));
             holder.tvDispatchToDetails.setText(itemData.get("DispatchForName") + " - " + itemData.get("TotalDispatch"));
 

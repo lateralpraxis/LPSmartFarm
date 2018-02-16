@@ -28,18 +28,18 @@ public class ActivityAddPayment extends Activity {
 
     private final Context mContext = this;
 
-    private TextView tvName, tvMobile, tvBookedQty, tvAmount, tvAdvance, tvBalance;
-    private Spinner spMode;
+    private TextView tvDispatchForName, tvDispatchForMobile, tvBookedQty, tvAmount, tvAdvance, tvBalance;
+    private Spinner spPaymentMode;
     private TextView tvPaymentAmount, tvPaymentRemarks;
 
     private DatabaseAdapter dba;
     private UserSessionManager session;
     private Common common;
 
-
     private String userId;
     private String lang;
 
+    private String dispatchId, driverName, driverMobileNo, dispatchForName, dispatchForMobile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +64,13 @@ public class ActivityAddPayment extends Activity {
         //</editor-fold>
 
         //<editor-fold desc="Find controls by Id">
-        tvName = findViewById(R.id.tvName);
-        tvMobile = findViewById(R.id.tvMobile);
+        tvDispatchForName = findViewById(R.id.tvDispatchForName);
+        tvDispatchForMobile = findViewById(R.id.tvDispatchForMobile);
         tvBookedQty = findViewById(R.id.tvBookedQty);
         tvAmount = findViewById(R.id.tvAmount);
         tvAdvance = findViewById(R.id.tvAdvance);
         tvBalance = findViewById(R.id.tvBalance);
-        spMode = findViewById(R.id.spMode);
+        spPaymentMode = findViewById(R.id.spPaymentMode);
         tvPaymentAmount = findViewById(R.id.tvPaymentAmount);
         tvPaymentRemarks = findViewById(R.id.tvPaymentRemarks);
         //</editor-fold>
@@ -78,11 +78,20 @@ public class ActivityAddPayment extends Activity {
         //<editor-fold desc="Get Extra values from Intent call">
         Bundle extras = this.getIntent().getExtras();
         if (extras != null) {
-
+            dispatchId = extras.getString("dispatchId");
+            driverName = extras.getString("driverName");
+            driverMobileNo = extras.getString("driverMobileNo");
+            dispatchForName = extras.getString("dispatchForName");
+            dispatchForMobile = extras.getString("dispatchForMobile");
         }
         //</editor-fold>
 
-        spMode.setAdapter(DataAdapter("paymentmode", ""));
+
+        //<editor-fold desc="Add data to controls">
+        tvDispatchForName.setText(dispatchForName);
+        tvDispatchForMobile.setText(dispatchForMobile);
+        spPaymentMode.setAdapter(DataAdapter("paymentmode", ""));
+        //</editor-fold>
     }
 
     /**
@@ -105,8 +114,8 @@ public class ActivityAddPayment extends Activity {
      */
     private ArrayAdapter<CustomType> DataAdapter(String masterType, String filter) {
         dba.open();
-        List<CustomType> lables = dba.GetMasterDetails(masterType, filter);
-        ArrayAdapter<CustomType> dataAdapter = new ArrayAdapter<CustomType>(this, android.R.layout.simple_spinner_item, lables);
+        List<CustomType> labels = dba.GetMasterDetails(masterType, filter);
+        ArrayAdapter<CustomType> dataAdapter = new ArrayAdapter<CustomType>(this, android.R.layout.simple_spinner_item, labels);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dba.close();
         return dataAdapter;

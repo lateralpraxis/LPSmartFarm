@@ -40,7 +40,7 @@
                     android:text="@string/datalabel_fullName" />
 
                 <TextView
-                    android:id="@+id/tvName"
+                    android:id="@+id/tvDispatchForName"
                     style="@style/style_dataField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -63,7 +63,7 @@
                     android:text="@string/label_mobilehead" />
 
                 <TextView
-                    android:id="@+id/tvMobile"
+                    android:id="@+id/tvDispatchForMobile"
                     style="@style/style_dataField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -203,7 +203,7 @@
                         android:text="@string/label_PaymentMode" />
 
                     <Spinner
-                        android:id="@+id/spMode"
+                        android:id="@+id/spPaymentMode"
                         style="@style/Widget.AppCompat.Spinner.Underlined"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"

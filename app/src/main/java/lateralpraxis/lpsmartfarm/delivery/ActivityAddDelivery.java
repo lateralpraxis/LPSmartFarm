@@ -45,11 +45,11 @@ public class ActivityAddDelivery extends Activity {
     UserSessionManager session;
     Common common;
     String userId, lang;
-    private TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchFor, tvTotalDelivery;
+    private TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchForName, tvDispatchForMobile, tvTotalDelivery, tvTotalDispatch;
     private Spinner spShortClose;
     private ListView lvDispatchItems;
     private ArrayList<HashMap<String, String>> dispatchData = null;
-    private String dispatchId, driverName, driverMobileNo, dispatchFor;
+    private String dispatchId, driverName, driverMobileNo, dispatchForName, dispatchForMobile;
     private Button btnBack, btnSave;
 
     @Override
@@ -77,9 +77,11 @@ public class ActivityAddDelivery extends Activity {
         tvDispatchId = findViewById(R.id.tvDispatchId);
         tvDriverName = findViewById(R.id.tvDriverName);
         tvDriverMobileNo = findViewById(R.id.tvDriverMobileNo);
-        tvDispatchFor = findViewById(R.id.tvDispatchFor);
+        tvDispatchForName = findViewById(R.id.tvDispatchForName);
+        tvDispatchForMobile = findViewById(R.id.tvDispatchForMobile);
         lvDispatchItems = findViewById(R.id.lvDispatchItems);
         tvTotalDelivery = findViewById(R.id.tvTotalDelivery);
+        tvTotalDispatch = findViewById(R.id.tvTotalDispatch);
         spShortClose = findViewById(R.id.spShortClose);
 
         btnBack = findViewById(R.id.btnBack);
@@ -98,7 +100,8 @@ public class ActivityAddDelivery extends Activity {
             dispatchId = extras.getString("dispatchId");
             driverName = extras.getString("driverName");
             driverMobileNo = extras.getString("driverMobileNo");
-            dispatchFor = extras.getString("dispatchFor");
+            dispatchForName = extras.getString("dispatchForName");
+            dispatchForMobile = extras.getString("dispatchForMobile");
         }
         //</editor-fold>
 
@@ -106,7 +109,8 @@ public class ActivityAddDelivery extends Activity {
         tvDispatchId.setText(dispatchId);
         tvDriverName.setText(driverName);
         tvDriverMobileNo.setText(driverMobileNo);
-        tvDispatchFor.setText(dispatchFor);
+        tvDispatchForName.setText(dispatchForName);
+        tvDispatchForMobile.setText(dispatchForMobile);
         //</editor-fold>
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -122,59 +126,64 @@ public class ActivityAddDelivery extends Activity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
-                        (ActivityAddDelivery.this);
-                alertDialogBuilder.setTitle("Confirmation");
-                alertDialogBuilder
-                        .setMessage("Are you sure, you want to save Delivery?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                for (int i = 0; i < lvDispatchItems.getCount(); i++) {
-                                    LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
-                                    TextView tvDispatchId = (TextView) layout1.getChildAt(0);
-                                    TextView tvBookingId = (TextView) layout1.getChildAt(1);
-                                    LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
-                                    TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
-                                    EditText etDeliveryQty = (EditText) layout2.getChildAt(3);
-                                    dba.open();
-                                    dba.insertDeliveryDetailsForDispatch(
-                                            tvDispatchId.getText().toString(),
-                                            tvBookingId.getText().toString(),
-                                            tvDispatchItemId.getText().toString(),
-                                            etDeliveryQty.getText().toString());
-                                    dba.close();
+                /* Check delivery quantity against dispatch quantity */
+                if (((getValue(tvTotalDelivery.getText().toString())) < getValue(tvTotalDispatch.getText().toString()))
+                        && (spShortClose.getSelectedItemPosition() == 0)) {
+                    common.showToast("ShortClose Reason is mandatory", 5, 1);
+                } else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
+                            (ActivityAddDelivery.this);
+                    alertDialogBuilder.setTitle("Confirmation");
+                    alertDialogBuilder
+                            .setMessage("Are you sure, you want to save Delivery?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    for (int i = 0; i < lvDispatchItems.getCount(); i++) {
+                                        LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
+                                        TextView tvDispatchId = (TextView) layout1.getChildAt(0);
+                                        TextView tvBookingId = (TextView) layout1.getChildAt(1);
+                                        LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
+                                        TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
+                                        EditText etDeliveryQty = (EditText) layout2.getChildAt(3);
+                                        dba.open();
+                                        dba.insertDeliveryDetailsForDispatch(
+                                                tvDispatchId.getText().toString(),
+                                                tvBookingId.getText().toString(),
+                                                tvDispatchItemId.getText().toString(),
+                                                etDeliveryQty.getText().toString());
+                                        dba.close();
 
-                                    Intent intent = new Intent(ActivityAddDelivery.this,
-                                            ActivityAddPayment.class);
-                                    /*intent.putExtra("nurseryUniqueId", nurseryUniqueId);
-                                    intent.putExtra("nurseryId", nurseryId);
-                                    intent.putExtra("nurseryType", nurseryType);
-                                    intent.putExtra("nurseryName", nurseryName);
-                                    intent.putExtra("nurseryZone", nurseryZoneName);
-                                    intent.putExtra("nurseryZoneId", zoneId);*/
-                                    startActivity(intent);
-                                    finish();
+                                        Intent intent = new Intent(ActivityAddDelivery.this,
+                                                ActivityAddPayment.class);
+                                        intent.putExtra("dispatchId", tvDispatchId.getText().toString());
+                                        intent.putExtra("driverName", driverName);
+                                        intent.putExtra("driverMobileNo", driverMobileNo);
+                                        intent.putExtra("dispatchForName", dispatchForName);
+                                        intent.putExtra("dispatchForMobile", dispatchForMobile);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    if (!String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()).trim().isEmpty()) {
+                                        dba.open();
+                                        dba.updatePendingDispatchForDeliveryShortCloseReason(
+                                                tvDispatchId.getText().toString(),
+                                                String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()));
+                                        dba.close();
+                                    }
                                 }
-                                if (!String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()).trim().isEmpty()) {
-                                    dba.open();
-                                    dba.updatePendingDispatchForDeliveryShortCloseReason(
-                                            tvDispatchId.getText().toString(),
-                                            String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()));
-                                    dba.close();
-                                }
-                            }
-                        })
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
                                 /*Just close the dialog without doing anything*/
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                alertDialog.show();
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
             }
         });
 
@@ -358,13 +367,14 @@ public class ActivityAddDelivery extends Activity {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     Integer totalDelivery = 0;
+                    Integer totalDispatch = 0;
                     if (!hasFocus) {
                         for (int i = 0; i < lvDispatchItems.getCount(); i++) {
                             LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
-                            TextView tvDispatchId = (TextView) layout1.getChildAt(0);
-                            TextView tvBookingId = (TextView) layout1.getChildAt(1);
+                            /*TextView tvDispatchId = (TextView) layout1.getChildAt(0);
+                            TextView tvBookingId = (TextView) layout1.getChildAt(1);*/
                             LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
-                            TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
+                            /*TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);*/
                             TextView tvDispatchItemQty = (TextView) layout2.getChildAt(2);
                             EditText etDeliveryQty = (EditText) layout2.getChildAt(3);
                             etDeliveryQty.setHint("Maximum: " + tvDispatchItemQty.getText());
@@ -373,15 +383,14 @@ public class ActivityAddDelivery extends Activity {
                                 etDeliveryQty.setText("");
                             }
                             totalDelivery = totalDelivery + getValue(etDeliveryQty.getEditableText().toString());
-
-                            //TODO: Insert record in the SQLite table
+                            totalDispatch = totalDispatch + getValue(tvDispatchItemQty.getText().toString());
 
                            /* dba.open();
                             dba.insertDeliveryDetailsForDispatch(tvDispatchId.getText().toString(), tvBookingId.getText().toString(), tvDispatchItemId.getText().toString(), etDeliveryQty.getText().toString());
                             dba.close();*/
                         }
+                        tvTotalDispatch.setText(totalDispatch.toString());
                         tvTotalDelivery.setText(totalDelivery.toString());
-
                     }
                 }
             });

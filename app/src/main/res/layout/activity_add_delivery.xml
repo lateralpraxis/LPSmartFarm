@@ -43,7 +43,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.3"
-                    android:text="@string/datalabel_fullName" />
+                    android:text="@string/label_Driver" />
 
                 <TextView
                     android:id="@+id/tvDriverName"
@@ -70,6 +70,7 @@
 
                 <TextView
                     android:id="@+id/tvDriverMobileNo"
+                    style="@style/style_dataField"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.7" />
@@ -97,11 +98,18 @@
                     android:text="@string/label_DispatchFor" />
 
                 <TextView
-                    android:id="@+id/tvDispatchFor"
+                    android:id="@+id/tvDispatchForName"
                     style="@style/style_dataLabel"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.6" />
+
+                <TextView
+                    android:id="@+id/tvDispatchForMobile"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
@@ -128,6 +136,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.4"
                     android:text="@string/label_Total" />
+
+                <TextView
+                    android:id="@+id/tvTotalDispatch"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tvTotalDelivery"
