@@ -129,7 +129,7 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
@@ -150,7 +150,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="0.7" />
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -229,8 +229,8 @@
                         android:layout_weight="0.3"
                         android:text="@string/label_Amount" />
 
-                    <TextView
-                        android:id="@+id/tvPaymentAmount"
+                    <EditText
+                        android:id="@+id/etPaymentAmount"
                         style="@style/style_dataField"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -252,12 +252,37 @@
                         android:layout_weight="0.3"
                         android:text="@string/label_Remarks" />
 
-                    <TextView
-                        android:id="@+id/tvPaymentRemarks"
+                    <EditText
+                        android:id="@+id/etPaymentRemarks"
                         style="@style/style_dataField"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="0.7" />
+
+                </LinearLayout>
+
+                <!-- Back / Save Buttons -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="1"
+                    tools:ignore="RtlHardcoded">
+
+                    <!-- Button Back -->
+                    <Button
+                        android:id="@+id/btnBack"
+                        style="@style/style_backButton"
+                        android:layout_weight="0.5"
+                        android:text="@string/label_back" />
+
+                    <!-- Button Save -->
+                    <Button
+                        android:id="@+id/btnNext"
+                        style="@style/style_nextButton"
+                        android:layout_weight="0.5"
+                        android:text="@string/label_save" />
 
                 </LinearLayout>
 

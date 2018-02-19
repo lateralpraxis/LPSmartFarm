@@ -146,6 +146,14 @@
                     android:visibility="gone" />
 
                 <TextView
+                    android:id="@+id/tvTotalAmount"
+                    style="@style/style_dataField"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/tvTotalDelivery"
                     style="@style/style_dataField"
                     android:layout_width="0dp"
@@ -197,10 +205,10 @@
 
                 <!-- Button Save -->
                 <Button
-                    android:id="@+id/btnSave"
+                    android:id="@+id/btnNext"
                     style="@style/style_nextButton"
                     android:layout_weight="0.5"
-                    android:text="@string/label_save" />
+                    android:text="@string/label_next" />
 
             </LinearLayout>
 

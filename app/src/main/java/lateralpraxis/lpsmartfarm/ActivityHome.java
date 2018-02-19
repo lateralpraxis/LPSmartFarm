@@ -2103,6 +2103,7 @@ public class ActivityHome extends Activity {
                         }
 
                         dba.clearPendingDispatchDetailForDelivery();
+                        dba.clearPendingDispatchDetailForDelivery();
                         for (int i = 0; i < jsonArrayDet.length(); i++) {
                             dba.insertPendingDispatchDetailForDelivery(
                                     jsonArrayDet.getJSONObject(i).getString("DispatchId"),

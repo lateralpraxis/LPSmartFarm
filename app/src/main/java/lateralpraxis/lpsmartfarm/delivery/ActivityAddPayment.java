@@ -3,14 +3,20 @@ package lateralpraxis.lpsmartfarm.delivery;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -39,7 +45,10 @@ public class ActivityAddPayment extends Activity {
     private String userId;
     private String lang;
 
-    private String dispatchId, driverName, driverMobileNo, dispatchForName, dispatchForMobile;
+    private String dispatchId, driverName, driverMobileNo, dispatchForName, dispatchForMobile, totalDispatch, totalAmount;
+
+    private Button btnBack, btnSave;
+    private EditText etPaymentAmount, etPaymentRemarks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +79,13 @@ public class ActivityAddPayment extends Activity {
         tvAmount = findViewById(R.id.tvAmount);
         tvAdvance = findViewById(R.id.tvAdvance);
         tvBalance = findViewById(R.id.tvBalance);
+
         spPaymentMode = findViewById(R.id.spPaymentMode);
-        tvPaymentAmount = findViewById(R.id.tvPaymentAmount);
-        tvPaymentRemarks = findViewById(R.id.tvPaymentRemarks);
+        etPaymentAmount = findViewById(R.id.etPaymentAmount);
+        etPaymentRemarks = findViewById(R.id.etPaymentRemarks);
+
+        btnBack = findViewById(R.id.btnBack);
+        btnSave = findViewById(R.id.btnSave);
         //</editor-fold>
 
         //<editor-fold desc="Get Extra values from Intent call">
@@ -83,6 +96,8 @@ public class ActivityAddPayment extends Activity {
             driverMobileNo = extras.getString("driverMobileNo");
             dispatchForName = extras.getString("dispatchForName");
             dispatchForMobile = extras.getString("dispatchForMobile");
+            totalDispatch = extras.getString("totalDispatch");
+            totalAmount = extras.getString("totalAmount");
         }
         //</editor-fold>
 
@@ -90,9 +105,107 @@ public class ActivityAddPayment extends Activity {
         //<editor-fold desc="Add data to controls">
         tvDispatchForName.setText(dispatchForName);
         tvDispatchForMobile.setText(dispatchForMobile);
+        tvBookedQty.setText(totalDispatch);
+        tvAmount.setText(totalAmount);
+       /* double balance = (getValue(totalAmount) - getValue(tvAdvance.getText().toString()));
+        tvBalance.setText(String.valueOf(balance));*/
         spPaymentMode.setAdapter(DataAdapter("paymentmode", ""));
         //</editor-fold>
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ActivityAddPayment.this, ActivityViewPendingDispatch.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /* Check delivery quantity against dispatch quantity */
+
+                if ((spPaymentMode.getSelectedItemPosition()) == 0) {
+                    common.showToast("Payment Mode is Mandatory", 5, 1);
+                } else if (String.valueOf(etPaymentAmount.getText()).trim().equals("")) {
+                    common.showToast("Payment Amount is Mandatory.");
+                } else {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
+                            (ActivityAddPayment.this);
+                    alertDialogBuilder.setTitle("Confirmation");
+                    alertDialogBuilder
+                            .setMessage("Are you sure, you want save Payment details?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dba.open();
+                                    dba.insertPaymentDetailsPendingDispatchDelivery(dispatchId, dispatchId, tvAmount.getText().toString(),
+                                            tvBalance.getText().toString(), String.valueOf(((CustomType) spPaymentMode.getSelectedItem()).getId()),
+                                            etPaymentAmount.getText().toString().trim(), etPaymentRemarks.getText().toString().trim());
+                                    dba.close();
+                                    /*for (int i = 0; i < lvDispatchItems.getCount(); i++) {
+                                        LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
+                                        TextView tvDispatchId = (TextView) layout1.getChildAt(0);
+                                        TextView tvBookingId = (TextView) layout1.getChildAt(1);
+                                        LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
+                                        TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
+                                        EditText etDeliveryQty = (EditText) layout2.getChildAt(5);
+                                        dba.open();
+                                        dba.insertDeliveryDetailsForDispatch(
+                                                tvDispatchId.getText().toString(),
+                                                tvBookingId.getText().toString(),
+                                                tvDispatchItemId.getText().toString(),
+                                                etDeliveryQty.getText().toString());
+                                        dba.close();
+
+                                        Intent intent = new Intent(ActivityAddDelivery.this,
+                                                ActivityAddPayment.class);
+                                        intent.putExtra("dispatchId", tvDispatchId.getText().toString());
+                                        intent.putExtra("driverName", driverName);
+                                        intent.putExtra("driverMobileNo", driverMobileNo);
+                                        intent.putExtra("dispatchForName", dispatchForName);
+                                        intent.putExtra("dispatchForMobile", dispatchForMobile);
+                                        intent.putExtra("totalDispatch", tvTotalDispatch.getText().toString());
+                                        intent.putExtra("totalAmount", tvTotalAmount.getText().toString());
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                    if (!String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()).trim().isEmpty()) {
+                                        dba.open();
+                                        dba.updatePendingDispatchForDeliveryShortCloseReason(
+                                                tvDispatchId.getText().toString(),
+                                                String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()));
+                                        dba.close();
+                                    }*/
+                                }
+                            })
+                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                /*Just close the dialog without doing anything*/
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
+                }
+            }
+        });
+
+        if (common.isConnected()) {
+            BindData();
+        } else {
+            Intent intent = new Intent(mContext, ActivityHome.class);
+            startActivity(intent);
+            finish();
+        }
     }
+
+    /*private Double getValue(String val) {
+        return Double.valueOf(val.trim().isEmpty() ? "0" : val);
+    }*/
 
     /**
      * Funtion to fetch and bind data to the controls

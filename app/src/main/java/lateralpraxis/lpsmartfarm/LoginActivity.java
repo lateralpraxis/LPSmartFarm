@@ -83,7 +83,8 @@ public class LoginActivity extends Activity {
         databaseAdapter = new DatabaseAdapter(getApplicationContext());
 
         //Code to fetch IMEI Number
-        imei = common.getIMEI();
+       //imei = common.getIMEI();
+        imei = "0000000000";
 
         //Code to check for active session
         if (session.checkLoginShowHome()) {

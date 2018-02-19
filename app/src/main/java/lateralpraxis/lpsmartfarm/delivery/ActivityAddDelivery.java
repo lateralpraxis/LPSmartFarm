@@ -45,12 +45,12 @@ public class ActivityAddDelivery extends Activity {
     UserSessionManager session;
     Common common;
     String userId, lang;
-    private TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchForName, tvDispatchForMobile, tvTotalDelivery, tvTotalDispatch;
+    private TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchForName, tvDispatchForMobile, tvTotalDelivery, tvTotalDispatch, tvTotalAmount;
     private Spinner spShortClose;
     private ListView lvDispatchItems;
     private ArrayList<HashMap<String, String>> dispatchData = null;
     private String dispatchId, driverName, driverMobileNo, dispatchForName, dispatchForMobile;
-    private Button btnBack, btnSave;
+    private Button btnBack, btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,10 +82,11 @@ public class ActivityAddDelivery extends Activity {
         lvDispatchItems = findViewById(R.id.lvDispatchItems);
         tvTotalDelivery = findViewById(R.id.tvTotalDelivery);
         tvTotalDispatch = findViewById(R.id.tvTotalDispatch);
+        tvTotalAmount = findViewById(R.id.tvTotalAmount);
         spShortClose = findViewById(R.id.spShortClose);
 
         btnBack = findViewById(R.id.btnBack);
-        btnSave = findViewById(R.id.btnSave);
+        btnNext = findViewById(R.id.btnNext);
         //</editor-fold>
 
 
@@ -123,7 +124,7 @@ public class ActivityAddDelivery extends Activity {
         });
 
         /*Save button click Listener*/
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /* Check delivery quantity against dispatch quantity */
@@ -135,7 +136,7 @@ public class ActivityAddDelivery extends Activity {
                             (ActivityAddDelivery.this);
                     alertDialogBuilder.setTitle("Confirmation");
                     alertDialogBuilder
-                            .setMessage("Are you sure, you want to save Delivery?")
+                            .setMessage("Are you sure, you want to proceed for Payment?")
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
@@ -146,7 +147,7 @@ public class ActivityAddDelivery extends Activity {
                                         TextView tvBookingId = (TextView) layout1.getChildAt(1);
                                         LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
                                         TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
-                                        EditText etDeliveryQty = (EditText) layout2.getChildAt(3);
+                                        EditText etDeliveryQty = (EditText) layout2.getChildAt(5);
                                         dba.open();
                                         dba.insertDeliveryDetailsForDispatch(
                                                 tvDispatchId.getText().toString(),
@@ -162,6 +163,8 @@ public class ActivityAddDelivery extends Activity {
                                         intent.putExtra("driverMobileNo", driverMobileNo);
                                         intent.putExtra("dispatchForName", dispatchForName);
                                         intent.putExtra("dispatchForMobile", dispatchForMobile);
+                                        intent.putExtra("totalDispatch", tvTotalDispatch.getText().toString());
+                                        intent.putExtra("totalAmount", tvTotalAmount.getText().toString());
                                         startActivity(intent);
                                         finish();
                                     }
@@ -289,12 +292,12 @@ public class ActivityAddDelivery extends Activity {
     }
     //</editor-fold>
 
-    private Integer getValue(String val) {
-        return Integer.valueOf(val.trim().isEmpty() ? "0" : val);
+    private Double getValue(String val) {
+        return Double.valueOf(val.trim().isEmpty() ? "0" : val);
     }
 
     public static class ViewHolder {
-        TextView tvDispatchId, tvBookingId, tvDispatchItem, tvDispatchItemId, tvDispatchItemQty;
+        TextView tvDispatchId, tvBookingId, tvDispatchItem, tvDispatchItemId, tvDispatchItemQty, tvDispatchItemRate, tvDispatchItemAmt;
         EditText etDeliveryQty;
         int ref;
     }
@@ -353,6 +356,8 @@ public class ActivityAddDelivery extends Activity {
             holder.tvDispatchItemQty = convertView.findViewById(R.id.tvDispatchItemQty);
             holder.tvDispatchItemId = convertView.findViewById(R.id.tvDispatchItemId);
             holder.etDeliveryQty = convertView.findViewById(R.id.etDeliveryQty);
+            holder.tvDispatchItemRate = convertView.findViewById(R.id.tvDispatchItemRate);
+            holder.tvDispatchItemAmt = convertView.findViewById(R.id.tvDispatchItemAmt);
 
             final HashMap<String, String> itemData = _listData.get(position);
             holder.tvDispatchId.setText(itemData.get("DispatchId"));
@@ -360,14 +365,16 @@ public class ActivityAddDelivery extends Activity {
             holder.tvDispatchItem.setText(itemData.get("PolybagTitle"));
             holder.tvDispatchItemId.setText(itemData.get("PolybagId"));
             holder.tvDispatchItemQty.setText(itemData.get("Quantity"));
+            holder.tvDispatchItemRate.setText(itemData.get("Rate"));
 
             tvTotalDelivery.setText("");
 
             holder.etDeliveryQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    Integer totalDelivery = 0;
-                    Integer totalDispatch = 0;
+                    Double totalDelivery = Double.valueOf(0);
+                    Double totalDispatch = Double.valueOf(0);
+                    Double totalAmount = Double.valueOf(0);
                     if (!hasFocus) {
                         for (int i = 0; i < lvDispatchItems.getCount(); i++) {
                             LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
@@ -376,7 +383,9 @@ public class ActivityAddDelivery extends Activity {
                             LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
                             /*TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);*/
                             TextView tvDispatchItemQty = (TextView) layout2.getChildAt(2);
-                            EditText etDeliveryQty = (EditText) layout2.getChildAt(3);
+                            TextView tvDispatchItemRate = (TextView) layout2.getChildAt(3);
+                            TextView tvDispatchItemAmt = (TextView) layout2.getChildAt(4);
+                            EditText etDeliveryQty = (EditText) layout2.getChildAt(5);
                             etDeliveryQty.setHint("Maximum: " + tvDispatchItemQty.getText());
                             if (getValue(etDeliveryQty.getEditableText().toString()) > getValue(tvDispatchItemQty.getText().toString())) {
                                 common.showToast("Cannot be greater than " + tvDispatchItemQty.getText(), Toast.LENGTH_LONG, 0);
@@ -384,6 +393,7 @@ public class ActivityAddDelivery extends Activity {
                             }
                             totalDelivery = totalDelivery + getValue(etDeliveryQty.getEditableText().toString());
                             totalDispatch = totalDispatch + getValue(tvDispatchItemQty.getText().toString());
+                            totalAmount = totalAmount +  (getValue(tvDispatchItemQty.getText().toString()) *  getValue(tvDispatchItemRate.getText().toString()));
 
                            /* dba.open();
                             dba.insertDeliveryDetailsForDispatch(tvDispatchId.getText().toString(), tvBookingId.getText().toString(), tvDispatchItemId.getText().toString(), etDeliveryQty.getText().toString());
@@ -391,6 +401,7 @@ public class ActivityAddDelivery extends Activity {
                         }
                         tvTotalDispatch.setText(totalDispatch.toString());
                         tvTotalDelivery.setText(totalDelivery.toString());
+                        tvTotalAmount.setText(totalAmount.toString());
                     }
                 }
             });

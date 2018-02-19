@@ -295,7 +295,9 @@ public class DatabaseAdapter {
                     "PendingDispatchDetailsForDelivery (DispatchId TEXT, BookingId TEXT, Rate TEXT, " +
                     "PolybagTypeId TEXT, PolybagTitle TEXT, Quantity INTEGER)",
             DeliveryDetailsForDispatch_CREATE = "CREATE TABLE IF NOT EXISTS DeliveryDetailsForDispatch (DispatchId TEXT, BookingId TEXT, " +
-                    "DispatchItemId TEXT, Quantity INTEGER)";
+                    "DispatchItemId TEXT, Quantity INTEGER)",
+            PaymentAgainstDispatchDelivery_CREATE = "CREATE TABLE IF NOT EXISTS PaymentAgainstDispatchDelivery (DispatchId, TEXT, BookingId TEXT, " +
+                    "TotalAmount TEXT, TotalBalance TEXT, PaymentMode TEXT, PaymentAmount TEXT, PaymentRemarks TEXT)";
 
     static String prevfarmCroppingUniqueId = "";
     /*Context of the application using the database.*/
@@ -1695,6 +1697,7 @@ public class DatabaseAdapter {
         db.execSQL("DELETE FROM PendingDispatchForDelivery");
     }
 
+
     public String insertPendingDispatchForDelivery(String id, String code, String dispatchForId,
                                                    String dispatchForName, String
                                                            dispatchForMobile, String
@@ -1739,6 +1742,20 @@ public class DatabaseAdapter {
         db.insert("PendingDispatchDetailsForDelivery", null, newValues);
         result = "success";
         return result;
+    }
+
+    public void clearDeliveryDetailsForDispatch(String dispatchId) {
+        if (dispatchId.trim().isEmpty())
+            db.execSQL("DELETE FROM DeliveryDetailsForDispatch");
+        else
+            db.execSQL("DELETE FROM DeliveryDetailsForDispatch WHERE DispatchId = '" + dispatchId + "'");
+    }
+
+    public void clearPaymentAgainstDispatchDelivery(String dispatchId) {
+        if (dispatchId.trim().isEmpty())
+            db.execSQL("DELETE FROM PaymentAgainstDeliveryDispatch");
+        else
+            db.execSQL("DELETE FROM PaymentAgainstDeliveryDispatch WHERE '" + dispatchId + "' ");
     }
     //</editor-fold>
 
@@ -3048,6 +3065,29 @@ public class DatabaseAdapter {
             newValues.put("Quantity", quantity);
 
             db.insert("DeliveryDetailsForDispatch", null, newValues);
+            result = "success";
+            return result;
+        } catch (Exception e) {
+            //e.printStackTrace();
+            return null;
+        }
+    }
+
+    public String insertPaymentDetailsPendingDispatchDelivery(String dispatchId, String bookingId, String totalAmount, String totalBalance,
+                                                              String paymentMode, String paymentAmount, String paymentRemarks) {
+        try {
+            result = "fail";
+            newValues = new ContentValues();
+
+            newValues.put("DispatchId", dispatchId);
+            newValues.put("BookingId", bookingId);
+            newValues.put("TotalAmount", totalAmount);
+            newValues.put("TotalBalance", totalBalance);
+            newValues.put("PaymentMode", paymentMode);
+            newValues.put("PaymentAmount", paymentAmount);
+            newValues.put("PaymentRemarks", paymentRemarks);
+
+            db.insert("PaymentAgainstDispatchDelivery", null, newValues);
             result = "success";
             return result;
         } catch (Exception e) {
