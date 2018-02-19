@@ -296,6 +296,8 @@ public class DatabaseAdapter {
                     "PolybagTypeId TEXT, PolybagTitle TEXT, Quantity INTEGER)",
             DeliveryDetailsForDispatch_CREATE = "CREATE TABLE IF NOT EXISTS DeliveryDetailsForDispatch (DispatchId TEXT, BookingId TEXT, " +
                     "DispatchItemId TEXT, Quantity INTEGER)",
+            BalanceDetailsForFarmerNursery_CREATE = "CREATE TABLE IF NOT EXISTS BalanceDetailsForFarmerNursery (DispatchId TEXT, " +
+                    "BookingId TEXT, DispatchForId TEXT, BalanceAmount TEXT)",
             PaymentAgainstDispatchDelivery_CREATE = "CREATE TABLE IF NOT EXISTS PaymentAgainstDispatchDelivery (DispatchId, TEXT, BookingId TEXT, " +
                     "TotalAmount TEXT, TotalBalance TEXT, PaymentMode TEXT, PaymentAmount TEXT, PaymentRemarks TEXT)";
 
@@ -1756,6 +1758,30 @@ public class DatabaseAdapter {
             db.execSQL("DELETE FROM PaymentAgainstDeliveryDispatch");
         else
             db.execSQL("DELETE FROM PaymentAgainstDeliveryDispatch WHERE '" + dispatchId + "' ");
+    }
+
+    public void clearBalanceDetailsForFarmerNursery(String dispatchId) {
+        if (dispatchId.trim().isEmpty())
+            db.execSQL("DELETE FROM BalanceDetailsForFarmerNursery");
+        else
+            db.execSQL("DELETE FROM BalanceDetailsForFarmerNursery WHERE '" + dispatchId + "' ");
+    }
+
+    public String insertBalanceDetailsForFarmerNursery(String DispatchId, String BookingId, String
+            dispatchForId, String balanceAmount) {
+
+        result = "fail";
+        newValues = new ContentValues();
+
+        newValues.put("DispatchId", DispatchId);
+        newValues.put("BookingId", BookingId);
+        newValues.put("DispatchForId", dispatchForId);
+        newValues.put("BalanceAmount", balanceAmount);
+
+        db = dbHelper.getWritableDatabase();
+        db.insert("BalanceDetailsForFarmerNursery", null, newValues);
+        result = "success";
+        return result;
     }
     //</editor-fold>
 

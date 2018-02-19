@@ -475,9 +475,9 @@ public class Common {
     }
 
     public String getIMEI() {
-        /*TelephonyManager telephonyManager = (TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE);
-        return telephonyManager.getDeviceId();*/
-        return "0000000000";
+        TelephonyManager telephonyManager = (TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE);
+        return telephonyManager.getDeviceId();
+        /*return "0000000000";*/
     }
 
     public String invokeTwinJSONWS(String sendValue1, String sendName1, String sendValue2, String sendName2,String sendValue3, String sendName3, String methName, String newUrl) throws Exception {

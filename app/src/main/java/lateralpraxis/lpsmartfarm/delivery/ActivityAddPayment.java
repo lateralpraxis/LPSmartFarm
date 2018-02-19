@@ -77,7 +77,7 @@ public class ActivityAddPayment extends Activity {
         tvDispatchForMobile = findViewById(R.id.tvDispatchForMobile);
         tvBookedQty = findViewById(R.id.tvBookedQty);
         tvAmount = findViewById(R.id.tvAmount);
-        tvAdvance = findViewById(R.id.tvAdvance);
+        /*tvAdvance = findViewById(R.id.tvAdvance);*/
         tvBalance = findViewById(R.id.tvBalance);
 
         spPaymentMode = findViewById(R.id.spPaymentMode);
@@ -145,40 +145,6 @@ public class ActivityAddPayment extends Activity {
                                             tvBalance.getText().toString(), String.valueOf(((CustomType) spPaymentMode.getSelectedItem()).getId()),
                                             etPaymentAmount.getText().toString().trim(), etPaymentRemarks.getText().toString().trim());
                                     dba.close();
-                                    /*for (int i = 0; i < lvDispatchItems.getCount(); i++) {
-                                        LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
-                                        TextView tvDispatchId = (TextView) layout1.getChildAt(0);
-                                        TextView tvBookingId = (TextView) layout1.getChildAt(1);
-                                        LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
-                                        TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
-                                        EditText etDeliveryQty = (EditText) layout2.getChildAt(5);
-                                        dba.open();
-                                        dba.insertDeliveryDetailsForDispatch(
-                                                tvDispatchId.getText().toString(),
-                                                tvBookingId.getText().toString(),
-                                                tvDispatchItemId.getText().toString(),
-                                                etDeliveryQty.getText().toString());
-                                        dba.close();
-
-                                        Intent intent = new Intent(ActivityAddDelivery.this,
-                                                ActivityAddPayment.class);
-                                        intent.putExtra("dispatchId", tvDispatchId.getText().toString());
-                                        intent.putExtra("driverName", driverName);
-                                        intent.putExtra("driverMobileNo", driverMobileNo);
-                                        intent.putExtra("dispatchForName", dispatchForName);
-                                        intent.putExtra("dispatchForMobile", dispatchForMobile);
-                                        intent.putExtra("totalDispatch", tvTotalDispatch.getText().toString());
-                                        intent.putExtra("totalAmount", tvTotalAmount.getText().toString());
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                    if (!String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()).trim().isEmpty()) {
-                                        dba.open();
-                                        dba.updatePendingDispatchForDeliveryShortCloseReason(
-                                                tvDispatchId.getText().toString(),
-                                                String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()));
-                                        dba.close();
-                                    }*/
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -212,7 +178,7 @@ public class ActivityAddPayment extends Activity {
      *
      * @param dispatchUniqueId DispatchUniqueId
      */
-    private void BindData(String dispatchUniqueId) {
+    private void BindData() {
         dba.open();
         // TODO: get the dispatch data
         dba.close();
