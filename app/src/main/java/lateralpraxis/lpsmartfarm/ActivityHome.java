@@ -2088,11 +2088,12 @@ public class ActivityHome extends Activity {
                     if (!result.contains("ERROR: ")) {
                         JSONArray jsonArrayMst = new JSONArray(responseJSON.split("~")[0]);
                         JSONArray jsonArrayDet = new JSONArray(responseJSON.split("~")[1]);
+                        JSONArray jsonArrayBal = new JSONArray((responseJSON.split("~")[2]));
                         dba.open();
                         dba.clearPendingDispatchForDelivery();
                         for (int i = 0; i < jsonArrayMst.length(); i++) {
                             dba.insertPendingDispatchForDelivery(
-                                    jsonArrayMst.getJSONObject(i).getString("Id"),
+                                    String.valueOf(jsonArrayMst.getJSONObject(i).getInt("Id")),
                                     jsonArrayMst.getJSONObject(i).getString("Code"),
                                     jsonArrayMst.getJSONObject(i).getString("DispatchForId"),
                                     jsonArrayMst.getJSONObject(i).getString("DispatchForName"),
@@ -2103,15 +2104,22 @@ public class ActivityHome extends Activity {
                         }
 
                         dba.clearPendingDispatchDetailForDelivery();
-                        dba.clearPendingDispatchDetailForDelivery();
                         for (int i = 0; i < jsonArrayDet.length(); i++) {
                             dba.insertPendingDispatchDetailForDelivery(
-                                    jsonArrayDet.getJSONObject(i).getString("DispatchId"),
-                                    jsonArrayDet.getJSONObject(i).getString("BookingId"),
+                                    String.valueOf(jsonArrayDet.getJSONObject(i).getInt("DispatchId")),
+                                    String.valueOf(jsonArrayDet.getJSONObject(i).getInt("BookingId")),
                                     jsonArrayDet.getJSONObject(i).getString("Rate"),
                                     jsonArrayDet.getJSONObject(i).getString("PolybagTypeId"),
                                     jsonArrayDet.getJSONObject(i).getString("PolybagTitle"),
                                     Integer.valueOf(jsonArrayDet.getJSONObject(i).getString("Quantity")));
+                        }
+
+                        dba.clearBalanceDetailsForFarmerNursery();
+                        for(int i = 0; i < jsonArrayBal.length(); i++) {
+                            dba.insertBalanceDetailsForFarmerNursery(
+                                    jsonArrayBal.getJSONObject(i).getString("FarmerNursery"),
+                                    jsonArrayBal.getJSONObject(i).getString("FarmerNurseryId"),
+                                    jsonArrayBal.getJSONObject(i).getString("BalanceAmount"));
                         }
                         dba.close();
                         if (common.isConnected()) {

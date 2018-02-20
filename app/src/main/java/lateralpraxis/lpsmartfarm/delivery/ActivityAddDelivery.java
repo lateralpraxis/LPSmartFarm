@@ -45,11 +45,12 @@ public class ActivityAddDelivery extends Activity {
     UserSessionManager session;
     Common common;
     String userId, lang;
-    private TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchForName, tvDispatchForMobile, tvTotalDelivery, tvTotalDispatch, tvTotalAmount;
+    private TextView tvDispatchId, tvDriverName, tvDriverMobileNo, tvDispatchForId, tvDispatchForName, tvDispatchForMobile,
+            tvTotalDelivery, tvTotalDispatch, tvTotalAmount;
     private Spinner spShortClose;
     private ListView lvDispatchItems;
     private ArrayList<HashMap<String, String>> dispatchData = null;
-    private String dispatchId, driverName, driverMobileNo, dispatchForName, dispatchForMobile;
+    private String dispatchId, driverName, driverMobileNo, dispatchForId, dispatchForName, dispatchForMobile;
     private Button btnBack, btnNext;
 
     @Override
@@ -77,6 +78,7 @@ public class ActivityAddDelivery extends Activity {
         tvDispatchId = findViewById(R.id.tvDispatchId);
         tvDriverName = findViewById(R.id.tvDriverName);
         tvDriverMobileNo = findViewById(R.id.tvDriverMobileNo);
+        tvDispatchForId = findViewById(R.id.tvDispatchForId);
         tvDispatchForName = findViewById(R.id.tvDispatchForName);
         tvDispatchForMobile = findViewById(R.id.tvDispatchForMobile);
         lvDispatchItems = findViewById(R.id.lvDispatchItems);
@@ -101,6 +103,7 @@ public class ActivityAddDelivery extends Activity {
             dispatchId = extras.getString("dispatchId");
             driverName = extras.getString("driverName");
             driverMobileNo = extras.getString("driverMobileNo");
+            dispatchForId = extras.getString("dispatchForId");
             dispatchForName = extras.getString("dispatchForName");
             dispatchForMobile = extras.getString("dispatchForMobile");
         }
@@ -110,6 +113,7 @@ public class ActivityAddDelivery extends Activity {
         tvDispatchId.setText(dispatchId);
         tvDriverName.setText(driverName);
         tvDriverMobileNo.setText(driverMobileNo);
+        tvDispatchForId.setText(dispatchForId);
         tvDispatchForName.setText(dispatchForName);
         tvDispatchForMobile.setText(dispatchForMobile);
         //</editor-fold>
@@ -147,7 +151,7 @@ public class ActivityAddDelivery extends Activity {
                                         TextView tvBookingId = (TextView) layout1.getChildAt(1);
                                         LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
                                         TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
-                                        EditText etDeliveryQty = (EditText) layout2.getChildAt(5);
+                                        EditText etDeliveryQty = (EditText) layout2.getChildAt(6);
                                         dba.open();
                                         dba.insertDeliveryDetailsForDispatch(
                                                 tvDispatchId.getText().toString(),
@@ -161,6 +165,7 @@ public class ActivityAddDelivery extends Activity {
                                         intent.putExtra("dispatchId", tvDispatchId.getText().toString());
                                         intent.putExtra("driverName", driverName);
                                         intent.putExtra("driverMobileNo", driverMobileNo);
+                                        intent.putExtra("dispatchForId", dispatchForId);
                                         intent.putExtra("dispatchForName", dispatchForName);
                                         intent.putExtra("dispatchForMobile", dispatchForMobile);
                                         intent.putExtra("totalDispatch", tvTotalDispatch.getText().toString());
@@ -223,6 +228,7 @@ public class ActivityAddDelivery extends Activity {
     }
 
     /* <editor-fold desc="Back button pressed"> */
+
     /**
      * Method to load previous Activity if back is pressed
      */
@@ -297,7 +303,7 @@ public class ActivityAddDelivery extends Activity {
     }
 
     public static class ViewHolder {
-        TextView tvDispatchId, tvBookingId, tvDispatchItem, tvDispatchItemId, tvDispatchItemQty, tvDispatchItemRate, tvDispatchItemAmt;
+        TextView tvDispatchId, tvBookingId, tvDispatchItem, tvDispatchItemId, tvDispatchItemQty, tvDeliveryQty, tvDispatchItemRate, tvDispatchItemAmt;
         EditText etDeliveryQty;
         int ref;
     }
@@ -356,6 +362,7 @@ public class ActivityAddDelivery extends Activity {
             holder.tvDispatchItemQty = convertView.findViewById(R.id.tvDispatchItemQty);
             holder.tvDispatchItemId = convertView.findViewById(R.id.tvDispatchItemId);
             holder.etDeliveryQty = convertView.findViewById(R.id.etDeliveryQty);
+            holder.tvDeliveryQty = convertView.findViewById(R.id.tvDeliveryQty);
             holder.tvDispatchItemRate = convertView.findViewById(R.id.tvDispatchItemRate);
             holder.tvDispatchItemAmt = convertView.findViewById(R.id.tvDispatchItemAmt);
 
@@ -365,6 +372,7 @@ public class ActivityAddDelivery extends Activity {
             holder.tvDispatchItem.setText(itemData.get("PolybagTitle"));
             holder.tvDispatchItemId.setText(itemData.get("PolybagId"));
             holder.tvDispatchItemQty.setText(itemData.get("Quantity"));
+            holder.tvDeliveryQty.setText(itemData.get("DeliveryQuantity"));
             holder.tvDispatchItemRate.setText(itemData.get("Rate"));
 
             tvTotalDelivery.setText("");
@@ -384,16 +392,19 @@ public class ActivityAddDelivery extends Activity {
                             /*TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);*/
                             TextView tvDispatchItemQty = (TextView) layout2.getChildAt(2);
                             TextView tvDispatchItemRate = (TextView) layout2.getChildAt(3);
-                            TextView tvDispatchItemAmt = (TextView) layout2.getChildAt(4);
-                            EditText etDeliveryQty = (EditText) layout2.getChildAt(5);
+                            /*TextView tvDispatchItemAmt = (TextView) layout2.getChildAt(4);
+                            TextView tvDeliveryQty = (TextView) layout2.getChildAt(5);*/
+                            EditText etDeliveryQty = (EditText) layout2.getChildAt(6);
                             etDeliveryQty.setHint("Maximum: " + tvDispatchItemQty.getText());
+                            /*if (!(tvDeliveryQty.getText().toString().trim().isEmpty() || tvDeliveryQty.getText().toString() == "0"))
+                                etDeliveryQty.setText(tvDeliveryQty.getText().toString().trim());*/
                             if (getValue(etDeliveryQty.getEditableText().toString()) > getValue(tvDispatchItemQty.getText().toString())) {
                                 common.showToast("Cannot be greater than " + tvDispatchItemQty.getText(), Toast.LENGTH_LONG, 0);
                                 etDeliveryQty.setText("");
                             }
                             totalDelivery = totalDelivery + getValue(etDeliveryQty.getEditableText().toString());
                             totalDispatch = totalDispatch + getValue(tvDispatchItemQty.getText().toString());
-                            totalAmount = totalAmount +  (getValue(tvDispatchItemQty.getText().toString()) *  getValue(tvDispatchItemRate.getText().toString()));
+                            totalAmount = totalAmount + (getValue(tvDispatchItemQty.getText().toString()) * getValue(tvDispatchItemRate.getText().toString()));
 
                            /* dba.open();
                             dba.insertDeliveryDetailsForDispatch(tvDispatchId.getText().toString(), tvBookingId.getText().toString(), tvDispatchItemId.getText().toString(), etDeliveryQty.getText().toString());
@@ -405,6 +416,9 @@ public class ActivityAddDelivery extends Activity {
                     }
                 }
             });
+
+            /*if (!(holder.tvDeliveryQty.getText().toString().trim().isEmpty() || holder.tvDeliveryQty.getText().toString() == "0"))
+                holder.etDeliveryQty.requestFocus();*/
 
             convertView.setBackgroundColor(Color.parseColor((position % 2 == 1) ? "#EEEEEE" : "#FFFFFF"));
             return convertView;

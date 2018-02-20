@@ -45,7 +45,7 @@ public class ActivityAddPayment extends Activity {
     private String userId;
     private String lang;
 
-    private String dispatchId, driverName, driverMobileNo, dispatchForName, dispatchForMobile, totalDispatch, totalAmount;
+    private String dispatchId, driverName, driverMobileNo, dispatchForId, dispatchForName, dispatchForMobile, totalDispatch, totalAmount;
 
     private Button btnBack, btnNext;
     private EditText etPaymentAmount, etPaymentRemarks;
@@ -94,6 +94,7 @@ public class ActivityAddPayment extends Activity {
             dispatchId = extras.getString("dispatchId");
             driverName = extras.getString("driverName");
             driverMobileNo = extras.getString("driverMobileNo");
+            dispatchForId = extras.getString("dispatchForId");
             dispatchForName = extras.getString("dispatchForName");
             dispatchForMobile = extras.getString("dispatchForMobile");
             totalDispatch = extras.getString("totalDispatch");
@@ -145,6 +146,10 @@ public class ActivityAddPayment extends Activity {
                                             tvBalance.getText().toString(), String.valueOf(((CustomType) spPaymentMode.getSelectedItem()).getId()),
                                             etPaymentAmount.getText().toString().trim(), etPaymentRemarks.getText().toString().trim());
                                     dba.close();
+                                    Intent intent = new Intent(ActivityAddPayment.this,
+                                            ActivityViewDelivery.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -175,12 +180,11 @@ public class ActivityAddPayment extends Activity {
 
     /**
      * Funtion to fetch and bind data to the controls
-     *
-     * @param dispatchUniqueId DispatchUniqueId
      */
     private void BindData() {
         dba.open();
-        // TODO: get the dispatch data
+        int balance = dba.getBalanceForFarmerNursery(dispatchForId);
+        tvBalance.setText(String.valueOf(balance));
         dba.close();
     }
 

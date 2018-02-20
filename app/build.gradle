@@ -10,7 +10,7 @@ android {
         }
     }
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "lateralpraxis.lpsmartfarm"
         minSdkVersion 16
@@ -20,15 +20,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug {
+        /*debug {
             ext.enableCrashlytics = false
-        }
+        }*/
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    flavorDimensions "stage", "mode"
+    /*flavorDimensions "stage", "mode"
     productFlavors {
         dev {
             dimension "stage"
@@ -37,11 +37,10 @@ android {
             applicationIdSuffix ".dev"
             resConfigs "en", "xxhdpi"
         }
-
         prod {
             dimension "mode"
         }
-    }
+    }*/
     sourceSets {
         main {
             java.srcDirs = ['src/main/java', 'src/main/java/libs']

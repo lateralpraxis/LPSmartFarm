@@ -24,6 +24,12 @@
         android:visibility="gone" />
 
     <TextView
+        android:id="@+id/tvDispatchForId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <TextView
         android:id="@+id/tvDispatchForName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

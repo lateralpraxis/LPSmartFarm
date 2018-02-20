@@ -296,8 +296,8 @@ public class DatabaseAdapter {
                     "PolybagTypeId TEXT, PolybagTitle TEXT, Quantity INTEGER)",
             DeliveryDetailsForDispatch_CREATE = "CREATE TABLE IF NOT EXISTS DeliveryDetailsForDispatch (DispatchId TEXT, BookingId TEXT, " +
                     "DispatchItemId TEXT, Quantity INTEGER)",
-            BalanceDetailsForFarmerNursery_CREATE = "CREATE TABLE IF NOT EXISTS BalanceDetailsForFarmerNursery (DispatchId TEXT, " +
-                    "BookingId TEXT, DispatchForId TEXT, BalanceAmount TEXT)",
+            BalanceDetailsForFarmerNursery_CREATE = "CREATE TABLE IF NOT EXISTS BalanceDetailsForFarmerNursery (FarmerNursery TEXT, " +
+                    "FarmerNurseryId TEXT, BalanceAmount TEXT)",
             PaymentAgainstDispatchDelivery_CREATE = "CREATE TABLE IF NOT EXISTS PaymentAgainstDispatchDelivery (DispatchId, TEXT, BookingId TEXT, " +
                     "TotalAmount TEXT, TotalBalance TEXT, PaymentMode TEXT, PaymentAmount TEXT, PaymentRemarks TEXT)";
 
@@ -1760,22 +1760,17 @@ public class DatabaseAdapter {
             db.execSQL("DELETE FROM PaymentAgainstDeliveryDispatch WHERE '" + dispatchId + "' ");
     }
 
-    public void clearBalanceDetailsForFarmerNursery(String dispatchId) {
-        if (dispatchId.trim().isEmpty())
-            db.execSQL("DELETE FROM BalanceDetailsForFarmerNursery");
-        else
-            db.execSQL("DELETE FROM BalanceDetailsForFarmerNursery WHERE '" + dispatchId + "' ");
+    public void clearBalanceDetailsForFarmerNursery() {
+        db.execSQL("DELETE FROM BalanceDetailsForFarmerNursery");
     }
 
-    public String insertBalanceDetailsForFarmerNursery(String DispatchId, String BookingId, String
-            dispatchForId, String balanceAmount) {
+    public String insertBalanceDetailsForFarmerNursery(String farmerNursery, String farmerNurseryId, String balanceAmount) {
 
         result = "fail";
         newValues = new ContentValues();
 
-        newValues.put("DispatchId", DispatchId);
-        newValues.put("BookingId", BookingId);
-        newValues.put("DispatchForId", dispatchForId);
+        newValues.put("FarmerNursery", farmerNursery);
+        newValues.put("FarmerNurseryId", farmerNurseryId);
         newValues.put("BalanceAmount", balanceAmount);
 
         db = dbHelper.getWritableDatabase();
@@ -6557,24 +6552,29 @@ public class DatabaseAdapter {
     //<editor-fold desc="Get the list of Pending Dispatches for Delivery">
     public ArrayList<HashMap<String, String>> getPendingDispatchesForDelivery() {
         ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
-        selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DispatchForMobile, SUM(t2.Quantity) AS TotalDispatch,  " +
+        /*selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DispatchForMobile, SUM(t2.Quantity) AS TotalDispatch,  " +
                 "t1.DriverName, t1.DriverMobileNo  " +
-                "FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2 " +
-                "WHERE t2.DispatchId = t1.Id " +
-                "GROUP BY t1.Id,t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DispatchForMobile, t1.DriverName, t1.DriverMobileNo ORDER BY t1.Id";
+                "FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2, PaymentAgainstDispatchDelivery t3 " +
+                "WHERE t2.DispatchId = t1.Id AND t3.DispatchId <> t1.Id " +
+                "GROUP BY t1.Id,t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DispatchForMobile, t1.DriverName, t1.DriverMobileNo ORDER BY t1.Id";*/
         /*selectQuery = "SELECT Id, Code, VehicleNo, DispatchForName, 10 AS TotalDispatch FROM " +
                 "PendingDispatchForDelivery";*/
+        selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForId, t1.DispatchForName, t1.DispatchForMobile, SUM(t2.Quantity) AS TotalDispatch, t1.DriverName, t1.DriverMobileNo   " +
+                "FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2 " +
+                "WHERE t2.DispatchId = t1.Id AND t1.Id NOT IN (SELECT DISTINCT DispatchId FROM PaymentAgainstDispatchDelivery) " +
+                "GROUP BY t1.Id,t1.Code, t1.VehicleNo, t1.DispatchForId, t1.DispatchForName, t1.DispatchForMobile, t1.DriverName, t1.DriverMobileNo ORDER BY t1.Id";
         cursor = db.rawQuery(selectQuery, null);
         while (cursor.moveToNext()) {
             map = new HashMap<>();
             map.put("Id", cursor.getString(0));
             map.put("Code", cursor.getString(1));
             map.put("VehicleNo", cursor.getString(2));
-            map.put("DispatchForName", cursor.getString(3));
-            map.put("DispatchForMobile", cursor.getString(4));
-            map.put("TotalDispatch", cursor.getString(5));
-            map.put("DriverName", cursor.getString(6));
-            map.put("DriverMobileNo", cursor.getString(7));
+            map.put("DispatchForId", cursor.getString(3));
+            map.put("DispatchForName", cursor.getString(4));
+            map.put("DispatchForMobile", cursor.getString(5));
+            map.put("TotalDispatch", cursor.getString(6));
+            map.put("DriverName", cursor.getString(7));
+            map.put("DriverMobileNo", cursor.getString(8));
             dataList.add(map);
         }
         cursor.close();
@@ -6585,9 +6585,11 @@ public class DatabaseAdapter {
     //<editor-fold desc="Get the list of Dispatch Items for selected Delivery">
     public ArrayList<HashMap<String, String>> getPendingDispatchItemsForDelivery(String dispatchId) {
         ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
-        selectQuery = "SELECT DispatchId, BookingId, Rate, PolybagTypeId, PolybagTitle, Quantity " +
-                "FROM PendingDispatchDetailsForDelivery " +
-                "WHERE DispatchId = '" + dispatchId + "'";
+        selectQuery = "SELECT t1.DispatchId, t1.BookingId, t1.Rate, t1.PolybagTypeId, t1.PolybagTitle, t1.Quantity, ifnull(t2. Quantity, 0) AS DeliveryQuantity " +
+                "FROM PendingDispatchDetailsForDelivery t1 " +
+                "LEFT OUTER JOIN DeliveryDetailsForDispatch t2 " +
+                "ON t1.DispatchId = t2.DispatchId AND t1.PolybagTypeId = t2.DispatchItemId " +
+                "WHERE t1.DispatchId = '" + dispatchId + "'";
         cursor = db.rawQuery(selectQuery, null);
         while (cursor.moveToNext()) {
             map = new HashMap<>();
@@ -6597,12 +6599,29 @@ public class DatabaseAdapter {
             map.put("PolybagId", cursor.getString(3));
             map.put("PolybagTitle", cursor.getString(4));
             map.put("Quantity", cursor.getString(5));
+            map.put("DeliveryQuantity", cursor.getString(6));
             dataList.add(map);
         }
         cursor.close();
         return dataList;
     }
     //</editor-fold>
+
+    //<editor-fold desc="Get Balance for Farmer / Nursery">
+    public int getBalanceForFarmerNursery(String farmerNurseryId) {
+        int balance = 0;
+        selectQuery = "SELECT BalanceAmount FROM BalanceDetailsForFarmerNursery WHERE FarmerNurseryId = '"+ farmerNurseryId +"'";
+        cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                balance = cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+        return balance;
+    }
+    //</editor-fold>
+
 
 
     //<editor-fold desc="To get all New Coordinates For Sync">
@@ -6688,9 +6707,9 @@ public class DatabaseAdapter {
 
     //<editor-fold desc="Method to get count of farm block by farmer">
     public int getFarmBlockCountByFarmerId(String farmerId) {
-        int id = 0;
-        selectQuery = "SELECT COUNT(Id) FROM FarmBlock WHERE FarmerId = '" + farmerId + "' ";
-        cursor = db.rawQuery(selectQuery, null);
+            int id = 0;
+            selectQuery = "SELECT COUNT(Id) FROM FarmBlock WHERE FarmerId = '" + farmerId + "' ";
+            cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
