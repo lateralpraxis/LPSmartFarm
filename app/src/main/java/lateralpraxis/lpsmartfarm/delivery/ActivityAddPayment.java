@@ -47,7 +47,7 @@ public class ActivityAddPayment extends Activity {
 
     private String dispatchId, driverName, driverMobileNo, dispatchForName, dispatchForMobile, totalDispatch, totalAmount;
 
-    private Button btnBack, btnSave;
+    private Button btnBack, btnNext;
     private EditText etPaymentAmount, etPaymentRemarks;
 
     @Override
@@ -85,7 +85,7 @@ public class ActivityAddPayment extends Activity {
         etPaymentRemarks = findViewById(R.id.etPaymentRemarks);
 
         btnBack = findViewById(R.id.btnBack);
-        btnSave = findViewById(R.id.btnSave);
+        btnNext = findViewById(R.id.btnNext);
         //</editor-fold>
 
         //<editor-fold desc="Get Extra values from Intent call">
@@ -121,7 +121,7 @@ public class ActivityAddPayment extends Activity {
             }
         });
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 /* Check delivery quantity against dispatch quantity */
