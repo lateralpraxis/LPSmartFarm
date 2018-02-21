@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -49,6 +50,8 @@ public class ActivityAddPayment extends Activity {
 
     private Button btnBack, btnNext;
     private EditText etPaymentAmount, etPaymentRemarks;
+
+    private ArrayList<HashMap<String, String>> dispatchData = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,8 +100,8 @@ public class ActivityAddPayment extends Activity {
             dispatchForId = extras.getString("dispatchForId");
             dispatchForName = extras.getString("dispatchForName");
             dispatchForMobile = extras.getString("dispatchForMobile");
-            totalDispatch = extras.getString("totalDispatch");
-            totalAmount = extras.getString("totalAmount");
+            /*totalDispatch = extras.getString("totalDispatch");
+            totalAmount = extras.getString("totalAmount");*/
         }
         //</editor-fold>
 
@@ -183,7 +186,15 @@ public class ActivityAddPayment extends Activity {
      */
     private void BindData() {
         dba.open();
+        dispatchData = dba.getPendingDispatchItemsForDelivery(dispatchId);
+        int totalQuantity = 0, totalAmount = 0;
+        for (int i = 0; i < dispatchData.size(); i++) {
+            totalQuantity += Integer.valueOf(dispatchData.get(i).get("Quantity"));
+            totalAmount += (Double.valueOf(dispatchData.get(i).get("Rate")) * Integer.valueOf(dispatchData.get(i).get("DeliveryQuantity")));
+        }
         int balance = dba.getBalanceForFarmerNursery(dispatchForId);
+        tvBookedQty.setText(String.valueOf(totalQuantity));
+        tvAmount.setText(String.valueOf(totalAmount));
         tvBalance.setText(String.valueOf(balance));
         dba.close();
     }

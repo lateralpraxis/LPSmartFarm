@@ -295,7 +295,7 @@ public class DatabaseAdapter {
                     "PendingDispatchDetailsForDelivery (DispatchId TEXT, BookingId TEXT, Rate TEXT, " +
                     "PolybagTypeId TEXT, PolybagTitle TEXT, Quantity INTEGER)",
             DeliveryDetailsForDispatch_CREATE = "CREATE TABLE IF NOT EXISTS DeliveryDetailsForDispatch (DispatchId TEXT, BookingId TEXT, " +
-                    "DispatchItemId TEXT, Quantity INTEGER)",
+                    "DispatchItemId TEXT, Quantity INTEGER,UniqueId TEXT)",
             BalanceDetailsForFarmerNursery_CREATE = "CREATE TABLE IF NOT EXISTS BalanceDetailsForFarmerNursery (FarmerNursery TEXT, " +
                     "FarmerNurseryId TEXT, BalanceAmount TEXT)",
             PaymentAgainstDispatchDelivery_CREATE = "CREATE TABLE IF NOT EXISTS PaymentAgainstDispatchDelivery (DispatchId, TEXT, BookingId TEXT, " +
@@ -3122,7 +3122,7 @@ public class DatabaseAdapter {
             result = "fail";
             selectQuery = "UPDATE PendingDispatchForDelivery " +
                     "SET ShortCloseReasonId = '" + shortCloseReasonId + "' " +
-                    "WHERE DispatchId ='" + dispatchId + "' ";
+                    "WHERE Id ='" + dispatchId + "' ";
             db.execSQL(selectQuery);
             result = "success";
             return result;
@@ -3926,6 +3926,7 @@ public class DatabaseAdapter {
             db.execSQL("DELETE FROM JobCardPending; ");
             db.execSQL("DELETE FROM PolyBagRate; ");
             db.execSQL("DELETE FROM PaymentMode; ");
+            db.execSQL("DELETE FROM ShortCloseReason");
             db.execSQL("DELETE FROM BookingAddressTemp; ");
             result = "success";
         } catch (Exception e) {
@@ -6619,6 +6620,25 @@ public class DatabaseAdapter {
             } while (cursor.moveToNext());
         }
         return balance;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Get Balance for Farmer / Nursery">
+    public String getShortCloseReason(String dispatchId) {
+        String reason = "";
+        selectQuery = "SELECT ifnull(t2.Title, '') AS SCReason " +
+                "FROM PendingDispatchForDelivery t1 " +
+                "LEFT OUTER JOIN ShortCloseReason t2 ON t1.ShortCloseReasonId = t2.Id " +
+                "WHERE t1.Id = '"+ dispatchId +"'";
+        cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                /*reason = cursor.getInt(1);*/
+                reason = cursor.getString(0);
+            } while (cursor.moveToNext());
+        }
+        return reason;
     }
     //</editor-fold>
 

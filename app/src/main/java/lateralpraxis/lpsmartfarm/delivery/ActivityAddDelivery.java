@@ -53,6 +53,8 @@ public class ActivityAddDelivery extends Activity {
     private String dispatchId, driverName, driverMobileNo, dispatchForId, dispatchForName, dispatchForMobile;
     private Button btnBack, btnNext;
 
+    private Integer total = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +118,8 @@ public class ActivityAddDelivery extends Activity {
         tvDispatchForId.setText(dispatchForId);
         tvDispatchForName.setText(dispatchForName);
         tvDispatchForMobile.setText(dispatchForMobile);
+        tvTotalDelivery.setText("0");
+
         //</editor-fold>
 
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +149,9 @@ public class ActivityAddDelivery extends Activity {
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    dba.open();
+                                    dba.clearDeliveryDetailsForDispatch(tvDispatchId.getText().toString());
+                                    dba.close();
                                     for (int i = 0; i < lvDispatchItems.getCount(); i++) {
                                         LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
                                         TextView tvDispatchId = (TextView) layout1.getChildAt(0);
@@ -168,8 +175,8 @@ public class ActivityAddDelivery extends Activity {
                                         intent.putExtra("dispatchForId", dispatchForId);
                                         intent.putExtra("dispatchForName", dispatchForName);
                                         intent.putExtra("dispatchForMobile", dispatchForMobile);
-                                        intent.putExtra("totalDispatch", tvTotalDispatch.getText().toString());
-                                        intent.putExtra("totalAmount", tvTotalAmount.getText().toString());
+                                        /*intent.putExtra("totalDispatch", tvTotalDispatch.getText().toString());
+                                        intent.putExtra("totalAmount", tvTotalAmount.getText().toString());*/
                                         startActivity(intent);
                                         finish();
                                     }
@@ -224,6 +231,23 @@ public class ActivityAddDelivery extends Activity {
             ViewGroup.LayoutParams params = lvDispatchItems.getLayoutParams();
             lvDispatchItems.setLayoutParams(params);
             lvDispatchItems.requestLayout();
+
+            for (int i = 0; i < dispatchData.size(); i++) {
+                total += Integer.valueOf(dispatchData.get(i).get("DeliveryQuantity").toString());
+            }
+            tvTotalDelivery.setText(total.toString());
+
+            dba.open();
+            String reason = dba.getShortCloseReason(dispatchId);
+            dba.close();
+
+            int index = 0;
+            for (int i = 0; i < spShortClose.getCount(); i++) {
+                String item = spShortClose.getItemAtPosition(i).toString();
+                if (item.equals(reason))
+                    index = i;
+            }
+            spShortClose.setSelection(index);
         }
     }
 
@@ -374,15 +398,14 @@ public class ActivityAddDelivery extends Activity {
             holder.tvDispatchItemQty.setText(itemData.get("Quantity"));
             holder.tvDeliveryQty.setText(itemData.get("DeliveryQuantity"));
             holder.tvDispatchItemRate.setText(itemData.get("Rate"));
-
-            tvTotalDelivery.setText("");
+            holder.etDeliveryQty.setText(itemData.get("DeliveryQuantity"));
 
             holder.etDeliveryQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    Double totalDelivery = Double.valueOf(0);
+                    /*Double totalDelivery = Double.valueOf(0);
                     Double totalDispatch = Double.valueOf(0);
-                    Double totalAmount = Double.valueOf(0);
+                    Double totalAmount = Double.valueOf(0);*/
                     if (!hasFocus) {
                         for (int i = 0; i < lvDispatchItems.getCount(); i++) {
                             LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
@@ -402,23 +425,20 @@ public class ActivityAddDelivery extends Activity {
                                 common.showToast("Cannot be greater than " + tvDispatchItemQty.getText(), Toast.LENGTH_LONG, 0);
                                 etDeliveryQty.setText("");
                             }
-                            totalDelivery = totalDelivery + getValue(etDeliveryQty.getEditableText().toString());
+                            /*totalDelivery = totalDelivery + getValue(etDeliveryQty.getEditableText().toString());
                             totalDispatch = totalDispatch + getValue(tvDispatchItemQty.getText().toString());
-                            totalAmount = totalAmount + (getValue(tvDispatchItemQty.getText().toString()) * getValue(tvDispatchItemRate.getText().toString()));
+                            totalAmount = totalAmount + (getValue(tvDispatchItemQty.getText().toString()) * getValue(tvDispatchItemRate.getText().toString()));*/
 
                            /* dba.open();
                             dba.insertDeliveryDetailsForDispatch(tvDispatchId.getText().toString(), tvBookingId.getText().toString(), tvDispatchItemId.getText().toString(), etDeliveryQty.getText().toString());
                             dba.close();*/
                         }
-                        tvTotalDispatch.setText(totalDispatch.toString());
+                        /*tvTotalDispatch.setText(totalDispatch.toString());
                         tvTotalDelivery.setText(totalDelivery.toString());
-                        tvTotalAmount.setText(totalAmount.toString());
+                        tvTotalAmount.setText(totalAmount.toString());*/
                     }
                 }
             });
-
-            /*if (!(holder.tvDeliveryQty.getText().toString().trim().isEmpty() || holder.tvDeliveryQty.getText().toString() == "0"))
-                holder.etDeliveryQty.requestFocus();*/
 
             convertView.setBackgroundColor(Color.parseColor((position % 2 == 1) ? "#EEEEEE" : "#FFFFFF"));
             return convertView;
