@@ -223,6 +223,12 @@ public class ActivityAddPayment extends Activity {
     @Override
     public void onBackPressed() {
         Intent i = new Intent(ActivityAddPayment.this, ActivityAddDelivery.class);
+        i.putExtra("dispatchId", dispatchId);
+        i.putExtra("driverName", driverName);
+        i.putExtra("driverMobileNo", driverMobileNo);
+        i.putExtra("dispatchForId", dispatchForId);
+        i.putExtra("dispatchForName", dispatchForName);
+        i.putExtra("dispatchForMobile", dispatchForMobile);
         startActivity(i);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
@@ -240,11 +246,7 @@ public class ActivityAddPayment extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(this, ActivityHome.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                onBackPressed();
                 return true;
             case R.id.action_go_to_home:
                 Intent homeScreenIntent = new Intent(this, ActivityHome.class);

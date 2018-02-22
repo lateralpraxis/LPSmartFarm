@@ -290,16 +290,18 @@ public class DatabaseAdapter {
             PendingDispatchForDelivery_CREATE =
                     "CREATE TABLE IF NOT EXISTS PendingDispatchForDelivery(Id TEXT, Code TEXT, " +
                             "DispatchForId TEXT, DispatchForName TEXT, DispatchForMobile TEXT, " +
-                            "VehicleNo TEXT, DriverName TEXT, DriverMobileNo TEXT, ShortCloseReasonId TEXT);",
+                            "VehicleNo TEXT, DriverName TEXT, DriverMobileNo TEXT)",
             PendingDispatchDetailsForDelivery_CREATE = "CREATE TABLE IF NOT EXISTS " +
                     "PendingDispatchDetailsForDelivery (DispatchId TEXT, BookingId TEXT, Rate TEXT, " +
                     "PolybagTypeId TEXT, PolybagTitle TEXT, Quantity INTEGER)",
             DeliveryDetailsForDispatch_CREATE = "CREATE TABLE IF NOT EXISTS DeliveryDetailsForDispatch (DispatchId TEXT, BookingId TEXT, " +
-                    "DispatchItemId TEXT, Quantity INTEGER,UniqueId TEXT)",
+                    "DispatchItemId TEXT, Quantity INTEGER)",
             BalanceDetailsForFarmerNursery_CREATE = "CREATE TABLE IF NOT EXISTS BalanceDetailsForFarmerNursery (FarmerNursery TEXT, " +
                     "FarmerNurseryId TEXT, BalanceAmount TEXT)",
-            PaymentAgainstDispatchDelivery_CREATE = "CREATE TABLE IF NOT EXISTS PaymentAgainstDispatchDelivery (DispatchId, TEXT, BookingId TEXT, " +
-                    "TotalAmount TEXT, TotalBalance TEXT, PaymentMode TEXT, PaymentAmount TEXT, PaymentRemarks TEXT)";
+            PaymentAgainstDispatchDelivery_CREATE = "CREATE TABLE IF NOT EXISTS PaymentAgainstDispatchDelivery (DispatchId TEXT, BookingId TEXT, " +
+                    "TotalAmount TEXT, TotalBalance TEXT, PaymentMode TEXT, PaymentAmount TEXT, PaymentRemarks TEXT)",
+            PendingDispatchSyncDetails_CREATE = "CREATE TABLE IF NOT EXISTS PendingDispatchSyncDetails (DispatchId TEXT, ShortCloseReasonId TEXT, UniqueId TEXT, " +
+                    "CreateBy TEXT, CreateDate TEXT, Latitude TEXT, Longitude TEXT, Accuracy TEXT, IsSync TEXT)";
 
     static String prevfarmCroppingUniqueId = "";
     /*Context of the application using the database.*/
@@ -1746,6 +1748,13 @@ public class DatabaseAdapter {
         return result;
     }
 
+    public void deleteTemporaryDispatchData() {
+
+        db.execSQL(" DELETE FROM PendingDispatchSyncDetails WHERE CreateBy IS NULL");
+        db.execSQL(" DELETE FROM PaymentAgainstDispatchDelivery WHERE DispatchId IN (SELECT DispatchId FROM PendingDispatchSyncDetails WHERE CreateBy IS NULL)");
+        db.execSQL(" DELETE FROM DeliveryDetailsForDispatch WHERE DispatchId IN (SELECT DispatchId FROM PendingDispatchSyncDetails WHERE CreateBy IS NULL)");
+    }
+
     public void clearDeliveryDetailsForDispatch(String dispatchId) {
         if (dispatchId.trim().isEmpty())
             db.execSQL("DELETE FROM DeliveryDetailsForDispatch");
@@ -3117,13 +3126,33 @@ public class DatabaseAdapter {
         }
     }
 
-    public String updatePendingDispatchForDeliveryShortCloseReason(String dispatchId, String shortCloseReasonId) {
+    public String updateShortCloseReason(String dispatchId, String shortCloseReasonId) {
         try {
             result = "fail";
-            selectQuery = "UPDATE PendingDispatchForDelivery " +
-                    "SET ShortCloseReasonId = '" + shortCloseReasonId + "' " +
-                    "WHERE Id ='" + dispatchId + "' ";
-            db.execSQL(selectQuery);
+            String uniqueId = "";
+            selectQuery = "SELECT UniqueId FROM PendingDispatchSyncDetails WHERE DispatchId = '" + dispatchId + "' ";
+            cursor = db.rawQuery(selectQuery, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    uniqueId = String.valueOf(cursor.getString(0));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+
+            if (uniqueId.toString().isEmpty()) {
+                uniqueId = UUID.randomUUID().toString();
+
+                newValues = new ContentValues();
+
+                newValues.put("DispatchId", dispatchId);
+                newValues.put("ShortCloseReasonId", shortCloseReasonId);
+                newValues.put("UniqueId", uniqueId);
+
+                db.insert("PendingDispatchSyncDetails", null, newValues);
+            } else {
+                selectQuery = "UPDATE PendingDispatchSyncDetails SET ShortCloseReasonId = '" + shortCloseReasonId + "' WHERE DispatchId = '" + dispatchId + "' AND UniqueId = '" + uniqueId + "' ";
+                db.execSQL(selectQuery);
+            }
             result = "success";
             return result;
         } catch (Exception e) {
@@ -6611,7 +6640,7 @@ public class DatabaseAdapter {
     //<editor-fold desc="Get Balance for Farmer / Nursery">
     public int getBalanceForFarmerNursery(String farmerNurseryId) {
         int balance = 0;
-        selectQuery = "SELECT BalanceAmount FROM BalanceDetailsForFarmerNursery WHERE FarmerNurseryId = '"+ farmerNurseryId +"'";
+        selectQuery = "SELECT BalanceAmount FROM BalanceDetailsForFarmerNursery WHERE FarmerNurseryId = '" + farmerNurseryId + "'";
         cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -6627,9 +6656,9 @@ public class DatabaseAdapter {
     public String getShortCloseReason(String dispatchId) {
         String reason = "";
         selectQuery = "SELECT ifnull(t2.Title, '') AS SCReason " +
-                "FROM PendingDispatchForDelivery t1 " +
+                "FROM PendingDispatchSyncDetails t1 " +
                 "LEFT OUTER JOIN ShortCloseReason t2 ON t1.ShortCloseReasonId = t2.Id " +
-                "WHERE t1.Id = '"+ dispatchId +"'";
+                "WHERE t1.DispatchId = '" + dispatchId + "'";
         cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
@@ -6641,7 +6670,6 @@ public class DatabaseAdapter {
         return reason;
     }
     //</editor-fold>
-
 
 
     //<editor-fold desc="To get all New Coordinates For Sync">
@@ -6727,9 +6755,9 @@ public class DatabaseAdapter {
 
     //<editor-fold desc="Method to get count of farm block by farmer">
     public int getFarmBlockCountByFarmerId(String farmerId) {
-            int id = 0;
-            selectQuery = "SELECT COUNT(Id) FROM FarmBlock WHERE FarmerId = '" + farmerId + "' ";
-            cursor = db.rawQuery(selectQuery, null);
+        int id = 0;
+        selectQuery = "SELECT COUNT(Id) FROM FarmBlock WHERE FarmerId = '" + farmerId + "' ";
+        cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {

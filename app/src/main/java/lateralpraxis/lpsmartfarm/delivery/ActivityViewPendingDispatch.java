@@ -75,6 +75,12 @@ public class ActivityViewPendingDispatch extends Activity {
         }
         //</editor-fold>
 
+        //<editor-fold desc="Code To Delete Unsaved Data">
+        dba.open();
+        dba.deleteTemporaryDispatchData();
+        dba.close();
+        //</editor-fold>
+
         if (common.isConnected()) {
             BindData();
         } else {

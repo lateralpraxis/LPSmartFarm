@@ -177,12 +177,13 @@ public class ActivityAddDelivery extends Activity {
                                         intent.putExtra("dispatchForMobile", dispatchForMobile);
                                         /*intent.putExtra("totalDispatch", tvTotalDispatch.getText().toString());
                                         intent.putExtra("totalAmount", tvTotalAmount.getText().toString());*/
+
                                         startActivity(intent);
                                         finish();
                                     }
                                     if (!String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()).trim().isEmpty()) {
                                         dba.open();
-                                        dba.updatePendingDispatchForDeliveryShortCloseReason(
+                                        dba.updateShortCloseReason(
                                                 tvDispatchId.getText().toString(),
                                                 String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()));
                                         dba.close();
