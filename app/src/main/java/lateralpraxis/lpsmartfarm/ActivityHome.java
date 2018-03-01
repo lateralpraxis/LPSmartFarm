@@ -2334,37 +2334,11 @@ public class ActivityHome extends Activity {
                         dba.InsertServerJobCardDetails(jsonArray.getJSONObject(i).getString("A"), jsonArray.getJSONObject(i).getString("I"), jsonArray.getJSONObject(i).getString("J"), jsonArray.getJSONObject(i).getString("K"), jsonArray.getJSONObject(i).getString("L"), jsonArray.getJSONObject(i).getString("M"), jsonArray.getJSONObject(i).getString("N"), jsonArray.getJSONObject(i).getString("H"), jsonArray.getJSONObject(i).getString("O"));
                     }
                     dba.close();
-                    if (syncFrom.equalsIgnoreCase("masters"))
-                        common.showAlert(ActivityHome.this, curusrlang.equalsIgnoreCase("en") ? "Synchronization completed successfully." : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ।", false);
-                    else {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                        // set title
-                        alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en") ? "Sync Successful" : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ");
-                        // set dialog message
-                        alertDialogBuilder
-                                .setMessage(curusrlang.equalsIgnoreCase("en") ? "Transaction Synchronization completed successfully. It is recommended to synchronize master data. Do you want to continue?" : "ट्रांसक्शन्स सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ। मास्टर डेटा को सिंक्रनाइज़ करने के लिए अनुशंसित है। क्या आप जारी रखना चाहते हैं?")
-                                .setCancelable(false)
-                                .setPositiveButton(curusrlang.equalsIgnoreCase("en") ? "Yes" : "हाँ", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-
-                                        if (common.isConnected()) {
-                                            AsyncUserRoleWSCall task = new AsyncUserRoleWSCall();
-                                            task.execute();
-                                        }
-                                    }
-                                })
-                                .setNegativeButton(curusrlang.equalsIgnoreCase("en") ? "No" : "नहीं", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // if this button is clicked, just close
-                                        dialog.cancel();
-                                    }
-                                });
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        // show it
-                        alertDialog.show();
-
+                    if (common.isConnected()) {
+                        AsyncDeliveryWSCall task = new AsyncDeliveryWSCall();
+                        task.execute();
                     }
+
                 } else {
                     common.showAlert(ActivityHome.this, result, false);
                 }
@@ -8902,6 +8876,148 @@ public class ActivityHome extends Activity {
         }
     }
     //</editor-fold>
+
+
+    private class AsyncDeliveryWSCall extends AsyncTask<String, Void, String> {
+        private ProgressDialog Dialog = new ProgressDialog(ActivityHome.this);
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            // Will contain the raw JSON response as a string.
+            try {
+                responseJSON = "";
+
+                JSONObject jsonMaster = new JSONObject();
+                dba.open();
+                sendJSon = "";
+                //to get New Farmers from database
+                ArrayList<HashMap<String, String>> insmast = dba.getUnSyncDeliveryMasterDetails();
+                dba.close();
+                if (insmast != null && insmast.size() > 0) {
+                    JSONArray array = new JSONArray();
+                    //To make json string to post New Farmers
+                    for (HashMap<String, String> insp : insmast) {
+                        JSONObject jsonins = new JSONObject();
+                        jsonins.put("FarmerNurseryType", insp.get("FarmerNurseryType"));
+                        jsonins.put("FarmerNurseryId", insp.get("FarmerNurseryId"));
+                        jsonins.put("Amount", insp.get("Amount"));
+                        jsonins.put("ShortCloseReasonId", insp.get("ShortCloseReasonId"));
+                        jsonins.put("UniqueId", insp.get("UniqueId"));
+                        jsonins.put("AndroidDate", insp.get("AndroidDate"));
+                        jsonins.put("PaymentModeId", insp.get("PaymentModeId"));
+                        jsonins.put("PaymentAmount", insp.get("PaymentAmount"));
+                        jsonins.put("Remarks", insp.get("Remarks"));
+                        jsonins.put("CreateBy", insp.get("CreateBy"));
+                        jsonins.put("PaymentFileName", insp.get("PaymentFileName"));
+                        jsonins.put("Latitude", insp.get("Latitude"));
+                        jsonins.put("Longitude", insp.get("Longitude"));
+                        jsonins.put("Accuracy", insp.get("Accuracy"));
+                        jsonins.put("CreateIP", common.getDeviceIPAddress(true));
+                        jsonins.put("CreateMachine", common.getIMEI());
+                        array.put(jsonins);
+                    }
+                    jsonMaster.put("Master", array);
+
+                    JSONObject jsonDetail = new JSONObject();
+                    //To get Assigned Block details from database
+                    dba.open();
+                    ArrayList<HashMap<String, String>> insdet = dba.getUnSyncDeliveryDetails();
+                    dba.close();
+                    if (insdet != null && insdet.size() > 0) {
+                        //To make json string to post Assigned Block details
+                        JSONArray arraydet = new JSONArray();
+                        for (HashMap<String, String> insd : insdet) {
+                            JSONObject jsondet = new JSONObject();
+                            jsondet.put("UniqueId", insd.get("UniqueId"));
+                            jsondet.put("PolyBagTypeId", insd.get("PolyBagTypeId"));
+                            jsondet.put("Quantity", insd.get("Quantity"));
+                            jsondet.put("Rate", insd.get("Rate"));
+                            jsondet.put("Amount", insd.get("Amount"));
+                            arraydet.put(jsondet);
+                        }
+                        jsonDetail.put("Detail", arraydet);
+                    }
+
+                    sendJSon = jsonMaster + "~" + jsonDetail;
+
+                    //To invoke json web service to create New Farmers On Portal
+                    responseJSON = common.invokeJSONWS(sendJSon, "json", "SubmitDelivery", common.url);
+                } else {
+                    return "No prospective farmer pending to be send.";
+                }
+                return responseJSON;
+            } catch (Exception e) {
+                // TODO: handle exception
+                return "ERROR: " + "Unable to get response from server.";
+            }
+        }
+
+        //After execution of json web service to create New Farmer On Portal
+        @Override
+        protected void onPostExecute(String result) {
+
+            try {
+                //To display message after response from server
+                if (!result.contains("ERROR")) {
+                    if (responseJSON.equalsIgnoreCase("success")) {
+                        dba.open();
+                        dba.Update_NewFarmerIsSync();
+                        dba.close();
+                    }
+                    if (syncFrom.equalsIgnoreCase("masters"))
+                        common.showAlert(ActivityHome.this, curusrlang.equalsIgnoreCase("en") ? "Synchronization completed successfully." : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ।", false);
+                    else {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        // set title
+                        alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en") ? "Sync Successful" : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ");
+                        // set dialog message
+                        alertDialogBuilder
+                                .setMessage(curusrlang.equalsIgnoreCase("en") ? "Transaction Synchronization completed successfully. It is recommended to synchronize master data. Do you want to continue?" : "ट्रांसक्शन्स सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ। मास्टर डेटा को सिंक्रनाइज़ करने के लिए अनुशंसित है। क्या आप जारी रखना चाहते हैं?")
+                                .setCancelable(false)
+                                .setPositiveButton(curusrlang.equalsIgnoreCase("en") ? "Yes" : "हाँ", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        if (common.isConnected()) {
+                                            AsyncUserRoleWSCall task = new AsyncUserRoleWSCall();
+                                            task.execute();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton(curusrlang.equalsIgnoreCase("en") ? "No" : "नहीं", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // if this button is clicked, just close
+                                        dialog.cancel();
+                                    }
+                                });
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        // show it
+                        alertDialog.show();
+
+                    }
+                } else {
+                    if (result.contains("null"))
+                        result = "Server not responding.";
+                    common.showAlert(ActivityHome.this, result, false);
+
+                }
+            } catch (Exception e) {
+                common.showAlert(ActivityHome.this, "Unable to fetch response from server.", false);
+            }
+
+            Dialog.dismiss();
+        }
+
+        //To display message on screen within process
+        @Override
+        protected void onPreExecute() {
+
+            Dialog.setMessage("Posting Prospective Farmers...");
+            Dialog.setCancelable(false);
+            Dialog.show();
+        }
+    }
 
     //Async class to send logout details to Portal and logout user from Android on receiving Success from Portal
     private class AsyncLogOutWSCall extends AsyncTask<String, Void, String> {

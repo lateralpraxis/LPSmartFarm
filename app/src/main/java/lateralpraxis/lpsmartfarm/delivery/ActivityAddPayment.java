@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +26,7 @@ import java.util.List;
 import lateralpraxis.lpsmartfarm.ActivityHome;
 import lateralpraxis.lpsmartfarm.Common;
 import lateralpraxis.lpsmartfarm.DatabaseAdapter;
+import lateralpraxis.lpsmartfarm.GPSTracker;
 import lateralpraxis.lpsmartfarm.R;
 import lateralpraxis.lpsmartfarm.UserSessionManager;
 import lateralpraxis.type.CustomType;
@@ -37,7 +37,7 @@ public class ActivityAddPayment extends Activity {
 
     private TextView tvDispatchForName, tvDispatchForMobile, tvBookedQty, tvAmount, tvAdvance, tvBalance;
     private Spinner spPaymentMode;
-    private TextView tvPaymentAmount, tvPaymentRemarks;
+    //private TextView tvPaymentAmount, tvPaymentRemarks;
 
     private DatabaseAdapter dba;
     private UserSessionManager session;
@@ -52,6 +52,16 @@ public class ActivityAddPayment extends Activity {
     private EditText etPaymentAmount, etPaymentRemarks;
 
     private ArrayList<HashMap<String, String>> dispatchData = null;
+
+
+    protected boolean isGPSEnabled = false;
+    protected boolean canGetLocation = false;
+    protected String latitude = "NA", longitude = "NA", accuracy = "NA";
+    protected String latitudeN = "NA", longitudeN = "NA";
+
+    double flatitude = 0.0, flongitude = 0.0;
+
+    GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,35 +152,65 @@ public class ActivityAddPayment extends Activity {
                 } else if (String.valueOf(etPaymentAmount.getText()).trim().equals("")) {
                     common.showToast("Payment Amount is Mandatory.");
                 } else {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
-                            (ActivityAddPayment.this);
-                    alertDialogBuilder.setTitle("Confirmation");
-                    alertDialogBuilder
-                            .setMessage("Are you sure, you want save Payment details?")
-                            .setCancelable(false)
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dba.open();
-                                    dba.insertPaymentDetailsPendingDispatchDelivery(dispatchId, dispatchId, tvAmount.getText().toString(),
-                                            tvBalance.getText().toString(), String.valueOf(((CustomType) spPaymentMode.getSelectedItem()).getId()),
-                                            etPaymentAmount.getText().toString().trim(), etPaymentRemarks.getText().toString().trim());
-                                    dba.close();
-                                    Intent intent = new Intent(ActivityAddPayment.this,
-                                            ActivityViewDelivery.class);
-                                    startActivity(intent);
-                                    finish();
-                                }
-                            })
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
+                    latitude = "NA";
+                    longitude = "NA";
+                    accuracy = "NA";
+                    latitudeN = "NA";
+                    longitudeN = "NA";
+
+                    gps = new GPSTracker(ActivityAddPayment.this);
+
+                    if (gps.canGetLocation()) {
+                        flatitude = gps.getLatitude();
+                        flongitude = gps.getLongitude();
+
+                        latitude = String.valueOf(flatitude);
+                        longitude = String.valueOf(flongitude);
+
+                        if (!latitude.equals("NA") && !longitude.equals("NA")) {
+                            latitudeN = latitude.toString();
+                            longitudeN = longitude.toString();
+                            accuracy = common.stringToOneDecimal(String.valueOf(gps.accuracy)) + " mts";
+                        } else if (latitude.equals("NA") || longitude.equals("NA")) {
+                            flatitude = gps.getLatitude();
+                            flongitude = gps.getLongitude();
+                        }
+
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
+                                (ActivityAddPayment.this);
+                        alertDialogBuilder.setTitle("Confirmation");
+                        alertDialogBuilder
+                                .setMessage("Are you sure, you want save Payment details?")
+                                .setCancelable(false)
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dba.open();
+                                        dba.insertPaymentDetailsPendingDispatchDelivery(dispatchId, dispatchId, tvAmount.getText().toString(),
+                                                tvBalance.getText().toString(), String.valueOf(((CustomType) spPaymentMode.getSelectedItem()).getId()),
+                                                etPaymentAmount.getText().toString().trim(), etPaymentRemarks.getText().toString().trim(), userId, longitudeN, latitudeN, accuracy);
+                                        dba.close();
+                                        Intent intent = new Intent(ActivityAddPayment.this,
+                                                ActivityViewDelivery.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                })
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
                                 /*Just close the dialog without doing anything*/
-                                    dialog.cancel();
-                                }
-                            });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    alertDialog.show();
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
+                    } else {
+                        // can't get location
+                        // GPS or Network is not enabled
+                        // Ask user to enable GPS/network in settings
+                        gps.showSettingsAlert();
+                    }
                 }
             }
         });
@@ -201,8 +241,8 @@ public class ActivityAddPayment extends Activity {
         }
         int balance = dba.getBalanceForFarmerNursery(dispatchForId);
         tvBookedQty.setText(String.valueOf(totalQuantity));
-        tvAmount.setText(String.valueOf(totalAmount));
-        tvBalance.setText(String.valueOf(balance));
+        tvAmount.setText(Double.valueOf(totalAmount).toString());
+        tvBalance.setText(Double.valueOf(balance).toString());
         dba.close();
     }
 

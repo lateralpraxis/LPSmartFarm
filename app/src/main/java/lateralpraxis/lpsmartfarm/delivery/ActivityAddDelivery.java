@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -139,7 +141,7 @@ public class ActivityAddDelivery extends Activity {
                         && (spShortClose.getSelectedItemPosition() == 0)) {
                     common.showToast("ShortClose Reason is mandatory", 5, 1);
                 } else {
-                    AlertDialog.Builder confirm = new AlertDialog.Builder
+                    final AlertDialog.Builder confirm = new AlertDialog.Builder
                             (ActivityAddDelivery.this);
                     confirm.setTitle("Confirmation");
                     confirm
@@ -158,6 +160,10 @@ public class ActivityAddDelivery extends Activity {
                                         LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
                                         TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);
                                         EditText etDeliveryQty = (EditText) layout2.getChildAt(6);
+                                        if (etDeliveryQty.getEditableText().toString().trim().isEmpty()) {
+                                            common.showToast("Delivery Quantity cannot be Empty", 5, 1);
+                                            return;
+                                        }
                                         dba.open();
                                         dba.insertDeliveryDetailsForDispatch(
                                                 tvDispatchId.getText().toString(),
@@ -532,12 +538,61 @@ public class ActivityAddDelivery extends Activity {
 
                         }
                         tvTotalDispatch.setText(totalDispatch.toString());
-                        if (Integer.valueOf(totalDelivery.toString()) > 0)
+                        //if (Integer.valueOf(totalDelivery.toString()) > 0)
                             tvTotalDelivery.setText(totalDelivery.toString());
                         tvTotalAmount.setText(totalAmount.toString());
                     }
                 }
             });
+
+
+            //<editor-fold desc="Code to be executed on change of text">
+            TextWatcher textWatcher = new TextWatcher() {
+                public void afterTextChanged(Editable s) {
+
+                    Integer totalDelivery = Integer.valueOf(0);
+                    Integer totalDispatch = Integer.valueOf(0);
+                    Double totalAmount = Double.valueOf(0);
+
+                    for (int i = 0; i < lvDispatchItems.getCount(); i++) {
+                        LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
+                            /*TextView tvDispatchId = (TextView) layout1.getChildAt(0);
+                            TextView tvBookingId = (TextView) layout1.getChildAt(1);*/
+                        LinearLayout layout2 = (LinearLayout) layout1.getChildAt(2);
+                            /*TextView tvDispatchItemId = (TextView) layout2.getChildAt(1);*/
+                        TextView tvDispatchItemQty = (TextView) layout2.getChildAt(2);
+                        TextView tvDispatchItemRate = (TextView) layout2.getChildAt(3);
+                            /*TextView tvDispatchItemAmt = (TextView) layout2.getChildAt(4);
+                            TextView tvDeliveryQty = (TextView) layout2.getChildAt(5);*/
+                        EditText etDeliveryQty = (EditText) layout2.getChildAt(6);
+                        etDeliveryQty.setHint("Maximum: " + tvDispatchItemQty.getText());
+                            /*if (!(tvDeliveryQty.getText().toString().trim().isEmpty() || tvDeliveryQty.getText().toString() == "0"))
+                                etDeliveryQty.setText(tvDeliveryQty.getText().toString().trim());*/
+
+                        if (getIntegerValue(etDeliveryQty.getEditableText().toString()) > getIntegerValue(tvDispatchItemQty.getText().toString())) {
+                            common.showToast("Cannot be greater than " + tvDispatchItemQty.getText(), Toast.LENGTH_LONG, 0);
+                            etDeliveryQty.setText("");
+                        }
+                        totalDelivery = totalDelivery + getIntegerValue(etDeliveryQty.getEditableText().toString());
+                        totalDispatch = totalDispatch + getIntegerValue(tvDispatchItemQty.getText().toString());
+                        totalAmount = totalAmount + (getDoubleValue(tvDispatchItemQty.getText().toString()) * getDoubleValue(tvDispatchItemRate.getText().toString()));
+
+                    }
+                    tvTotalDispatch.setText(totalDispatch.toString());
+                    //if (Integer.valueOf(totalDelivery.toString()) > 0)
+                    tvTotalDelivery.setText(totalDelivery.toString());
+                    tvTotalAmount.setText(totalAmount.toString());
+
+                }
+
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                }
+
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+            };
+            holder.etDeliveryQty.addTextChangedListener(textWatcher);
+            //</editor-fold>
 
             convertView.setBackgroundColor(Color.parseColor((position % 2 == 1) ? "#EEEEEE" : "#FFFFFF"));
             return convertView;

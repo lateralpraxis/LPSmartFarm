@@ -7,7 +7,6 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -3103,7 +3102,7 @@ public class DatabaseAdapter {
     }
 
     public String insertPaymentDetailsPendingDispatchDelivery(String dispatchId, String bookingId, String totalAmount, String totalBalance,
-                                                              String paymentMode, String paymentAmount, String paymentRemarks) {
+                                                              String paymentMode, String paymentAmount, String paymentRemarks, String userId, String longitude, String latitude, String accuracy) {
         try {
             result = "fail";
             newValues = new ContentValues();
@@ -3117,6 +3116,14 @@ public class DatabaseAdapter {
             newValues.put("PaymentRemarks", paymentRemarks);
 
             db.insert("PaymentAgainstDispatchDelivery", null, newValues);
+
+            newValues.clear();
+
+            db.execSQL("UPDATE PendingDispatchSyncDetails SET " +
+                    "CreateBy = '" + userId + "', CreateDate = '" + getDateTime() + "', " +
+                    "Latitude = '" + latitude + "', Longitude = '" + longitude + "', Accuracy = '" + accuracy + "' " +
+                    "WHERE DispatchId = '" + dispatchId + "' ");
+
             result = "success";
             return result;
         } catch (Exception e) {
@@ -8641,6 +8648,92 @@ public class DatabaseAdapter {
         cursor.close();
 
         return farmerdetails;
+    }
+    //</editor-fold>
+
+
+    //<editor-fold desc="Method to push UnSync Delivery Master Details">
+    public ArrayList<HashMap<String, String>> getUnSyncDeliveryMasterDetails() {
+        ArrayList<HashMap<String, String>> wordList = new ArrayList<>();
+
+        selectQuery = "SELECT " +
+                "bal.FarmerNursery AS FarmerNurseryType, " +
+                "bal.FarmerNurseryId, " +
+                "sync.DispatchId, " +
+                "sync.ShortCloseReasonId, " +
+                "sync.UniqueId, " +
+                "sync.CreateDate AS AndroidDate, " +
+                "pay.PaymentMode AS PaymentModeId, " +
+                "pay.PaymentAmount, " +
+                "pay.PaymentRemarks AS Remarks, " +
+                "'' AS PaymentFileName, " +
+                "sync.CreateBy, " +
+                "sync.Latitude, " +
+                "sync.Longitude, " +
+                "sync.Accuracy " +
+                "FROM " +
+                "PendingDispatchForDelivery pending, " +
+                "PaymentAgainstDispatchDelivery pay, " +
+                "PendingDispatchSyncDetails sync, " +
+                "BalanceDetailsForFarmerNursery bal " +
+                "WHERE " +
+                "sync.DispatchId = pending.Id " +
+                "AND pay.DispatchId = sync.DispatchId " +
+                "AND bal.FarmerNurseryId = pending.DispatchForId " +
+                "AND sync.IsSync IS NULL";
+        cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
+            map = new HashMap<>();
+            map.put("FarmerNurseryType", cursor.getString(0));
+            map.put("FarmerNurseryId", cursor.getString(1));
+            map.put("DispatchId", cursor.getString(2));
+            map.put("ShortCloseReasonId", cursor.getString(3));
+            map.put("UniqueId", cursor.getString(4));
+            map.put("AndroidDate", cursor.getString(5));
+            map.put("PaymentModeId", cursor.getString(6));
+            map.put("PaymentAmount", cursor.getString(7));
+            map.put("Remarks", cursor.getString(8));
+            map.put("PaymentFileName", cursor.getString(9));
+            map.put("CreateBy", cursor.getString(10));
+            map.put("Latitude", cursor.getString(11));
+            map.put("Longitude", cursor.getString(12));
+            map.put("Accuracy", cursor.getString(13));
+
+            wordList.add(map);
+        }
+        cursor.close();
+        return wordList;
+    }
+    //</editor-fold>
+
+    //<editor-fold desc="Method to push UnSync Delivery Details">
+    public ArrayList<HashMap<String, String>> getUnSyncDeliveryDetails() {
+        ArrayList<HashMap<String, String>> wordList = new ArrayList<>();
+
+        selectQuery = "SELECT DISTINCT " +
+                "sync.UniqueId, detail.PolyBagTypeId, delv.Quantity, detail.Rate, (delv.Quantity * detail.Rate) AS Amount " +
+                "FROM " +
+                "PendingDispatchSyncDetails sync, " +
+                "PendingDispatchDetailsForDelivery detail, " +
+                "DeliveryDetailsForDispatch delv " +
+                "WHERE " +
+                "sync.IsSync IS null " +
+                "AND detail.DispatchId = sync.DispatchId " +
+                "AND delv.DispatchId = detail.DispatchId " +
+                "AND delv.DispatchItemId = detail.PolybagTypeId";
+        cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
+            map = new HashMap<>();
+            map.put("UniqueId", cursor.getString(0));
+            map.put("PolyBagTypeId", cursor.getString(1));
+            map.put("Quantity", cursor.getString(2));
+            map.put("Rate", cursor.getString(3));
+            map.put("Amount", cursor.getString(4));
+
+            wordList.add(map);
+        }
+        cursor.close();
+        return wordList;
     }
     //</editor-fold>
 //--------------------------------------------End of Select Queries---------------------------------------------//
