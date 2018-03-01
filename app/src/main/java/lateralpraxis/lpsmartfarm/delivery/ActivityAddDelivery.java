@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -136,14 +135,14 @@ public class ActivityAddDelivery extends Activity {
             @Override
             public void onClick(View v) {
                 /* Check delivery quantity against dispatch quantity */
-                if (((getValue(tvTotalDelivery.getText().toString())) < getValue(tvTotalDispatch.getText().toString()))
+                if (((getIntegerValue(tvTotalDelivery.getText().toString())) < getIntegerValue(tvTotalDispatch.getText().toString()))
                         && (spShortClose.getSelectedItemPosition() == 0)) {
                     common.showToast("ShortClose Reason is mandatory", 5, 1);
                 } else {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder
+                    AlertDialog.Builder confirm = new AlertDialog.Builder
                             (ActivityAddDelivery.this);
-                    alertDialogBuilder.setTitle("Confirmation");
-                    alertDialogBuilder
+                    confirm.setTitle("Confirmation");
+                    confirm
                             .setMessage("Are you sure, you want to proceed for Payment?")
                             .setCancelable(false)
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -166,20 +165,6 @@ public class ActivityAddDelivery extends Activity {
                                                 tvDispatchItemId.getText().toString(),
                                                 etDeliveryQty.getText().toString());
                                         dba.close();
-
-                                        Intent intent = new Intent(ActivityAddDelivery.this,
-                                                ActivityAddPayment.class);
-                                        intent.putExtra("dispatchId", tvDispatchId.getText().toString());
-                                        intent.putExtra("driverName", driverName);
-                                        intent.putExtra("driverMobileNo", driverMobileNo);
-                                        intent.putExtra("dispatchForId", dispatchForId);
-                                        intent.putExtra("dispatchForName", dispatchForName);
-                                        intent.putExtra("dispatchForMobile", dispatchForMobile);
-                                        /*intent.putExtra("totalDispatch", tvTotalDispatch.getText().toString());
-                                        intent.putExtra("totalAmount", tvTotalAmount.getText().toString());*/
-
-                                        startActivity(intent);
-                                        finish();
                                     }
                                     if (!String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()).trim().isEmpty()) {
                                         dba.open();
@@ -188,6 +173,19 @@ public class ActivityAddDelivery extends Activity {
                                                 String.valueOf(((CustomType) spShortClose.getSelectedItem()).getId()));
                                         dba.close();
                                     }
+                                    Intent intent = new Intent(ActivityAddDelivery.this,
+                                            ActivityAddPayment.class);
+                                    intent.putExtra("dispatchId", tvDispatchId.getText().toString());
+                                    intent.putExtra("driverName", driverName);
+                                    intent.putExtra("driverMobileNo", driverMobileNo);
+                                    intent.putExtra("dispatchForId", dispatchForId);
+                                    intent.putExtra("dispatchForName", dispatchForName);
+                                    intent.putExtra("dispatchForMobile", dispatchForMobile);
+                                        /*intent.putExtra("totalDispatch", tvTotalDispatch.getText().toString());
+                                        intent.putExtra("totalAmount", tvTotalAmount.getText().toString());*/
+
+                                    startActivity(intent);
+                                    finish();
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -197,9 +195,45 @@ public class ActivityAddDelivery extends Activity {
                                     dialog.cancel();
                                 }
                             });
-                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    AlertDialog alertDialog = confirm.create();
                     alertDialog.show();
                 }
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Called when a view has been clicked.
+             *
+             * @param v The view that was clicked.
+             */
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder confirm = new AlertDialog.Builder
+                        (ActivityAddDelivery.this);
+                confirm
+                        .setTitle("Confirmation")
+                        .setMessage("Delivery data would be cleared. Are you sure?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(ActivityAddDelivery.this, ActivityViewPendingDispatch.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                /*Just close the dialog without doing anything*/
+                                dialog.cancel();
+                            }
+                        });
+                AlertDialog confirmDialog = confirm.create();
+                confirmDialog.show();
             }
         });
 
@@ -216,7 +250,7 @@ public class ActivityAddDelivery extends Activity {
     private ArrayAdapter<CustomType> DataAdapter(String masterType, String filter) {
         dba.open();
         List<CustomType> labels = dba.GetMasterDetails(masterType, filter);
-        ArrayAdapter<CustomType> dataAdapter = new ArrayAdapter<CustomType>(this, android.R.layout.simple_spinner_item, labels);
+        ArrayAdapter<CustomType> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, labels);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         dba.close();
         return dataAdapter;
@@ -259,12 +293,32 @@ public class ActivityAddDelivery extends Activity {
      */
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(ActivityAddDelivery.this, ActivityViewPendingDispatch.class);
-        startActivity(i);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        this.finish();
-        System.gc();
+        AlertDialog.Builder confirm = new AlertDialog.Builder
+                (ActivityAddDelivery.this);
+        confirm
+                .setTitle("Confirmation")
+                .setMessage("Delivery data would be cleared. Are you sure?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(ActivityAddDelivery.this, ActivityViewPendingDispatch.class);
+                        startActivity(i);
+                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        finish();
+                        System.gc();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                                /*Just close the dialog without doing anything*/
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog confirmDialog = confirm.create();
+        confirmDialog.show();
     }
 
     /**
@@ -275,19 +329,58 @@ public class ActivityAddDelivery extends Activity {
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        AlertDialog.Builder confirm = new AlertDialog.Builder
+                (ActivityAddDelivery.this);
+        AlertDialog confirmDialog;
         switch (item.getItemId()) {
             case android.R.id.home:
-                Intent intent = new Intent(this, ActivityHome.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
+                confirm
+                        .setTitle("Confirmation")
+                        .setMessage("Delivery data would be cleared. Are you sure?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(ActivityAddDelivery.this, ActivityHome.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                        | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                /*Just close the dialog without doing anything*/
+                                dialog.cancel();
+                            }
+                        });
+                confirmDialog = confirm.create();
+                confirmDialog.show();
                 return true;
             case R.id.action_go_to_home:
-                Intent homeScreenIntent = new Intent(this, ActivityHome.class);
-                homeScreenIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeScreenIntent);
-                finish();
+                confirm
+                        .setTitle("Confirmation")
+                        .setMessage("Delivery data would be cleared. Are you sure?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent homeScreenIntent = new Intent(ActivityAddDelivery.this, ActivityHome.class);
+                                homeScreenIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(homeScreenIntent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                /*Just close the dialog without doing anything*/
+                                dialog.cancel();
+                            }
+                        });
+                confirmDialog = confirm.create();
+                confirmDialog.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -323,8 +416,12 @@ public class ActivityAddDelivery extends Activity {
     }
     //</editor-fold>
 
-    private Double getValue(String val) {
-        return Double.valueOf(val.trim().isEmpty() ? "0" : val);
+    private Integer getIntegerValue(String val) {
+        return Integer.valueOf(val.trim().isEmpty() ? "0" : val);
+    }
+
+    private Double getDoubleValue(String val) {
+        return Double.valueOf(val.trim().isEmpty() ? "0.0" : val);
     }
 
     public static class ViewHolder {
@@ -399,14 +496,16 @@ public class ActivityAddDelivery extends Activity {
             holder.tvDispatchItemQty.setText(itemData.get("Quantity"));
             holder.tvDeliveryQty.setText(itemData.get("DeliveryQuantity"));
             holder.tvDispatchItemRate.setText(itemData.get("Rate"));
-            holder.etDeliveryQty.setText(itemData.get("DeliveryQuantity"));
+
+            if (Integer.valueOf(itemData.get("DeliveryQuantity")) > 0)
+                holder.etDeliveryQty.setText(itemData.get("DeliveryQuantity"));
 
             holder.etDeliveryQty.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
-                    /*Double totalDelivery = Double.valueOf(0);
-                    Double totalDispatch = Double.valueOf(0);
-                    Double totalAmount = Double.valueOf(0);*/
+                    Integer totalDelivery = Integer.valueOf(0);
+                    Integer totalDispatch = Integer.valueOf(0);
+                    Double totalAmount = Double.valueOf(0);
                     if (!hasFocus) {
                         for (int i = 0; i < lvDispatchItems.getCount(); i++) {
                             LinearLayout layout1 = (LinearLayout) lvDispatchItems.getChildAt(i);
@@ -422,21 +521,20 @@ public class ActivityAddDelivery extends Activity {
                             etDeliveryQty.setHint("Maximum: " + tvDispatchItemQty.getText());
                             /*if (!(tvDeliveryQty.getText().toString().trim().isEmpty() || tvDeliveryQty.getText().toString() == "0"))
                                 etDeliveryQty.setText(tvDeliveryQty.getText().toString().trim());*/
-                            if (getValue(etDeliveryQty.getEditableText().toString()) > getValue(tvDispatchItemQty.getText().toString())) {
+
+                            if (getIntegerValue(etDeliveryQty.getEditableText().toString()) > getIntegerValue(tvDispatchItemQty.getText().toString())) {
                                 common.showToast("Cannot be greater than " + tvDispatchItemQty.getText(), Toast.LENGTH_LONG, 0);
                                 etDeliveryQty.setText("");
                             }
-                            /*totalDelivery = totalDelivery + getValue(etDeliveryQty.getEditableText().toString());
-                            totalDispatch = totalDispatch + getValue(tvDispatchItemQty.getText().toString());
-                            totalAmount = totalAmount + (getValue(tvDispatchItemQty.getText().toString()) * getValue(tvDispatchItemRate.getText().toString()));*/
+                            totalDelivery = totalDelivery + getIntegerValue(etDeliveryQty.getEditableText().toString());
+                            totalDispatch = totalDispatch + getIntegerValue(tvDispatchItemQty.getText().toString());
+                            totalAmount = totalAmount + (getDoubleValue(tvDispatchItemQty.getText().toString()) * getDoubleValue(tvDispatchItemRate.getText().toString()));
 
-                           /* dba.open();
-                            dba.insertDeliveryDetailsForDispatch(tvDispatchId.getText().toString(), tvBookingId.getText().toString(), tvDispatchItemId.getText().toString(), etDeliveryQty.getText().toString());
-                            dba.close();*/
                         }
-                        /*tvTotalDispatch.setText(totalDispatch.toString());
-                        tvTotalDelivery.setText(totalDelivery.toString());
-                        tvTotalAmount.setText(totalAmount.toString());*/
+                        tvTotalDispatch.setText(totalDispatch.toString());
+                        if (Integer.valueOf(totalDelivery.toString()) > 0)
+                            tvTotalDelivery.setText(totalDelivery.toString());
+                        tvTotalAmount.setText(totalAmount.toString());
                     }
                 }
             });

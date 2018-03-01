@@ -119,8 +119,15 @@ public class ActivityAddPayment extends Activity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ActivityAddPayment.this, ActivityViewPendingDispatch.class);
-                startActivity(intent);
+                Intent i = new Intent(ActivityAddPayment.this, ActivityAddDelivery.class);
+                i.putExtra("dispatchId", dispatchId);
+                i.putExtra("driverName", driverName);
+                i.putExtra("driverMobileNo", driverMobileNo);
+                i.putExtra("dispatchForId", dispatchForId);
+                i.putExtra("dispatchForName", dispatchForName);
+                i.putExtra("dispatchForMobile", dispatchForMobile);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
                 finish();
             }
         });
@@ -229,7 +236,6 @@ public class ActivityAddPayment extends Activity {
         i.putExtra("dispatchForId", dispatchForId);
         i.putExtra("dispatchForName", dispatchForName);
         i.putExtra("dispatchForMobile", dispatchForMobile);
-        startActivity(i);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         this.finish();
@@ -249,10 +255,31 @@ public class ActivityAddPayment extends Activity {
                 onBackPressed();
                 return true;
             case R.id.action_go_to_home:
-                Intent homeScreenIntent = new Intent(this, ActivityHome.class);
-                homeScreenIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(homeScreenIntent);
-                finish();
+                AlertDialog.Builder confirm = new AlertDialog.Builder
+                        (ActivityAddPayment.this);
+                AlertDialog confirmDialog;
+                confirm
+                        .setTitle("Confirmation")
+                        .setMessage("Delivery data would be cleared. Are you sure?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent homeScreenIntent = new Intent(ActivityAddPayment.this, ActivityHome.class);
+                                homeScreenIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(homeScreenIntent);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                /*Just close the dialog without doing anything*/
+                                dialog.cancel();
+                            }
+                        });
+                confirmDialog = confirm.create();
+                confirmDialog.show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

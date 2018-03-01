@@ -1749,10 +1749,9 @@ public class DatabaseAdapter {
     }
 
     public void deleteTemporaryDispatchData() {
-
-        db.execSQL(" DELETE FROM PendingDispatchSyncDetails WHERE CreateBy IS NULL");
         db.execSQL(" DELETE FROM PaymentAgainstDispatchDelivery WHERE DispatchId IN (SELECT DispatchId FROM PendingDispatchSyncDetails WHERE CreateBy IS NULL)");
         db.execSQL(" DELETE FROM DeliveryDetailsForDispatch WHERE DispatchId IN (SELECT DispatchId FROM PendingDispatchSyncDetails WHERE CreateBy IS NULL)");
+        db.execSQL(" DELETE FROM PendingDispatchSyncDetails WHERE CreateBy IS NULL");
     }
 
     public void clearDeliveryDetailsForDispatch(String dispatchId) {
