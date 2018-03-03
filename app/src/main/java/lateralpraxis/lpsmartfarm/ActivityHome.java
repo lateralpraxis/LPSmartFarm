@@ -8932,6 +8932,7 @@ public class ActivityHome extends Activity {
                         for (HashMap<String, String> insd : insdet) {
                             JSONObject jsondet = new JSONObject();
                             jsondet.put("UniqueId", insd.get("UniqueId"));
+                            jsondet.put("BookingId", insd.get("BookingId"));
                             jsondet.put("PolyBagTypeId", insd.get("PolyBagTypeId"));
                             jsondet.put("Quantity", insd.get("Quantity"));
                             jsondet.put("Rate", insd.get("Rate"));

@@ -8711,7 +8711,7 @@ public class DatabaseAdapter {
         ArrayList<HashMap<String, String>> wordList = new ArrayList<>();
 
         selectQuery = "SELECT DISTINCT " +
-                "sync.UniqueId, detail.PolyBagTypeId, delv.Quantity, detail.Rate, (delv.Quantity * detail.Rate) AS Amount " +
+                "sync.UniqueId, detail.BookingId, detail.PolyBagTypeId, delv.Quantity, detail.Rate, (delv.Quantity * detail.Rate) AS Amount " +
                 "FROM " +
                 "PendingDispatchSyncDetails sync, " +
                 "PendingDispatchDetailsForDelivery detail, " +
@@ -8725,10 +8725,11 @@ public class DatabaseAdapter {
         while (cursor.moveToNext()) {
             map = new HashMap<>();
             map.put("UniqueId", cursor.getString(0));
-            map.put("PolyBagTypeId", cursor.getString(1));
-            map.put("Quantity", cursor.getString(2));
-            map.put("Rate", cursor.getString(3));
-            map.put("Amount", cursor.getString(4));
+            map.put("BookingId", cursor.getString(1));
+            map.put("PolyBagTypeId", cursor.getString(2));
+            map.put("Quantity", cursor.getString(3));
+            map.put("Rate", cursor.getString(4));
+            map.put("Amount", cursor.getString(5));
 
             wordList.add(map);
         }
