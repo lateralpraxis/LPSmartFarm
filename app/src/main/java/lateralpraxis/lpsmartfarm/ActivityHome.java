@@ -2029,6 +2029,7 @@ public class ActivityHome extends Activity {
                         task.execute();*/
                         AsyncPendingDispatchesForDeliveryWSCall task = new AsyncPendingDispatchesForDeliveryWSCall();
                         task.execute();
+
                     }
                 } else {
                     if (result.contains("null"))
@@ -8899,17 +8900,18 @@ public class ActivityHome extends Activity {
                     //To make json string to post New Farmers
                     for (HashMap<String, String> insp : insmast) {
                         JSONObject jsonins = new JSONObject();
+
                         jsonins.put("FarmerNurseryType", insp.get("FarmerNurseryType"));
                         jsonins.put("FarmerNurseryId", insp.get("FarmerNurseryId"));
-                        jsonins.put("Amount", insp.get("Amount"));
+                        jsonins.put("DispatchId", insp.get("DispatchId"));
                         jsonins.put("ShortCloseReasonId", insp.get("ShortCloseReasonId"));
                         jsonins.put("UniqueId", insp.get("UniqueId"));
                         jsonins.put("AndroidDate", insp.get("AndroidDate"));
                         jsonins.put("PaymentModeId", insp.get("PaymentModeId"));
                         jsonins.put("PaymentAmount", insp.get("PaymentAmount"));
                         jsonins.put("Remarks", insp.get("Remarks"));
-                        jsonins.put("CreateBy", insp.get("CreateBy"));
                         jsonins.put("PaymentFileName", insp.get("PaymentFileName"));
+                        jsonins.put("CreateBy", insp.get("CreateBy"));
                         jsonins.put("Latitude", insp.get("Latitude"));
                         jsonins.put("Longitude", insp.get("Longitude"));
                         jsonins.put("Accuracy", insp.get("Accuracy"));
@@ -8944,12 +8946,13 @@ public class ActivityHome extends Activity {
                     //To invoke json web service to create New Farmers On Portal
                     responseJSON = common.invokeJSONWS(sendJSon, "json", "SubmitDelivery", common.url);
                 } else {
-                    return "No prospective farmer pending to be send.";
+                    return "No Pending Dispatch remaining to be send.";
                 }
                 return responseJSON;
             } catch (Exception e) {
                 // TODO: handle exception
-                return "ERROR: " + "Unable to get response from server.";
+                //return "ERROR: " + "Unable to get response from server.";
+                return "ERROR: " + e.getMessage();
             }
         }
 
@@ -8960,11 +8963,11 @@ public class ActivityHome extends Activity {
             try {
                 //To display message after response from server
                 if (!result.contains("ERROR")) {
-                    if (responseJSON.equalsIgnoreCase("success")) {
+                    /*if (responseJSON.equalsIgnoreCase("success")) {
                         dba.open();
                         dba.Update_NewFarmerIsSync();
                         dba.close();
-                    }
+                    }*/
                     if (syncFrom.equalsIgnoreCase("masters"))
                         common.showAlert(ActivityHome.this, curusrlang.equalsIgnoreCase("en") ? "Synchronization completed successfully." : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ।", false);
                     else {
@@ -9013,7 +9016,7 @@ public class ActivityHome extends Activity {
         @Override
         protected void onPreExecute() {
 
-            Dialog.setMessage("Posting Prospective Farmers...");
+            Dialog.setMessage("Posting Pending Dispatches...");
             Dialog.setCancelable(false);
             Dialog.show();
         }
