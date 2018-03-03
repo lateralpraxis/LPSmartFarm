@@ -1708,6 +1708,7 @@ public class FarmerCreateStep1 extends Activity {
         Cursor cursor = null;
         try {
             String[] proj = {MediaStore.Images.Media.DATA};
+
             cursor = this.getContentResolver().query(tempUri, proj, null, null, null);
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             cursor.moveToFirst();

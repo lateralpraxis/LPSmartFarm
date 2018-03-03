@@ -7,8 +7,11 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,9 +22,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import lateralpraxis.lpsmartfarm.ActivityHome;
 import lateralpraxis.lpsmartfarm.Common;
@@ -33,9 +38,14 @@ import lateralpraxis.type.CustomType;
 
 public class ActivityAddPayment extends Activity {
 
+    private static final int PICK_Camera_IMAGE = 0;
+    protected static final int GALLERY_REQUEST = 1;
+    private static final int PICK_FSSAI_Camera_IMAGE = 3;
+    private static final int PICK_Farmer_Camera_IMAGE = 5;
+
     private final Context mContext = this;
 
-    private TextView tvDispatchForName, tvDispatchForMobile, tvBookedQty, tvAmount, tvAdvance, tvBalance;
+    private TextView tvDispatchForName, tvDispatchForMobile, tvBookedQty, tvAmount, tvPaymentFile, tvBalance;
     private Spinner spPaymentMode;
     //private TextView tvPaymentAmount, tvPaymentRemarks;
 
@@ -46,9 +56,12 @@ public class ActivityAddPayment extends Activity {
     private String userId;
     private String lang;
 
-    private String dispatchId, driverName, driverMobileNo, dispatchForId, dispatchForName, dispatchForMobile, totalDispatch, totalAmount;
+    private String dispatchId, driverName, driverMobileNo, dispatchForId, dispatchForName, dispatchForMobile;
+    private String payImgUID, level1dir, level2dir, level3dir, filePath, payImgPath, newPayImgPath;
+    File destination;
+    Uri uri;
 
-    private Button btnBack, btnNext;
+    private Button btnUpload, btnViewAttach, btnBack, btnNext;
     private EditText etPaymentAmount, etPaymentRemarks;
 
     private ArrayList<HashMap<String, String>> dispatchData = null;
@@ -90,13 +103,15 @@ public class ActivityAddPayment extends Activity {
         tvDispatchForMobile = findViewById(R.id.tvDispatchForMobile);
         tvBookedQty = findViewById(R.id.tvBookedQty);
         tvAmount = findViewById(R.id.tvAmount);
-        /*tvAdvance = findViewById(R.id.tvAdvance);*/
         tvBalance = findViewById(R.id.tvBalance);
+        tvPaymentFile = findViewById(R.id.tvPaymentFile);
 
         spPaymentMode = findViewById(R.id.spPaymentMode);
         etPaymentAmount = findViewById(R.id.etPaymentAmount);
         etPaymentRemarks = findViewById(R.id.etPaymentRemarks);
 
+        btnUpload = findViewById(R.id.btnUpload);
+        btnViewAttach = findViewById(R.id.btnViewAttach);
         btnBack = findViewById(R.id.btnBack);
         btnNext = findViewById(R.id.btnNext);
         //</editor-fold>
@@ -110,8 +125,6 @@ public class ActivityAddPayment extends Activity {
             dispatchForId = extras.getString("dispatchForId");
             dispatchForName = extras.getString("dispatchForName");
             dispatchForMobile = extras.getString("dispatchForMobile");
-            /*totalDispatch = extras.getString("totalDispatch");
-            totalAmount = extras.getString("totalAmount");*/
         }
         //</editor-fold>
 
@@ -119,12 +132,42 @@ public class ActivityAddPayment extends Activity {
         //<editor-fold desc="Add data to controls">
         tvDispatchForName.setText(dispatchForName);
         tvDispatchForMobile.setText(dispatchForMobile);
-        tvBookedQty.setText(totalDispatch);
-        tvAmount.setText(totalAmount);
-       /* double balance = (getValue(totalAmount) - getValue(tvAdvance.getText().toString()));
-        tvBalance.setText(String.valueOf(balance));*/
         spPaymentMode.setAdapter(DataAdapter("paymentmode", ""));
         //</editor-fold>
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (tvPaymentFile.getText().toString().trim().length() > 0) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
+                    dialog.setTitle("Attache Payment File");
+                    dialog.setMessage("Are you sure, you want attach the Payment File?");
+                    dialog.setCancelable(true);
+                    dialog.setPositiveButton("Yes",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    tvPaymentFile.setText("");
+                                    btnViewAttach.setVisibility(View.GONE);
+                                    dba.open();
+                                    dba.DeleteTempFileByType("DeliveryPayment");
+                                    dba.close();
+                                    startPaymentDialog();
+                                }
+                            }).setNegativeButton("No",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = dialog.create();
+                    alert.show();
+                } else {
+                    startPaymentDialog();
+                }
+            }
+        });
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +264,63 @@ public class ActivityAddPayment extends Activity {
             Intent intent = new Intent(mContext, ActivityHome.class);
             startActivity(intent);
             finish();
+        }
+    }
+
+    private void startPaymentDialog() {
+        payImgUID = UUID.randomUUID().toString();
+        level1dir = "LPSMARTFARM";
+        level2dir = level1dir + "/" + "DeliveryPayment";
+        level3dir = level2dir + "/" + "PaymentImage";
+
+        String imageName = common.random() + ".jpg";
+        filePath = Environment.getExternalStorageDirectory() + "/" + level3dir;
+        destination = new File(filePath, imageName);
+
+        if (common.createDirectory(level1dir) && common.createDirectory(level2dir) && common.createDirectory(level3dir)) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT,
+                    Uri.fromFile(destination));
+            startActivityForResult(intent, PICK_Camera_IMAGE);
+
+            btnViewAttach.setVisibility(View.GONE);
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == 0 && data == null) {
+            //Reset image name and hide reset button
+            tvPaymentFile.setText("");
+        } else if (requestCode == PICK_Camera_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                //Camera request and result code is ok
+                payImgUID = UUID.randomUUID().toString();
+                level1dir = "LPSMARTFARM";
+                level2dir = level1dir + "/" + "DeliveryPayment";
+                level3dir = level2dir + "/" + "PaymentImage";
+                newPayImgPath = Environment.getExternalStorageDirectory() + "/" + level3dir;
+                payImgPath = filePath + "/" + destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1);
+                if (common.createDirectory(level1dir) && common.createDirectory(level2dir) && common.createDirectory(level3dir)) {
+                    common.copyFile(payImgPath, newPayImgPath, "");
+                }
+                dba.open();
+                dba.Insert_TempFile("DeliveryPayment", newPayImgPath + "/" + destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1));
+                dba.close();
+                btnViewAttach.setVisibility(View.VISIBLE);
+                tvPaymentFile.setText(destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1));
+                File dir = new File(payImgPath);
+                if (dir.isDirectory()) {
+                    String[] children = dir.list();
+                    for (int i = 0; i < children.length; i++) {
+                        new File(dir, children[i]).delete();
+                    }
+                }
+            }
+        } else if (resultCode == RESULT_CANCELED) {
+        } else if (requestCode == PICK_Camera_IMAGE) {
+            tvPaymentFile.setText("");
+            btnViewAttach.setVisibility(View.GONE);
         }
     }
 

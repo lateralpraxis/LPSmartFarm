@@ -2027,7 +2027,9 @@ public class ActivityHome extends Activity {
                         /*//call method to POST Job Card
                         AsyncJobCardWSCall task = new AsyncJobCardWSCall();
                         task.execute();*/
-                        AsyncPendingDispatchesForDeliveryWSCall task = new AsyncPendingDispatchesForDeliveryWSCall();
+                        /*AsyncPendingDispatchesForDeliveryWSCall task = new AsyncPendingDispatchesForDeliveryWSCall();
+                        task.execute();*/
+                        AsyncDeliveryWSCall task = new AsyncDeliveryWSCall();
                         task.execute();
 
                     }
@@ -2052,106 +2054,7 @@ public class ActivityHome extends Activity {
         }
     }
 
-    //<editor-fold desc="AsyncTask class to handle Pending Dispatch for Delivery WS call as separate UI Thread">
-    private class AsyncPendingDispatchesForDeliveryWSCall extends AsyncTask<String, Void, String> {
-        private ProgressDialog Dialog = new ProgressDialog(context);
 
-        @Override
-        protected String doInBackground(String... params) {
-            if (userRole.contains("Farmer")
-                    || userRole.contains("Mini Nursery User")
-                    || userRole.contains("Service Provider")) {
-                try {
-                    responseJSON = "";
-                /*responseJSON = common.invokeJSONWS(userId, "userId",
-                        "GetPendingDispatchForDelivery", common.url);*/
-                    responseJSON = common.invokeTwinJSONWS("GetPendingDispatchForDelivery",
-                            "action", userId, "userId", userRole.replace(',', ' ').trim(),
-                            "userRole",
-                            "GetPendingDispatchForDelivery", common.url);
-                } catch (SocketTimeoutException e) {
-                    return "ERROR: TimeOut Exception. Either Server is busy or Internet is slow";
-                } catch (final Exception e) {
-                    e.printStackTrace();
-                    //return "ERROR: " + "Unable to fetch response from server.";
-                    return "ERROR: " + e.getMessage();
-                }
-            }
-            return "";
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            if (userRole.contains("Farmer")
-                    || userRole.contains("Mini Nursery User")
-                    || userRole.contains("Service Provider")) {
-                try {
-                    if (!result.contains("ERROR: ")) {
-                        JSONArray jsonArrayMst = new JSONArray(responseJSON.split("~")[0]);
-                        JSONArray jsonArrayDet = new JSONArray(responseJSON.split("~")[1]);
-                        JSONArray jsonArrayBal = new JSONArray((responseJSON.split("~")[2]));
-                        dba.open();
-                        dba.clearPendingDispatchForDelivery();
-                        for (int i = 0; i < jsonArrayMst.length(); i++) {
-                            dba.insertPendingDispatchForDelivery(
-                                    String.valueOf(jsonArrayMst.getJSONObject(i).getInt("Id")),
-                                    jsonArrayMst.getJSONObject(i).getString("Code"),
-                                    jsonArrayMst.getJSONObject(i).getString("DispatchForId"),
-                                    jsonArrayMst.getJSONObject(i).getString("DispatchForName"),
-                                    jsonArrayMst.getJSONObject(i).getString("DispatchForMobile"),
-                                    jsonArrayMst.getJSONObject(i).getString("VehicleNo"),
-                                    jsonArrayMst.getJSONObject(i).getString("DriverName"),
-                                    jsonArrayMst.getJSONObject(i).getString("DriverMobileNo"));
-                        }
-
-                        dba.clearPendingDispatchDetailForDelivery();
-                        for (int i = 0; i < jsonArrayDet.length(); i++) {
-                            dba.insertPendingDispatchDetailForDelivery(
-                                    String.valueOf(jsonArrayDet.getJSONObject(i).getInt("DispatchId")),
-                                    String.valueOf(jsonArrayDet.getJSONObject(i).getInt("BookingId")),
-                                    jsonArrayDet.getJSONObject(i).getString("Rate"),
-                                    jsonArrayDet.getJSONObject(i).getString("PolybagTypeId"),
-                                    jsonArrayDet.getJSONObject(i).getString("PolybagTitle"),
-                                    Integer.valueOf(jsonArrayDet.getJSONObject(i).getString("Quantity")));
-                        }
-
-                        dba.clearBalanceDetailsForFarmerNursery();
-                        for(int i = 0; i < jsonArrayBal.length(); i++) {
-                            dba.insertBalanceDetailsForFarmerNursery(
-                                    jsonArrayBal.getJSONObject(i).getString("FarmerNursery"),
-                                    jsonArrayBal.getJSONObject(i).getString("FarmerNurseryId"),
-                                    jsonArrayBal.getJSONObject(i).getString("BalanceAmount"));
-                        }
-                        dba.close();
-                        if (common.isConnected()) {
-                            AsyncServerJobCardDetailWSCall task = new AsyncServerJobCardDetailWSCall();
-                            task.execute();
-                        }
-                    } else {
-                        common.showAlert(ActivityHome.this, result, true);
-                    }
-                } catch (Exception e) {
-                    common.showAlert(ActivityHome.this, "Pending Dispatch Downloading failed: " + e
-                            .toString(), true);
-                }
-            }
-            Dialog.dismiss();
-        }
-
-        @Override
-        protected void onPreExecute() {
-            Dialog.setMessage("Downloading Pending Dispatch Details ..");
-            Dialog.setCancelable(false);
-            Dialog.show();
-
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-        }
-
-    }
-    //</editor-fold>
 
     //To make web service class to post data of Job Card
     private class AsyncJobCardWSCall extends AsyncTask<String, Void, String> {
@@ -2335,9 +2238,36 @@ public class ActivityHome extends Activity {
                         dba.InsertServerJobCardDetails(jsonArray.getJSONObject(i).getString("A"), jsonArray.getJSONObject(i).getString("I"), jsonArray.getJSONObject(i).getString("J"), jsonArray.getJSONObject(i).getString("K"), jsonArray.getJSONObject(i).getString("L"), jsonArray.getJSONObject(i).getString("M"), jsonArray.getJSONObject(i).getString("N"), jsonArray.getJSONObject(i).getString("H"), jsonArray.getJSONObject(i).getString("O"));
                     }
                     dba.close();
-                    if (common.isConnected()) {
-                        AsyncDeliveryWSCall task = new AsyncDeliveryWSCall();
-                        task.execute();
+                    if (syncFrom.equalsIgnoreCase("masters"))
+                        common.showAlert(ActivityHome.this, curusrlang.equalsIgnoreCase("en") ? "Synchronization completed successfully." : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ।", false);
+                    else {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        // set title
+                        alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en") ? "Sync Successful" : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ");
+                        // set dialog message
+                        alertDialogBuilder
+                                .setMessage(curusrlang.equalsIgnoreCase("en") ? "Transaction Synchronization completed successfully. It is recommended to synchronize master data. Do you want to continue?" : "ट्रांसक्शन्स सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ। मास्टर डेटा को सिंक्रनाइज़ करने के लिए अनुशंसित है। क्या आप जारी रखना चाहते हैं?")
+                                .setCancelable(false)
+                                .setPositiveButton(curusrlang.equalsIgnoreCase("en") ? "Yes" : "हाँ", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                        if (common.isConnected()) {
+                                            AsyncUserRoleWSCall task = new AsyncUserRoleWSCall();
+                                            task.execute();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton(curusrlang.equalsIgnoreCase("en") ? "No" : "नहीं", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // if this button is clicked, just close
+                                        dialog.cancel();
+                                    }
+                                });
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        // show it
+                        alertDialog.show();
+
                     }
 
                 } else {
@@ -8878,7 +8808,6 @@ public class ActivityHome extends Activity {
     }
     //</editor-fold>
 
-
     private class AsyncDeliveryWSCall extends AsyncTask<String, Void, String> {
         private ProgressDialog Dialog = new ProgressDialog(ActivityHome.this);
 
@@ -8932,7 +8861,7 @@ public class ActivityHome extends Activity {
                         for (HashMap<String, String> insd : insdet) {
                             JSONObject jsondet = new JSONObject();
                             jsondet.put("UniqueId", insd.get("UniqueId"));
-                            jsondet.put("BookingId", insd.get("BookingId"));
+                            jsondet.put("BookingCollectionId", insd.get("BookingId"));
                             jsondet.put("PolyBagTypeId", insd.get("PolyBagTypeId"));
                             jsondet.put("Quantity", insd.get("Quantity"));
                             jsondet.put("Rate", insd.get("Rate"));
@@ -8960,45 +8889,16 @@ public class ActivityHome extends Activity {
         //After execution of json web service to create New Farmer On Portal
         @Override
         protected void onPostExecute(String result) {
-
             try {
+                dba.open();
+                dba.clearDeliveryDetailsForDispatch("");
+                dba.clearPaymentAgainstDispatchDelivery("");
+                dba.close();
                 //To display message after response from server
                 if (!result.contains("ERROR")) {
-                    /*if (responseJSON.equalsIgnoreCase("success")) {
-                        dba.open();
-                        dba.Update_NewFarmerIsSync();
-                        dba.close();
-                    }*/
-                    if (syncFrom.equalsIgnoreCase("masters"))
-                        common.showAlert(ActivityHome.this, curusrlang.equalsIgnoreCase("en") ? "Synchronization completed successfully." : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ।", false);
-                    else {
-                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                        // set title
-                        alertDialogBuilder.setTitle(curusrlang.equalsIgnoreCase("en") ? "Sync Successful" : "सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ");
-                        // set dialog message
-                        alertDialogBuilder
-                                .setMessage(curusrlang.equalsIgnoreCase("en") ? "Transaction Synchronization completed successfully. It is recommended to synchronize master data. Do you want to continue?" : "ट्रांसक्शन्स सिंक्रनाइज़ेशन सफलतापूर्वक पूरा हुआ। मास्टर डेटा को सिंक्रनाइज़ करने के लिए अनुशंसित है। क्या आप जारी रखना चाहते हैं?")
-                                .setCancelable(false)
-                                .setPositiveButton(curusrlang.equalsIgnoreCase("en") ? "Yes" : "हाँ", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-
-                                        if (common.isConnected()) {
-                                            AsyncUserRoleWSCall task = new AsyncUserRoleWSCall();
-                                            task.execute();
-                                        }
-                                    }
-                                })
-                                .setNegativeButton(curusrlang.equalsIgnoreCase("en") ? "No" : "नहीं", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // if this button is clicked, just close
-                                        dialog.cancel();
-                                    }
-                                });
-                        // create alert dialog
-                        AlertDialog alertDialog = alertDialogBuilder.create();
-                        // show it
-                        alertDialog.show();
-
+                    if (common.isConnected()) {
+                        AsyncPendingDispatchesForDeliveryWSCall task = new AsyncPendingDispatchesForDeliveryWSCall();
+                        task.execute();
                     }
                 } else {
                     if (result.contains("null"))
@@ -9007,7 +8907,8 @@ public class ActivityHome extends Activity {
 
                 }
             } catch (Exception e) {
-                common.showAlert(ActivityHome.this, "Unable to fetch response from server.", false);
+                common.showAlert(ActivityHome.this, e.getMessage(), false);
+                //common.showAlert(ActivityHome.this, "Unable to fetch response from server.", false);
             }
 
             Dialog.dismiss();
@@ -9022,6 +8923,106 @@ public class ActivityHome extends Activity {
             Dialog.show();
         }
     }
+
+    //<editor-fold desc="AsyncTask class to handle Pending Dispatch for Delivery WS call as separate UI Thread">
+    private class AsyncPendingDispatchesForDeliveryWSCall extends AsyncTask<String, Void, String> {
+        private ProgressDialog Dialog = new ProgressDialog(context);
+
+        @Override
+        protected String doInBackground(String... params) {
+            if (userRole.contains("Farmer")
+                    || userRole.contains("Mini Nursery User")
+                    || userRole.contains("Service Provider")) {
+                try {
+                    responseJSON = "";
+                    responseJSON = common.invokeTwinJSONWS("GetPendingDispatchForDelivery",
+                            "action", userId, "userId", userRole.replace(',', ' ').trim(),
+                            "userRole",
+                            "GetPendingDispatchForDelivery", common.url);
+                } catch (SocketTimeoutException e) {
+                    return "ERROR: TimeOut Exception. Either Server is busy or Internet is slow";
+                } catch (final Exception e) {
+                    e.printStackTrace();
+                    //return "ERROR: " + "Unable to fetch response from server.";
+                    return "ERROR: " + e.getMessage();
+                }
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (userRole.contains("Farmer")
+                    || userRole.contains("Mini Nursery User")
+                    || userRole.contains("Service Provider")) {
+                try {
+                    if (!result.contains("ERROR: ")) {
+                        JSONArray jsonArrayMst = new JSONArray(responseJSON.split("~")[0]);
+                        JSONArray jsonArrayDet = new JSONArray(responseJSON.split("~")[1]);
+                        JSONArray jsonArrayBal = new JSONArray((responseJSON.split("~")[2]));
+                        dba.open();
+                        dba.clearPendingDispatchForDelivery();
+                        for (int i = 0; i < jsonArrayMst.length(); i++) {
+                            dba.insertPendingDispatchForDelivery(
+                                    String.valueOf(jsonArrayMst.getJSONObject(i).getInt("Id")),
+                                    jsonArrayMst.getJSONObject(i).getString("Code"),
+                                    jsonArrayMst.getJSONObject(i).getString("DispatchForId"),
+                                    jsonArrayMst.getJSONObject(i).getString("DispatchForName"),
+                                    jsonArrayMst.getJSONObject(i).getString("DispatchForMobile"),
+                                    jsonArrayMst.getJSONObject(i).getString("VehicleNo"),
+                                    jsonArrayMst.getJSONObject(i).getString("DriverName"),
+                                    jsonArrayMst.getJSONObject(i).getString("DriverMobileNo"));
+                        }
+
+                        dba.clearPendingDispatchDetailForDelivery();
+                        for (int i = 0; i < jsonArrayDet.length(); i++) {
+                            dba.insertPendingDispatchDetailForDelivery(
+                                    String.valueOf(jsonArrayDet.getJSONObject(i).getInt("DispatchId")),
+                                    String.valueOf(jsonArrayDet.getJSONObject(i).getInt("BookingId")),
+                                    jsonArrayDet.getJSONObject(i).getString("Rate"),
+                                    jsonArrayDet.getJSONObject(i).getString("PolybagTypeId"),
+                                    jsonArrayDet.getJSONObject(i).getString("PolybagTitle"),
+                                    Integer.valueOf(jsonArrayDet.getJSONObject(i).getString("Quantity")));
+                        }
+
+                        dba.clearBalanceDetailsForFarmerNursery();
+                        for (int i = 0; i < jsonArrayBal.length(); i++) {
+                            dba.insertBalanceDetailsForFarmerNursery(
+                                    jsonArrayBal.getJSONObject(i).getString("FarmerNursery"),
+                                    jsonArrayBal.getJSONObject(i).getString("FarmerNurseryId"),
+                                    jsonArrayBal.getJSONObject(i).getString("BalanceAmount"));
+                        }
+                        dba.close();
+                        if (common.isConnected()) {
+                            AsyncServerJobCardDetailWSCall task = new AsyncServerJobCardDetailWSCall();
+                            task.execute();
+                        }
+                    } else {
+                        common.showAlert(ActivityHome.this, result, true);
+                    }
+                } catch (Exception e) {
+                    common.showAlert(ActivityHome.this, "Pending Dispatch Downloading failed: " + e
+                            .toString(), true);
+                }
+            }
+            Dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Dialog.setMessage("Downloading Pending Dispatch Details ..");
+            Dialog.setCancelable(false);
+            Dialog.show();
+
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+        }
+
+    }
+    //</editor-fold>
+
 
     //Async class to send logout details to Portal and logout user from Android on receiving Success from Portal
     private class AsyncLogOutWSCall extends AsyncTask<String, Void, String> {

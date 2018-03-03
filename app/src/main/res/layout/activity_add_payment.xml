@@ -260,6 +260,46 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <Button
+                        android:id="@+id/btnUpload"
+                        style="@style/style_nextButton"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginTop="5dp"
+                        android:width="100sp"
+                        android:text="@string/label_chooseFile"
+                        android:textColor="@color/colorWhite"
+                        tools:ignore="RtlHardcoded" />
+
+                    <TextView
+                        android:id="@+id/tvPaymentFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dip"
+                        android:layout_toEndOf="@+id/btnUpload"
+                        android:layout_toRightOf="@+id/btnUpload"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/btnViewAttach"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@android:color/transparent"
+                        android:drawableEnd="@mipmap/ic_attach"
+                        android:drawableRight="@mipmap/ic_attach"
+                        android:textColor="@color/colorWhite"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
                 <!-- Back / Save Buttons -->
                 <LinearLayout
                     android:layout_width="match_parent"

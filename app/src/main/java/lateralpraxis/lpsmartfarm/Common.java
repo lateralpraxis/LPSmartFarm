@@ -5,14 +5,22 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +34,7 @@ import org.ksoap2.transport.HttpTransportSE;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,8 +51,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
-import lateralpraxis.type.CustomType;
+import java.util.Random;
 
 /**
  * Created by LPNOIDA01 on 9/26/2017.
@@ -532,4 +540,204 @@ public class Common {
         return responseJSON;
     }
 
+    //<editor-fold desc="File related functions">
+    private ImageLoadingUtils utils;
+
+    public String random() {
+        Random r = new Random();
+
+        char[] choices = ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890").toCharArray();
+
+        StringBuilder salt = new StringBuilder(10);
+        for (int i = 0; i < 10; ++i)
+            salt.append(choices[r.nextInt(choices.length)]);
+        return "img_" + salt.toString();
+    }
+
+    public void DeleteRecursive(File fileOrDirectory) {
+
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles())
+                DeleteRecursive(child);
+
+        fileOrDirectory.delete();
+    }
+
+    public String getRealPathFromUri(Uri tempUri) {
+        Cursor cursor = null;
+        try {
+            String[] proj = {MediaStore.Images.Media.DATA};
+
+            cursor = c.getContentResolver().query(tempUri, proj, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    public String compressImage(String path) {
+
+        File imagePath = new File(path);
+        String filePath = path;
+        Bitmap scaledBitmap = null;
+
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        Bitmap bmp = BitmapFactory.decodeFile(filePath, options);
+
+        int actualHeight = options.outHeight;
+        int actualWidth = options.outWidth;
+        float maxHeight = 816.0f;
+        float maxWidth = 612.0f;
+        float imgRatio = actualWidth / actualHeight;
+        float maxRatio = maxWidth / maxHeight;
+
+        if (actualHeight > maxHeight || actualWidth > maxWidth) {
+            if (imgRatio < maxRatio) {
+                imgRatio = maxHeight / actualHeight;
+                actualWidth = (int) (imgRatio * actualWidth);
+                actualHeight = (int) maxHeight;
+            } else if (imgRatio > maxRatio) {
+                imgRatio = maxWidth / actualWidth;
+                actualHeight = (int) (imgRatio * actualHeight);
+                actualWidth = (int) maxWidth;
+            } else {
+                actualHeight = (int) maxHeight;
+                actualWidth = (int) maxWidth;
+
+            }
+        }
+
+        options.inSampleSize = utils.calculateInSampleSize(options,
+                actualWidth, actualHeight);
+        options.inJustDecodeBounds = false;
+        options.inDither = false;
+        options.inTempStorage = new byte[16 * 1024];
+
+        try {
+            bmp = BitmapFactory.decodeFile(filePath, options);
+        } catch (OutOfMemoryError exception) {
+            //exception.printStackTrace();
+
+        }
+        try {
+            scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight,
+                    Bitmap.Config.ARGB_8888);
+        } catch (OutOfMemoryError exception) {
+            //exception.printStackTrace();
+        }
+
+        float ratioX = actualWidth / (float) options.outWidth;
+        float ratioY = actualHeight / (float) options.outHeight;
+        float middleX = actualWidth / 2.0f;
+        float middleY = actualHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2,
+                middleY - bmp.getHeight() / 2, new Paint(
+                        Paint.FILTER_BITMAP_FLAG));
+
+        ExifInterface exif;
+        try {
+            exif = new ExifInterface(filePath);
+
+            int orientation = exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION, 0);
+            Matrix matrix = new Matrix();
+            if (orientation == 6) {
+                matrix.postRotate(90);
+            } else if (orientation == 3) {
+                matrix.postRotate(180);
+            } else if (orientation == 8) {
+                matrix.postRotate(270);
+            }
+            scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
+                    scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix,
+                    true);
+        } catch (IOException e) {
+        }
+        FileOutputStream out;
+
+        try {
+            out = new FileOutputStream(imagePath);
+            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+        } catch (FileNotFoundException e) {
+            //e.printStackTrace();
+        }
+
+        return imagePath.getAbsolutePath();
+    }
+
+    public String copyFile(String inputPath, String outputPath, String outputPathWithName) {
+        File f = (outputPathWithName.trim().isEmpty()) ? new File(inputPath) : new File(outputPathWithName);
+        InputStream in;
+        OutputStream out;
+        try {
+            in = new FileInputStream(inputPath);
+            out = new FileOutputStream(outputPath + "/" + f.getName());
+
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            in.close();
+
+            compressImage(outputPath + "/" + f.getName());
+
+            // write the output file (You have now copied the file)
+            out.flush();
+            out.close();
+
+
+        } catch (FileNotFoundException fnfe1) {
+            //Log.e("tag", fnfe1.getMessage());
+        } catch (Exception e) {
+            //Log.e("tag", e.getMessage());
+        }
+        return outputPath + "/" + f.getName();
+    }
+
+    public boolean createDirectory(String dirName) {
+        //Code to Create Directory for Inspection (Parent)
+        File folder = new File(Environment.getExternalStorageDirectory() + "/" + dirName);
+        boolean success = true;
+        if (!folder.exists()) {
+            success = folder.mkdir();
+        }
+        if (success) {
+            copyNoMediaFile(dirName);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void copyNoMediaFile(String dirName) {
+        try {
+            String storageState = Environment.getExternalStorageState();
+
+            if (Environment.MEDIA_MOUNTED.equals(storageState)) {
+                try {
+                    File noMedia = new File(Environment.getExternalStorageDirectory() + "/" + dirName, ".nomedia");
+
+                    FileOutputStream noMediaOutStream = new FileOutputStream(noMedia);
+                    noMediaOutStream.write(0);
+                    noMediaOutStream.close();
+                } catch (Exception e) {
+                }
+            } else {
+            }
+        } catch (Exception e) {
+        }
+    }
+    //</editor-fold>
 }

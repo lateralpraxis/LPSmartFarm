@@ -1762,9 +1762,9 @@ public class DatabaseAdapter {
 
     public void clearPaymentAgainstDispatchDelivery(String dispatchId) {
         if (dispatchId.trim().isEmpty())
-            db.execSQL("DELETE FROM PaymentAgainstDeliveryDispatch");
+            db.execSQL("DELETE FROM PaymentAgainstDispatchDelivery");
         else
-            db.execSQL("DELETE FROM PaymentAgainstDeliveryDispatch WHERE '" + dispatchId + "' ");
+            db.execSQL("DELETE FROM PaymentAgainstDispatchDelivery WHERE '" + dispatchId + "' ");
     }
 
     public void clearBalanceDetailsForFarmerNursery() {
