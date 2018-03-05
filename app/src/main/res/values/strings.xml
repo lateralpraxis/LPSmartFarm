@@ -596,6 +596,7 @@
     <!--End of Stock Return Strings-->
 
     <!-- Start of Delivery Strings -->
+    <string name="label_DeliveryPaymentDetails">Delivery / Payment Details</string>
     <string name="label_DispatchNo">Dispatch #</string>
     <string name="label_DeliveryDetails">Delivery Details</string>
     <string name="label_ViewDelivery">View Delivery</string>

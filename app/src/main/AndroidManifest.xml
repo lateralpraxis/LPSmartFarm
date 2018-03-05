@@ -446,18 +446,23 @@
             android:name=".returns.ActivityStockReturnDetail"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
-        <activity android:name=".delivery.ActivityViewPendingDispatch"
+        <activity
+            android:name=".delivery.ActivityViewPendingDispatch"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
-        <activity android:name=".delivery.ActivityAddDelivery"
+        <activity
+            android:name=".delivery.ActivityAddDelivery"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
-        <activity android:name=".delivery.ActivityAddPayment"
+        <activity
+            android:name=".delivery.ActivityAddPayment"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
-        <activity android:name=".delivery.ActivityViewDelivery"
+        <activity
+            android:name=".delivery.ActivityViewDelivery"
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
+        <activity android:name=".delivery.ActivityViewDeliveryDetails"></activity>
     </application>
 
 </manifest>

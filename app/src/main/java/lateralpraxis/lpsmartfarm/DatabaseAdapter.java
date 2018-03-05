@@ -47,6 +47,7 @@ import lateralpraxis.type.VisitNurseryData;
 import lateralpraxis.type.VisitNurseryViewData;
 import lateralpraxis.type.VisitViewData;
 
+
 /**
  * Created by LPNOIDA01 on 9/26/2017.
  */
@@ -6588,13 +6589,6 @@ public class DatabaseAdapter {
     //<editor-fold desc="Get the list of Pending Dispatches for Delivery">
     public ArrayList<HashMap<String, String>> getPendingDispatchesForDelivery() {
         ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
-        /*selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DispatchForMobile, SUM(t2.Quantity) AS TotalDispatch,  " +
-                "t1.DriverName, t1.DriverMobileNo  " +
-                "FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2, PaymentAgainstDispatchDelivery t3 " +
-                "WHERE t2.DispatchId = t1.Id AND t3.DispatchId <> t1.Id " +
-                "GROUP BY t1.Id,t1.Code, t1.VehicleNo, t1.DispatchForName, t1.DispatchForMobile, t1.DriverName, t1.DriverMobileNo ORDER BY t1.Id";*/
-        /*selectQuery = "SELECT Id, Code, VehicleNo, DispatchForName, 10 AS TotalDispatch FROM " +
-                "PendingDispatchForDelivery";*/
         selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForId, t1.DispatchForName, t1.DispatchForMobile, SUM(t2.Quantity) AS TotalDispatch, t1.DriverName, t1.DriverMobileNo   " +
                 "FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2 " +
                 "WHERE t2.DispatchId = t1.Id AND t1.Id NOT IN (SELECT DISTINCT DispatchId FROM PaymentAgainstDispatchDelivery) " +
@@ -6642,6 +6636,30 @@ public class DatabaseAdapter {
         return dataList;
     }
     //</editor-fold>
+
+    public ArrayList<HashMap<String, String>> getUnSyncDeliveryDetailsForDispatches() {
+        ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
+        selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForId, t1.DispatchForName, t1.DispatchForMobile, SUM(t2.Quantity) AS TotalDispatch, t1.DriverName, t1.DriverMobileNo   " +
+                "FROM PendingDispatchForDelivery t1, PendingDispatchDetailsForDelivery t2 " +
+                "WHERE t2.DispatchId = t1.Id AND t1.Id IN (SELECT DISTINCT DispatchId FROM PaymentAgainstDispatchDelivery) " +
+                "GROUP BY t1.Id,t1.Code, t1.VehicleNo, t1.DispatchForId, t1.DispatchForName, t1.DispatchForMobile, t1.DriverName, t1.DriverMobileNo ORDER BY t1.Id";
+        cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
+            map = new HashMap<>();
+            map.put("Id", cursor.getString(0));
+            map.put("Code", cursor.getString(1));
+            map.put("VehicleNo", cursor.getString(2));
+            map.put("DispatchForId", cursor.getString(3));
+            map.put("DispatchForName", cursor.getString(4));
+            map.put("DispatchForMobile", cursor.getString(5));
+            map.put("TotalDispatch", cursor.getString(6));
+            map.put("DriverName", cursor.getString(7));
+            map.put("DriverMobileNo", cursor.getString(8));
+            dataList.add(map);
+        }
+        cursor.close();
+        return dataList;
+    }
 
     //<editor-fold desc="Get Balance for Farmer / Nursery">
     public int getBalanceForFarmerNursery(String farmerNurseryId) {

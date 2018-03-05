@@ -44,7 +44,29 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Display delivery list here -->
+            <TextView
+                android:id="@+id/tvEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="@string/datalabel_NoRecord"
+                android:textColor="@color/colorBlack" />
+
+            <lateralpraxis.lpsmartfarm.NonScrollableListView
+                android:id="@+id/lvPendingDispatchForDelivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@color/colorGold"
+                android:dividerHeight="1sp"
+                android:paddingLeft="2sp"
+                tools:ignore="RtlHardcoded,RtlSymmetry"></lateralpraxis.lpsmartfarm.NonScrollableListView>
+
+            <View
+                android:id="@+id/tvDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorGold"
+                android:visibility="gone" />
 
         </LinearLayout>
 
