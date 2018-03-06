@@ -6225,10 +6225,28 @@ public class DatabaseAdapter {
     //<editor-fold desc="To get all Attachments for Farmer">
     public ArrayList<HashMap<String, String>> getAttachmentsForSync() {
         ArrayList<HashMap<String, String>> wordList = new ArrayList<HashMap<String, String>>();
-        selectQuery = "SELECT DISTINCT FarmerUniqueId, Type,FileName AS FilePath, FileName FROM FarmerDocuments WHERE IsSync IS NULL AND FileName IS NOT NULL AND FileName !='' UNION ALL SELECT DISTINCT  FarmerUniqueId, 'Proof' AS Type, FilePath, FileName FROM FarmerProof WHERE IsSync IS NULL AND FileName IS NOT NULL AND FilePath IS NOT NULL AND FileName !='' AND FilePath !='' UNION ALL SELECT DISTINCT  UniqueId, 'VisitReport' AS Type, FilePath, FileName FROM VisitReportPhoto WHERE IsSync IS NULL AND IsTemp = '0'  AND FileName IS NOT NULL AND FilePath IS NOT NULL AND FileName !='' AND FilePath !='' UNION ALL SELECT DISTINCT  UniqueId, 'Recommendation' AS Type, FileName, FileName FROM RecommendationDetail WHERE IsSyncFile IS NULL AND IsTemp = '0' AND FileName !='' UNION ALL SELECT UniqueId,'JobCard' AS Type, FileName AS FilePath, FileName FROM JobCardDetail WHERE (IsSync IS NULL OR IsSync ='') AND FileName !='' AND FileName IS NOT NULL";
+        selectQuery = "SELECT DISTINCT FarmerUniqueId, Type,FileName AS FilePath, FileName " +
+                "FROM FarmerDocuments " +
+                "WHERE IsSync IS NULL AND FileName IS NOT NULL AND FileName !='' " +
+                "UNION ALL " +
+                "SELECT DISTINCT  FarmerUniqueId, 'Proof' AS Type, FilePath, FileName " +
+                "FROM FarmerProof " +
+                "WHERE IsSync IS NULL AND FileName IS NOT NULL AND FilePath IS NOT NULL AND FileName !='' AND FilePath !='' " +
+                "UNION ALL " +
+                "SELECT DISTINCT  UniqueId, 'VisitReport' AS Type, FilePath, FileName " +
+                "FROM VisitReportPhoto " +
+                "WHERE IsSync IS NULL AND IsTemp = '0'  AND FileName IS NOT NULL AND FilePath IS NOT NULL AND FileName !='' AND FilePath !='' " +
+                "UNION ALL " +
+                "SELECT DISTINCT  UniqueId, 'Recommendation' AS Type, FileName, FileName " +
+                "FROM RecommendationDetail " +
+                "WHERE IsSyncFile IS NULL AND IsTemp = '0' AND FileName !='' " +
+                "UNION ALL " +
+                "SELECT UniqueId,'JobCard' AS Type, FileName AS FilePath, FileName " +
+                "FROM JobCardDetail " +
+                "WHERE (IsSync IS NULL OR IsSync ='') AND FileName !='' AND FileName IS NOT NULL";
         cursor = db.rawQuery(selectQuery, null);
         while (cursor.moveToNext()) {
-            map = new HashMap<String, String>();
+            map = new HashMap<>();
             //map.put("DocumentId", cursor.getString(0));
             map.put("FarmerUniqueId", cursor.getString(0));
             map.put("Type", cursor.getString(1));

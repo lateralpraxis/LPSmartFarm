@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -239,7 +238,7 @@ public class ActivityViewDeliveryDetails extends Activity {
      */
     @Override
     public void onBackPressed() {
-        Intent i = new Intent(ActivityViewDeliveryDetails.this, ActivityHome.class);
+        Intent i = new Intent(ActivityViewDeliveryDetails.this, ActivityViewPendingDispatch.class);
         startActivity(i);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

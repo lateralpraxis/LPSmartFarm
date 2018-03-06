@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,8 +41,6 @@ public class ActivityAddPayment extends Activity {
 
     private static final int PICK_Camera_IMAGE = 0;
     protected static final int GALLERY_REQUEST = 1;
-    private static final int PICK_FSSAI_Camera_IMAGE = 3;
-    private static final int PICK_Farmer_Camera_IMAGE = 5;
 
     private final Context mContext = this;
 
@@ -57,9 +56,10 @@ public class ActivityAddPayment extends Activity {
     private String lang;
 
     private String dispatchId, driverName, driverMobileNo, dispatchForId, dispatchForName, dispatchForMobile;
-    private String payImgUID, level1dir, level2dir, level3dir, filePath, payImgPath, newPayImgPath;
+    private String payImgUID, level1dir, level2dir, level3dir, fileName, payImgPath, fullPayImgPath;
     File destination;
     Uri uri;
+    Intent picIntent;
 
     private Button btnUpload, btnViewAttach, btnBack, btnNext;
     private EditText etPaymentAmount, etPaymentRemarks;
@@ -268,44 +268,89 @@ public class ActivityAddPayment extends Activity {
     }
 
     private void startPaymentDialog() {
-        payImgUID = UUID.randomUUID().toString();
-        level1dir = "LPSMARTFARM";
-        level2dir = level1dir + "/" + "DeliveryPayment";
-        level3dir = level2dir + "/" + "PaymentImage";
+        AlertDialog.Builder dialog = new AlertDialog.Builder(ActivityAddPayment.this);
+        dialog.setTitle("Select Image Source");
 
-        String imageName = common.random() + ".jpg";
-        filePath = Environment.getExternalStorageDirectory() + "/" + level3dir;
-        destination = new File(filePath, imageName);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                ActivityAddPayment.this,
+                android.R.layout.select_dialog_singlechoice);
+        adapter.add("Capture Image");
+        adapter.add("Select from Gallery");
 
-        if (common.createDirectory(level1dir) && common.createDirectory(level2dir) && common.createDirectory(level3dir)) {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                    Uri.fromFile(destination));
-            startActivityForResult(intent, PICK_Camera_IMAGE);
+        dialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
 
-            btnViewAttach.setVisibility(View.GONE);
-        }
+        dialog.setAdapter(
+                adapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String option = adapter.getItem(which);
+                        if (option.equals("Capture Image")) {
+                            payImgUID = UUID.randomUUID().toString();
+                            level1dir = "LPSMARTFARM";
+                            level2dir = level1dir + "/" + "DeliveryPayment";
+                            level3dir = level2dir + "/" + payImgUID;
+                            fullPayImgPath = Environment.getExternalStorageDirectory() + "/" + level3dir;
+                            fileName = common.random() + ".jpg";
+                            destination = new File(fullPayImgPath, fileName);
+
+                            if (common.createDirectory(level1dir) && common.createDirectory(level2dir) && common.createDirectory(level3dir)) {
+                                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
+                                startActivityForResult(intent, PICK_Camera_IMAGE);
+                                btnViewAttach.setVisibility(View.GONE);
+                            }
+
+                        } else if (option.equals("Select from Gallery")) {
+                            picIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                            picIntent.putExtra("return_data", true);
+                            startActivityForResult(picIntent, GALLERY_REQUEST);
+
+                        } else {
+                            common.showToast("No file available for preview");
+                        }
+                    }
+                });
+        dialog.show();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         if (requestCode == 0 && resultCode == 0 && data == null) {
             //Reset image name and hide reset button
             tvPaymentFile.setText("");
+        } else if (requestCode == GALLERY_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                if (data != null) {
+                    uri = data.getData();
+                    if (uri != null) {
+                        if (common.createDirectory(level1dir) && common.createDirectory(level2dir) && common.createDirectory(level3dir)) {
+                            common.copyFile(payImgPath, fullPayImgPath, destination.getPath());
+                        }
+                        tvPaymentFile.setText(fileName);
+                        dba.open();
+                        dba.Insert_TempFile("DeliveryPayment", fullPayImgPath + "/" + fileName);
+                        dba.close();
+                    }
+                }
+            } else if (resultCode == RESULT_CANCELED) {
+                tvPaymentFile.setText("");
+            }
         } else if (requestCode == PICK_Camera_IMAGE) {
             if (resultCode == RESULT_OK) {
                 //Camera request and result code is ok
-                payImgUID = UUID.randomUUID().toString();
-                level1dir = "LPSMARTFARM";
-                level2dir = level1dir + "/" + "DeliveryPayment";
-                level3dir = level2dir + "/" + "PaymentImage";
-                newPayImgPath = Environment.getExternalStorageDirectory() + "/" + level3dir;
-                payImgPath = filePath + "/" + destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1);
+
+                payImgPath = fullPayImgPath + "/" + destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1);
                 if (common.createDirectory(level1dir) && common.createDirectory(level2dir) && common.createDirectory(level3dir)) {
-                    common.copyFile(payImgPath, newPayImgPath, "");
+                    common.copyFile(payImgPath, fullPayImgPath, "");
                 }
                 dba.open();
-                dba.Insert_TempFile("DeliveryPayment", newPayImgPath + "/" + destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1));
+                dba.Insert_TempFile("DeliveryPayment", fullPayImgPath + "/" + destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1));
                 dba.close();
                 btnViewAttach.setVisibility(View.VISIBLE);
                 tvPaymentFile.setText(destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1));
@@ -317,7 +362,6 @@ public class ActivityAddPayment extends Activity {
                     }
                 }
             }
-        } else if (resultCode == RESULT_CANCELED) {
         } else if (requestCode == PICK_Camera_IMAGE) {
             tvPaymentFile.setText("");
             btnViewAttach.setVisibility(View.GONE);
@@ -452,4 +496,16 @@ public class ActivityAddPayment extends Activity {
         }
     }
     //</editor-fold>
+
+    @Override
+    public void onResume() {
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        super.onResume();
+    }
+
+    @Override
+    public void onStart() {
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        super.onStart();
+    }
 }

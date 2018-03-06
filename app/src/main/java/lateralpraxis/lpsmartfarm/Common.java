@@ -678,8 +678,8 @@ public class Common {
 
     public String copyFile(String inputPath, String outputPath, String outputPathWithName) {
         File f = (outputPathWithName.trim().isEmpty()) ? new File(inputPath) : new File(outputPathWithName);
-        InputStream in;
-        OutputStream out;
+        InputStream in = null;
+        OutputStream out = null;
         try {
             in = new FileInputStream(inputPath);
             out = new FileOutputStream(outputPath + "/" + f.getName());
@@ -698,10 +698,10 @@ public class Common {
             out.close();
 
 
-        } catch (FileNotFoundException fnfe1) {
-            //Log.e("tag", fnfe1.getMessage());
+        } catch (FileNotFoundException e) {
+            return e.getMessage();
         } catch (Exception e) {
-            //Log.e("tag", e.getMessage());
+            return e.getMessage();
         }
         return outputPath + "/" + f.getName();
     }
