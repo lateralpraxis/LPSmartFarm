@@ -90,7 +90,7 @@ public class ActivityViewPendingDispatch extends Activity {
         }
         lvPendingDispatchForDelivery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> lv, View item, int position, long id) {
-                Intent intent = new Intent(ActivityViewPendingDispatch.this, ActivityViewDeliveryDetails.class);
+                Intent intent = new Intent(ActivityViewPendingDispatch.this, ActivityAddDelivery.class);
                 intent.putExtra("dispatchId", String.valueOf(((TextView) item.findViewById(R.id.tvDispatchId)).getText().toString()));
                 intent.putExtra("driverName", String.valueOf(((TextView) item.findViewById(R.id.tvDriverName)).getText().toString()));
                 intent.putExtra("driverMobileNo", String.valueOf(((TextView) item.findViewById(R.id.tvDriverMobileNo)).getText().toString()));

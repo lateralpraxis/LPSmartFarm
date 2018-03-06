@@ -6637,6 +6637,24 @@ public class DatabaseAdapter {
     }
     //</editor-fold>
 
+    public ArrayList<HashMap<String, String>> getDispatchItemsDeliveryDetails(String dispatchId) {
+        ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
+        selectQuery = "SELECT t1.DispatchId, t1.DispatchItemId, t2.PolybagTitle, t1.Quantity " +
+                "FROM DeliveryDetailsForDispatch t1, PendingDispatchDetailsForDelivery t2 " +
+                "WHERE t1.DispatchId = '"+ dispatchId +"' AND t1.DispatchId = t2.DispatchId AND t1.DispatchItemId = t2.PolybagTypeId";
+        cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
+            map = new HashMap<>();
+            map.put("DispatchId", cursor.getString(0));
+            map.put("DispatchItemId", cursor.getString(1));
+            map.put("PolybagTitle", cursor.getString(2));
+            map.put("Quantity", cursor.getString(3));
+            dataList.add(map);
+        }
+        cursor.close();
+        return dataList;
+    }
+
     public ArrayList<HashMap<String, String>> getUnSyncDeliveryDetailsForDispatches() {
         ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
         selectQuery = "SELECT t1.Id, t1.Code, t1.VehicleNo, t1.DispatchForId, t1.DispatchForName, t1.DispatchForMobile, SUM(t2.Quantity) AS TotalDispatch, t1.DriverName, t1.DriverMobileNo   " +
@@ -6694,6 +6712,25 @@ public class DatabaseAdapter {
         return reason;
     }
     //</editor-fold>
+
+    public ArrayList<HashMap<String, String>> getPaymentDetailsAgainstDispatchDelivery(String dispatchId) {
+        ArrayList<HashMap<String, String>> dataList = new ArrayList<>();
+        selectQuery = "SELECT t1.PaymentMode, t2.Title AS PaymentModeTitle, t1.PaymentAmount, t1.PaymentRemarks " +
+                "FROM PaymentAgainstDispatchDelivery t1, PaymentMode t2 " +
+                "ON t1.PaymentMode = t2.Id " +
+                "WHERE t1.DispatchId = '" + dispatchId + "' ";
+        cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
+            map = new HashMap<>();
+            map.put("PaymentMode", cursor.getString(0));
+            map.put("PaymentModeTitle", cursor.getString(1));
+            map.put("PaymentAmount", cursor.getString(2));
+            map.put("PaymentRemarks", cursor.getString(3));
+            dataList.add(map);
+        }
+        cursor.close();
+        return dataList;
+    }
 
 
     //<editor-fold desc="To get all New Coordinates For Sync">
