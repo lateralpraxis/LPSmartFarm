@@ -24,6 +24,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +36,7 @@ import lateralpraxis.lpsmartfarm.DatabaseAdapter;
 import lateralpraxis.lpsmartfarm.GPSTracker;
 import lateralpraxis.lpsmartfarm.R;
 import lateralpraxis.lpsmartfarm.UserSessionManager;
+import lateralpraxis.lpsmartfarm.ViewImage;
 import lateralpraxis.type.CustomType;
 
 public class ActivityAddPayment extends Activity {
@@ -57,9 +59,13 @@ public class ActivityAddPayment extends Activity {
 
     private String dispatchId, driverName, driverMobileNo, dispatchForId, dispatchForName, dispatchForMobile;
     private String payImgUID, level1dir, level2dir, level3dir, fileName, payImgPath, fullPayImgPath;
+    private ArrayList<HashMap<String, String>> attachments;
+
     File destination;
     Uri uri;
     Intent picIntent;
+    File[] listFiles;
+    String[] filePathStrings, fileNameStrings;
 
     private Button btnUpload, btnViewAttach, btnBack, btnNext;
     private EditText etPaymentAmount, etPaymentRemarks;
@@ -258,6 +264,61 @@ public class ActivityAddPayment extends Activity {
             }
         });
 
+        btnViewAttach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    // Check SD Card
+                    if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                        common.showToast("ERROR: No SD Card found");
+                    } else {
+                        dba.open();
+                        attachments = dba.GetTempAttachment("DeliveryPayment");
+                        dba.close();
+
+                        if (attachments.size() > 0) {
+                            for (HashMap<String, String> map : attachments) {
+                                for (String key : map.keySet()) {
+                                    if (key.contains("FileName"))
+                                        fileName = map.get(key);
+                                }
+                            }
+                            File file = new File(fileName);
+                            destination = new File(file.getParent());
+                        }
+                    }
+
+                    if (destination.isDirectory()) {
+                        listFiles = destination.listFiles(new FilenameFilter() {
+                            @Override
+                            public boolean accept(File dir, String name) {
+                                return fileName.endsWith(".jpeg")
+                                        || fileName.endsWith(".bmp")
+                                        || fileName.endsWith(".jpg")
+                                        || fileName.endsWith(".png")
+                                        || fileName.endsWith(".gif");
+                            }
+                        });
+                        filePathStrings = new String[listFiles.length];
+                        fileNameStrings = new String[listFiles.length];
+
+                        for (int i = 0; i < filePathStrings.length; i++) {
+                            filePathStrings[i] = listFiles[i].getAbsolutePath();
+                            fileNameStrings[i] = listFiles[i].getName();
+
+                            Intent i1 = new Intent(ActivityAddPayment.this, ViewImage.class);
+                            i1.putExtra("filepath", filePathStrings);
+                            i1.putExtra("filename", fileNameStrings);
+                            i1.putExtra("position", 0);
+                            startActivity(i1);
+                        }
+                    }
+                } catch (Exception e) {
+                    common.showAlert(ActivityAddPayment.this, "ERROR: " + e.getMessage(), false);
+                }
+            }
+        });
+
         if (common.isConnected()) {
             BindData();
         } else {
@@ -289,15 +350,14 @@ public class ActivityAddPayment extends Activity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String option = adapter.getItem(which);
+                        payImgUID = UUID.randomUUID().toString();
+                        level1dir = "LPSMARTFARM";
+                        level2dir = level1dir + "/" + "DeliveryPayment";
+                        level3dir = level2dir + "/" + payImgUID;
+                        fullPayImgPath = Environment.getExternalStorageDirectory() + "/" + level3dir;
+                        fileName = common.random() + ".jpg";
+                        destination = new File(fullPayImgPath, fileName);
                         if (option.equals("Capture Image")) {
-                            payImgUID = UUID.randomUUID().toString();
-                            level1dir = "LPSMARTFARM";
-                            level2dir = level1dir + "/" + "DeliveryPayment";
-                            level3dir = level2dir + "/" + payImgUID;
-                            fullPayImgPath = Environment.getExternalStorageDirectory() + "/" + level3dir;
-                            fileName = common.random() + ".jpg";
-                            destination = new File(fullPayImgPath, fileName);
-
                             if (common.createDirectory(level1dir) && common.createDirectory(level2dir) && common.createDirectory(level3dir)) {
                                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(destination));
@@ -329,9 +389,11 @@ public class ActivityAddPayment extends Activity {
                 if (data != null) {
                     uri = data.getData();
                     if (uri != null) {
+                        payImgPath = common.getRealPathFromUri(uri);
                         if (common.createDirectory(level1dir) && common.createDirectory(level2dir) && common.createDirectory(level3dir)) {
                             common.copyFile(payImgPath, fullPayImgPath, destination.getPath());
                         }
+                        btnViewAttach.setVisibility(View.VISIBLE);
                         tvPaymentFile.setText(fileName);
                         dba.open();
                         dba.Insert_TempFile("DeliveryPayment", fullPayImgPath + "/" + fileName);
@@ -344,13 +406,10 @@ public class ActivityAddPayment extends Activity {
         } else if (requestCode == PICK_Camera_IMAGE) {
             if (resultCode == RESULT_OK) {
                 //Camera request and result code is ok
-
                 payImgPath = fullPayImgPath + "/" + destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1);
-                if (common.createDirectory(level1dir) && common.createDirectory(level2dir) && common.createDirectory(level3dir)) {
-                    common.copyFile(payImgPath, fullPayImgPath, "");
-                }
+                //payImgPath = common.compressImage(payImgPath);
                 dba.open();
-                dba.Insert_TempFile("DeliveryPayment", fullPayImgPath + "/" + destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1));
+                dba.Insert_TempFile("DeliveryPayment", payImgPath);
                 dba.close();
                 btnViewAttach.setVisibility(View.VISIBLE);
                 tvPaymentFile.setText(destination.getAbsolutePath().substring(destination.getAbsolutePath().lastIndexOf("/") + 1));
@@ -362,10 +421,13 @@ public class ActivityAddPayment extends Activity {
                     }
                 }
             }
-        } else if (requestCode == PICK_Camera_IMAGE) {
-            tvPaymentFile.setText("");
-            btnViewAttach.setVisibility(View.GONE);
+        } else if (resultCode == RESULT_CANCELED) {
+            if (requestCode == PICK_Camera_IMAGE) {
+                tvPaymentFile.setText("");
+                btnViewAttach.setVisibility(View.GONE);
+            }
         }
+
     }
 
     /*private Double getValue(String val) {

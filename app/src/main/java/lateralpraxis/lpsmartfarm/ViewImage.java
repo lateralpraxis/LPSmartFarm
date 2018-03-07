@@ -40,13 +40,13 @@ public class ViewImage extends Activity {
         String[] filename = i.getStringArrayExtra("filename");
 
         // Locate the TextView in view_image.xml
-        text = (TextView) findViewById(R.id.imagetext);
+        text = findViewById(R.id.imagetext);
 
         // Load the text into the TextView followed by the position
         text.setText(filename[position]);
 
         // Locate the ImageView in view_image.xml
-        imageview = (ImageView) findViewById(R.id.full_image_view);
+        imageview = findViewById(R.id.full_image_view);
 
         // Decode the filepath with BitmapFactory followed by the position
         Bitmap bmp = BitmapFactory.decodeFile(filepath[position]);
