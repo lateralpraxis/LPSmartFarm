@@ -541,7 +541,7 @@ public class Common {
     }
 
     //<editor-fold desc="File related functions">
-    private ImageLoadingUtils utils;
+    // public ImageLoadingUtils utils;
 
     public String random() {
         Random r = new Random();
@@ -611,7 +611,7 @@ public class Common {
 
             }
         }
-
+        ImageLoadingUtils utils = new ImageLoadingUtils(c);
         options.inSampleSize = utils.calculateInSampleSize(options,
                 actualWidth, actualHeight);
         options.inJustDecodeBounds = false;
@@ -677,15 +677,15 @@ public class Common {
     }
 
     public String copyFile(String inputPath, String outputPath, String outputPathWithName) {
-        File f = (outputPathWithName.trim().isEmpty()) ? new File(inputPath) : new File(outputPathWithName);
-        InputStream in = null;
-        OutputStream out = null;
+        File f = (outputPathWithName.trim() == "") ? new File(inputPath) : new File(outputPathWithName);
+        InputStream in;
+        OutputStream out;
         try {
             in = new FileInputStream(inputPath);
             out = new FileOutputStream(outputPath + "/" + f.getName());
 
             byte[] buffer = new byte[1024];
-            int read;
+            int read = 0;
             while ((read = in.read(buffer)) != -1) {
                 out.write(buffer, 0, read);
             }
